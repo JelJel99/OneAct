@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OneAct - Login / Signup</title>
+<link rel="stylesheet" href="signup.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card fade">
+
+        <div class="brand">
+            <img src="round_logo.png" class="logo" alt="OneAct Logo">
+            <h2>OneAct</h2>
+        </div>
+
+        <h3>Welcome</h3>
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm" class="form-section fade-in">
+            <p class="subtitle">Masuk ke OneAct untuk melanjutkan</p>
+
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Password">
+
+            <button class="btn" onclick="submitLogin()">Lanjut</button>
+
+            <p class="switch-text">
+                Tidak memiliki akun? 
+                <span onclick="showSignup()" class="link">Daftar</span>
+            </p>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="signupForm" class="hidden form-section fade-in">
+            <p class="subtitle">Daftar ke OneAct untuk melanjutkan</p>
+
+            <input type="email" id="signupEmail" placeholder="Email">
+            <input type="password" id="signupPassword" placeholder="Password">
+
+            <button class="btn" onclick="submitSignup()">Lanjut</button>
+
+            <p class="switch-text">
+                Sudah memiliki akun? 
+                <span onclick="showLogin()" class="link">Masuk</span>
+            </p>
+        </div>
+
+        <p id="errorMessage" class="error-message"></p>
+
+    </div>
+</div>
+
+<script src="signup.js"></script>
+</body>
+</html>
