@@ -79,31 +79,46 @@ body.body {
 .nav-right {
     display: flex;
     align-items: center;
-    /* gap: 0rem; */
+    gap: 0.5rem;
 }
 
-.icon-btn-bell {
+.icon-btn {
     color: white;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 9999px;
     transition: 0.2s;
-    width: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.icon-btn-acc {
-    color: white;
-    padding: 1rem;
-    border-radius: 9999px;
-    transition: 0.2s;
-    width: 67px;
+.icon-btn i {
+    width: 20px;
+    height: 20px;
 }
 
 .icon-btn:hover {
-    background: #B91C1C;
+    background: #660000; /* Darker red on hover */
+}
+
+.auth-separator {
+    color: white;
+    font-size: 0.9rem;
+    margin: 0 -0.25rem;
 }
 
 .auth-btn {
     display: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: white;
+    transition: 0.2s;
+}
+
+.auth-btn:hover {
+    color: #f0f0f0; 
+    text-decoration: underline; 
 }
 
 @media (min-width: 640px) {
@@ -868,3 +883,4 @@ body.body {
     opacity: 0.8;
     font-size: 0.9rem;
 }
+
