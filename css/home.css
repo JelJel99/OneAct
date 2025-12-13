@@ -65,6 +65,13 @@ body.body {
     transform: translateX(-50%);
 }
 
+.nav-link.active {
+    background: #FFE3E3;          /* highlight */
+    color: #800000;             /* text becomes dark */
+    font-weight: 600;
+    border-radius: 10px;
+}
+
 .nav-link:hover::after {
     width: 50%;
 }
@@ -75,11 +82,20 @@ body.body {
     /* gap: 0rem; */
 }
 
-.icon-btn {
+.icon-btn-bell {
     color: white;
     padding: 1rem;
     border-radius: 9999px;
     transition: 0.2s;
+    width: 55px;
+}
+
+.icon-btn-acc {
+    color: white;
+    padding: 1rem;
+    border-radius: 9999px;
+    transition: 0.2s;
+    width: 67px;
 }
 
 .icon-btn:hover {
@@ -239,9 +255,10 @@ body.body {
 }
 
 .tab-outline.active {
-    background-color: #AE0C0C;
+    background-color: #AE0C0C;  /* or whatever color you want */
     color: white;
-    border-radius: 0.6rem;
+    border-radius: 7px;
+    /* border-color: #e63946; */
 }
 
 /* .tab-outline:hover {
@@ -366,7 +383,7 @@ body.body {
     gap: 1rem;
 }
 
-.btn-daftar {
+#btn-daftar {
     flex: 1;
     text-align: center;
     padding: 0.75rem;
@@ -377,11 +394,11 @@ body.body {
     transition: 0.2s;
 }
 
-.btn-daftar:hover {
+#btn-daftar:hover {
     background: #7f1115;
 }
 
-.btn-detail {
+#btn-detail {
     flex: 1;
     text-align: center;
     padding: 0.75rem;
@@ -392,10 +409,277 @@ body.body {
     transition: 0.75s ease;
 }
 
-.btn-detail:hover {
+#btn-detail:hover {
     background: #dfdede;
     transition: 0.75s ease;
 }
+
+/* DETAIL POPUP */
+.detail-modal-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: opacity 0.3s ease;
+}
+
+#modal-main-content {
+    padding: 27px;
+}
+
+.detail-modal-container.show{
+    pointer-events: auto;
+    opacity: 1;
+}
+
+#detail-modal {
+    /* position: relative; */
+
+    background-color: #fff;
+    border-radius: 10px;
+    width: 850px;
+    max-width: 100%;
+
+    /* scrollable */
+    max-height: 80vh;
+    overflow-y: auto;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    
+}
+
+#close {
+    position: absolute;
+    top: calc(50% - 340px); /* aligns to modal top */
+    right: calc(50% - 480px);
+
+    width: 36px;
+    height: 36px;
+
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    z-index: 1001;
+}
+
+
+.modal-image-section {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 350px;
+}
+
+.modal-image-section img{
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* overflow: hidden; */
+    object-position: center;
+
+    /* display: block; */
+}
+
+.modal-tags {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+
+    background: #A11D23;
+    padding: 6px 20px;
+    border-radius: 70px;
+}
+
+.modal-tag-primary {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.donate-desc {
+    margin-top: 10px;
+}
+
+.modal-title{
+    font-size: 25px;
+}
+
+.first-line {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-periode {
+    /* border: 2px solid #7f1115; */
+    background: #f5ede7;
+    padding: 0px 15px;
+    border-radius: 20px;
+    display: flex;
+    /* font-weight: 10rem; */
+    
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.modal-periode img {
+    width: 18px;
+}
+
+.modal-periode p {
+    color: #b90707;
+    
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.modal-key-metrics {
+    background-color: #f1f3f8;
+    padding: 24px 32px;
+    border-radius: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+
+    margin-top: 10px;
+}
+
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 150px;
+}
+
+.metric-title {
+    display: flex;
+    /* align-items: center; */
+    gap: 8px;
+
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #656c79;
+}
+
+.metric-title svg {
+    width: 18px;
+    height: 18px;
+    color: #a11d23; /* red like the screenshot */
+}
+
+.metric-value {
+    font-size: 0.9rem;
+    /* font-weight: 600; */
+    color: #111827;
+    padding-left: 24px; /* aligns text under label, not icon */
+}
+
+.modal-footer {
+    position: sticky;
+    bottom: 0;
+
+    background: white;
+    padding: 25px;
+    border-top: 1px solid #e8e8ea;
+
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#relawan-detail-daftar {
+    background: #7f1115;
+    color: white;
+    width: 100%;
+    height: 65px;
+
+    /* margin: 15px; */
+    border-radius: 5px;
+}
+
+#modal-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+#modal-details section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#modal-details h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+#modal-details h2 svg {
+    width: 18px;
+    height: 18px;
+    color: #7f1115; /* merah seperti gambar */
+}
+
+#modal-details p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin: 0;
+}
+
+#modal-details ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#modal-details li {
+    position: relative;
+    padding-left: 16px;
+
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+#modal-details li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+
+    width: 6px;
+    height: 6px;
+    background-color: #7f1115;
+    border-radius: 50%;
+}
+
 
 /* CTA */
 .cta {
@@ -557,15 +841,17 @@ body.body {
 
 /* Bottom Bar */
 .footer-bottom {
-    max-width: 1200px;
+    /* max-width: 1200px; */
     margin: 3rem auto 0;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     border-top: 1px solid rgba(255,255,255,0.2);
 
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     text-align: center;
+
+    align-items: center; /* Add this */
 }
 
 @media (min-width: 768px) {
