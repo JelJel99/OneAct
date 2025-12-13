@@ -161,6 +161,8 @@ body.body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    overflow: hidden;
 }
 
 .hero-overlay img{
@@ -883,4 +885,5 @@ body.body {
     opacity: 0.8;
     font-size: 0.9rem;
 }
+
 
