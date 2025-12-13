@@ -9,9 +9,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/home.css">
-
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <body class="body">
@@ -29,7 +29,7 @@
                 <a href="#" class="nav-link">Donasi</a>
                 <a href="#" class="nav-link">Relawan</a>
                 <a href="#" class="nav-link">Komunitas</a>
-                <a href="#" class="nav-link">Hubungi Kami</a>
+                <a href="faq.html" class="nav-link">FAQs</a>
             </div>
 
             <div class="nav-right">
@@ -76,13 +76,13 @@
             </p>
 
             <div class="tab-program">
-                <button class="tab-outline active">Program Donasi</button>
-                <button class="tab-outline">Kesempatan Relawan</button>
-                <button class="tab-outline">Kampanye Darurat</button>
+                <button class="tab-outline active" data-tab="donasi">Program Donasi</button>
+                <button class="tab-outline" data-tab="relawan">Kesempatan Relawan</button>
+                <button class="tab-outline" data-tab="darurat">Kampanye Darurat</button>
             </div>
 
             <!-- CARDS GRID -->
-            <div class="cards-grid">
+            <div class="cards-grid" data-category="donasi">
 
                 <!-- CARD -->
                 <div class="card">
@@ -99,7 +99,7 @@
 
                         <h3 class="card-title">Relawan Pengajar untuk Anak Jalanan</h3>
 
-                        <p class="card-organizer">Taman Baca Pelangi</p>
+                        <a href="#" class="card-organizer">Yayasan Peduli Anak Indonesia</a>
                         <p class="card-desc">
                             Mengajar baca tulis dan matematika dasar untuk anak jalanan di Jakarta Pusat setiap akhir pekan
                         </p>
@@ -119,8 +119,136 @@
                         </div>
 
                         <div class="card-actions">
-                            <a class="btn-daftar">Daftar</a>
-                            <a class="btn-detail">Detail</a>
+                            <button id="btn-daftar">Daftar</button>
+                            <button id="btn-detail">Detail</button>
+                        </div>
+
+                        <!-- Detail Modal (Pop-up) -->
+                        <div class="detail-modal-container" id="detail_modal_container">
+                            <!-- Modal Content Wrapper -->
+                            <!-- Detail Modal (Pop-up) -->
+                            <button id="close">
+                                <!-- <p>x</p> -->
+                                <i data-lucide="x"></i>
+                            </button>
+                            <div id="detail-modal">
+                                
+                                <!-- Close Button -->
+
+                                <!-- Main Content -->
+                                <div id="modal-main-content">
+                                    <!-- Image Section -->
+                                    <div class="modal-image-section">
+                                        <img src="/asset/photo-1497486751825-1233686d5d80.jpeg" alt="pengajar anak jalanan">
+                                        <div class="modal-tags">
+                                            <span class="modal-tag-primary">Pendidikan</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="donate-desc">
+                                        <!-- Tags & Title -->
+                                        <div class="modal-title-who">
+                                            <div class="first-line">
+                                                <h1 class="modal-title">Relawan Pengajar untuk Anak Jalanan</h1>
+                                                <div class="modal-periode">
+                                                    <img src="/asset/time-left.png" alt="time left">
+                                                    <p >10 hari lagi</p>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <span class="modal-organizer">Oleh </span>
+                                            <a href="#" class="modal-organizer">Yayasan Peduli Anak Indonesia</a>
+                                        </div>
+
+                                        <!-- Key Metrics -->
+                                        <div class="modal-key-metrics">
+                                            <div class="metric">
+                                                <div class="metric-title">
+                                                    <i data-lucide="map-pin"></i>
+                                                    <span>Lokasi</span>
+                                                </div>
+                                                <span class="metric-value">Jakarta Pusat</span>
+                                            </div>
+
+                                            <div class="metric">
+                                                <div class="metric-title">
+                                                    <i data-lucide="calendar"></i>
+                                                    <span>Periode</span>
+                                                </div>
+                                                <span class="metric-value">15 Jan 2025 - 15 Mar 2025</span>
+                                            </div>
+
+                                            <div class="metric">
+                                                <div class="metric-title">
+                                                    <i data-lucide="clock"></i>
+                                                    <span>Komitmen</span>
+                                                </div>
+                                                <span class="metric-value">1-2 Jam/minggu</span>
+                                            </div>
+                                            
+                                            <div class="metric">
+                                                <div class="metric-title">
+                                                    <i data-lucide="users"></i>
+                                                    <span>Peserta</span>
+                                                </div>
+                                                <span class="metric-value">12/20</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Details Sections -->
+                                        <div id="modal-details">
+                                            <!-- Tentang Program -->
+                                            <section>
+                                                <h2><i data-lucide="bookmark"></i>Tentang Program</h2>
+                                                <p>
+                                                    Program ini bertujuan untuk memberikan pendidikan dasar kepada anak-anak jalanan di Jakarta Pusat. Sebagai relawan pengajar, Anda akan membantu anak-anak belajar membaca, menulis, dan matematika dasar. Kegiatan dilakukan setiap akhir pekan di Taman Baca Pelangi, Jakarta Pusat. Program ini sangat penting untuk memberikan kesempatan pendidikan bagi anak-anak yang kurang beruntung.
+                                                </p>
+                                            </section>
+
+                                            <!-- Tanggung Jawab -->
+                                            <section>
+                                                <h2><i data-lucide="check-square"></i>Tanggung Jawab</h2>
+                                                <ul>
+                                                    <li>Mengajar membaca, menulis, dan berhitung dasar</li>
+                                                    <li>Membuat materi pembelajaran yang menarik dan mudah dipahami</li>
+                                                    <li>Memotivasi anak-anak untuk terus belajar</li>
+                                                    <li>Melaporkan perkembangan pembelajaran anak</li>
+                                                </ul>
+                                            </section>
+
+                                            <!-- Persyaratan -->
+                                            <section>
+                                                <h2><i data-lucide="list"></i>Persyaratan</h2>
+                                                <ul>
+                                                    <li>Berusia minimal 18 tahun</li>
+                                                    <li>Memiliki kesabaran dan kemampuan komunikasi yang baik</li>
+                                                    <li>Dapat berkomitmen minimal 2 bulan</li>
+                                                    <li>Memiliki pengalaman mengajar (lebih disukai tapi tidak wajib)</li>
+                                                    <li>Bersedia mengikuti pelatihan singkat sebelum mengajar</li>
+                                                </ul>
+                                            </section>
+
+                                            <!-- Yang Akan Kamu Dapatkan -->
+                                            <section>
+                                                <h2><i data-lucide="heart"></i>Yang Akan Kamu Dapatkan</h2>
+                                                <ul>
+                                                    <li>Sertifikat volunteer dari Yayasan Peduli Anak Indonesia</li>
+                                                    <li>Pengalaman mengajar dan mengembangkan soft skills</li>
+                                                    <li>Koneksi dengan komunitas volunteer lainnya</li>
+                                                    <li>Kepuasan batin membantu anak-anak yang membutuhkan</li>
+                                                    <li>Dokumentasi kegiatan untuk portofolio</li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Footer Button -->
+                                <div class="modal-footer">
+                                    <button id="relawan-detail-daftar">Daftar Sekarang</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,87 +258,98 @@
                 <div class="card"> ... </div>
 
             </div>
+            <div class="cards-grid" data-category="relawan">
+                <div class="card"> ... </div>
+                <div class="card"> ... </div>
+                <div class="card"> ... </div>
+            </div>
+            <div class="cards-grid" data-category="darurat">
+                <div class="card"> ... </div>
+                <div class="card"> ... </div>
+                <div class="card"> ... </div>
+            </div>
 
             <div class="cta">
                 <a class="cta-btn">Lihat Semua Program</a>
             </div>
 
         </div>
-    </main>    
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+    
+            <!-- Left Section -->
+            <div class="footer-left">
+                <h2 class="footer-title">OneAct</h2>
+                <p class="footer-description">
+                    Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
+                </p>
+    
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram" class="social-btn">
+                        <img src="/asset/instagram.png" alt="Instagram" />
+                    </a>
+                    <a href="#" aria-label="Twitter" class="social-btn">
+                        <img src="/asset/twitter.png" alt="Twitter" />
+                    </a>
+                    <a href="#" aria-label="Facebook" class="social-btn">
+                        <img src="/asset/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="#" aria-label="Youtube" class="social-btn">
+                        <img src="/asset/youtube.png" alt="Youtube" />
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social-btn">
+                        <img src="/asset/linkedin.png" alt="LinkedIn" />
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3 class="footer-heading">Quick Links</h3>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Use</a>
+                <a href="#" class="footer-link">Tim Kami</a>
+                <a href="#" class="footer-link">FAQs/Kontak</a>
+                <a href="#" class="footer-link">Karir</a>
+                <a href="#" class="footer-link">Sponsorship</a>
+            </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3 class="footer-heading">Hubungi Kami</h3>
+    
+                <div class="contact-item">
+                    <img src="" class="contact-icon" />
+                    <div>
+                        <p class="contact-title">Kantor Pusat OneAct</p>
+                        <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
+                    </div>
+                </div>
+    
+                <a href="tel:+6281656782" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <img src="" />
+                    </div>
+                    <span>+62 81 656 7824</span>
+                </a>
+    
+                <a href="mailto:oneact@oneact.or.id" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <img src="" />
+                    </div>
+                    <span>oneact@oneact.or.id</span>
+                </a>
+            </div>
+    
+        </div>
+    
+        <div class="footer-bottom">
+            <p>© 2025 OneAct. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <script src="/js/home.js"></script>
 </body>
-
-<footer class="footer">
-    <div class="footer-container">
-
-        <!-- Left Section -->
-        <div class="footer-left">
-            <h2 class="footer-title">OneAct</h2>
-            <p class="footer-description">
-                Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
-            </p>
-
-            <div class="footer-social">
-                <a href="#" aria-label="Instagram" class="social-btn">
-                    <img src="/asset/instagram.png" alt="Instagram" />
-                </a>
-                <a href="#" aria-label="Twitter" class="social-btn">
-                    <img src="/asset/twitter.png" alt="Twitter" />
-                </a>
-                <a href="#" aria-label="Facebook" class="social-btn">
-                    <img src="/asset/facebook.png" alt="Facebook" />
-                </a>
-                <a href="#" aria-label="Youtube" class="social-btn">
-                    <img src="/asset/youtube.png" alt="Youtube" />
-                </a>
-                <a href="#" aria-label="LinkedIn" class="social-btn">
-                    <img src="/asset/linkedin.png" alt="LinkedIn" />
-                </a>
-            </div>
-        </div>
-
-        <!-- Quick Links -->
-        <div class="footer-links">
-            <h3 class="footer-heading">Quick Links</h3>
-            <a href="#" class="footer-link">Privacy Policy</a>
-            <a href="#" class="footer-link">Terms of Use</a>
-            <a href="#" class="footer-link">Tim Kami</a>
-            <a href="#" class="footer-link">FAQs/Kontak</a>
-            <a href="#" class="footer-link">Karir</a>
-            <a href="#" class="footer-link">Sponsorship</a>
-        </div>
-
-        <!-- Contact Info -->
-        <div class="footer-contact">
-            <h3 class="footer-heading">Hubungi Kami</h3>
-
-            <div class="contact-item">
-                <img src="" class="contact-icon" />
-                <div>
-                    <p class="contact-title">Kantor Pusat OneAct</p>
-                    <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
-                </div>
-            </div>
-
-            <a href="tel:+6281656782" class="contact-item">
-                <div class="contact-icon-circle">
-                    <img src="" />
-                </div>
-                <span>+62 81 656 7824</span>
-            </a>
-
-            <a href="mailto:oneact@oneact.or.id" class="contact-item">
-                <div class="contact-icon-circle">
-                    <img src="" />
-                </div>
-                <span>oneact@oneact.or.id</span>
-            </a>
-        </div>
-
-    </div>
-
-    <div class="footer-bottom">
-        <p>© 2025 OneAct. All rights reserved.</p>
-    </div>
-</footer>
-
 </html>
