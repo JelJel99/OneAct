@@ -1,0 +1,483 @@
+/* GLOBAL */
+body {
+    font-family: "Inter", sans-serif;
+    color: #1f2937;
+    background: #f9fafb;
+    margin: 0; 
+    margin-top: 64px; /* Offset untuk navbar fixed */
+}
+
+a {
+    text-decoration: none;
+    color: inherit; /* Untuk link yang berfungsi sebagai button */
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+/* --- NAVBAR (HEADER) STYLES --- */
+.navbar {
+    background: #800000; /* Merah Marun Gelap */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 20;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-left img {
+    height: 36px;       /* lebih enak dipandang */
+    width: auto;        /* agar tidak gepeng */
+    object-fit: contain;
+    border-radius: 0;   /* jangan dibulatkan (hilangkan crop) */
+    display: block;
+}
+
+
+.nav-menu {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 20px;
+}
+
+.nav-link {
+    position: relative;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    white-space: nowrap;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+/* Garis bawah pada hover/active link */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -5px; 
+    width: 0%;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease, left 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    color: white;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-btn:hover {
+    background: #660000; /* Darker red on hover */
+}
+
+.auth-separator {
+    color: white;
+    font-size: 0.9rem;
+    margin: 0 -0.25rem;
+}
+
+.auth-btn {
+    display: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: white;
+    transition: 0.2s;
+}
+
+.auth-btn:hover {
+    color: #f0f0f0; 
+    text-decoration: underline; 
+}
+
+@media (min-width: 640px) {
+    .auth-btn {
+        display: inline-block;
+    }
+}
+/* --- END NAVBAR STYLES --- */
+
+---
+
+/* --- MAIN CONTENT & FAQ STYLES --- */
+
+/* PERBAIKAN: Hapus margin-top pada body yang sudah Anda tambahkan.
+   Sebagai gantinya, gunakan margin-top pada elemen main/konten utama. */
+/* Hapus: body { margin-top: 64px; } */
+
+main {
+    max-width: 900px;
+    /* Margin atas: 64px (navbar height) + 20px (jarak visual) */
+    margin: 84px auto 20px auto;
+    padding: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form-section {
+    /* Kelas ini sekarang berperan sebagai wrapper konten di dalam main */
+    padding: 0;
+}
+
+.faq-container {
+    max-width: 100%; /* Agar mengisi lebar main */
+    margin: 0 auto;
+    padding: 20px; /* Padding default untuk mobile/tablet */
+    text-align: left; /* Konten FAQ rata kiri */
+}
+
+/* JANGAN gunakan kelas ini di hubungi.html */
+.page-title-header { 
+    padding-top: 0;
+}
+
+h1 {
+    font-size: 18px;
+    color: #555;
+    margin: 0;
+}
+
+.faq-heading {
+    font-size: 24px;
+    text-align: center;
+    color: #800000;
+    margin-bottom: 5px;
+}
+
+.faq-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* FAQ Groups and Items */
+.faq-group h3 {
+    color: #800000;
+    font-size: 20px;
+    border-bottom: 2px solid #eee; 
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.faq-item {
+    border-bottom: 1px solid #eee;
+}
+
+.faq-question {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 15px 0;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.2s;
+}
+
+.faq-question:hover {
+    color: #800000;
+}
+
+.toggle-icon {
+    font-weight: bold;
+    font-size: 20px;
+    color: #800000;
+    width: 20px;
+    text-align: center;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 10px;
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.faq-answer p, .faq-answer ol, .faq-answer ul {
+    padding: 10px 0;
+    margin: 0;
+    line-height: 1.6;
+    font-size: 14px;
+    color: #555;
+}
+
+.faq-answer ol, .faq-answer ul {
+    padding-left: 20px;
+}
+
+.faq-answer.active {
+    max-height: 500px;
+    padding: 15px 10px 15px 10px;
+}
+
+/* Hubungi Kami Banner (Di halaman FAQ, bukan hubungi.html) */
+.contact-banner {
+    background-color: #eee;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Default: Menumpuk di mobile */
+    align-items: center;
+    border-radius: 0 0 8px 8px; 
+    margin: 0; /* Hapus margin negatif */
+}
+
+/* Responsif Banner */
+@media (min-width: 768px) {
+    .contact-banner {
+        flex-direction: row; /* Bersebelahan di desktop */
+        justify-content: space-between;
+        align-items: center;
+    }
+    .contact-banner .text-content {
+        max-width: 60%;
+        text-align: left;
+    }
+    .contact-banner .image-content {
+        max-width: 35%; 
+    }
+}
+
+.contact-banner .contact-title {
+    color: #800000;
+    font-size: 20px;
+    margin-top: 0;
+}
+
+.contact-banner p {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.hubungi-button {
+    background-color: white;
+    color: #800000;
+    border: 1px solid #800000;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s, color 0.2s;
+    display: inline-block;
+}
+
+.hubungi-button:hover {
+    background-color: #800000;
+    color: white;
+}
+
+.contact-banner .image-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+
+/* --- CONTACT FORM STYLES (HUBUNGI.HTML) --- */
+
+.contact-form-section {
+    /* Padding untuk section ini dihapus di main/desktop media query */
+    padding-bottom: 40px; 
+}
+
+.contact-form-section.hidden {
+    display: none;
+}
+
+/* KUNCI: Container di dalam section, memiliki padding */
+.form-container {
+    padding: 20px; /* Padding default untuk mobile */
+}
+
+.contact-title-form {
+    color: #800000;
+    font-size: 28px;
+    margin-bottom: 15px; /* Jarak yang lebih baik ke paragraf pertama */
+    margin-top: 0; 
+}
+
+.form-container p {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.form-container .note {
+    font-size: 13px;
+    color: #666;
+    margin: 5px 0 15px 0;
+}
+
+form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 25px; /* Jarak antar grup form lebih lega */
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px; /* Jarak label ke input */
+    color: #333;
+}
+
+/* Custom Select Styling */
+.custom-select {
+    position: relative;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    height: 40px;
+}
+
+.custom-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent;
+    border: none;
+    padding: 0 10px;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.custom-select:after {
+    content: '\25BC';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #800000;
+    pointer-events: none;
+}
+
+textarea, input[type="text"], input[type="email"] {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #fff;
+    resize: vertical;
+    min-height: 40px;
+}
+
+.hidden-by-default {
+    display: none;
+}
+
+/* RESPONSIVITAS NAMA & EMAIL */
+.name-email-group {
+    display: flex;
+    flex-direction: column; /* Default: Menumpuk di layar kecil */
+    gap: 20px;
+}
+
+.input-field {
+    flex: 1;
+}
+
+@media (min-width: 600px) {
+    .name-email-group {
+        flex-direction: row; /* Bersebelahan di desktop/tablet */
+    }
+}
+/* AKHIR RESPONSIVITAS NAMA & EMAIL */
+
+.kirim-button {
+    background-color: #800000;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    margin: 30px auto 0 auto;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.kirim-button:hover {
+    background-color: #660000;
+}
+
+/* Placeholder Styling */
+::placeholder {
+    color: #aaa;
+    opacity: 1; 
+}
+
+/* Media Query untuk ukuran desktop/tablet */
+@media (min-width: 768px) {
+    .main-content {
+        margin: 84px auto 40px auto; /* Margin bawah yang lebih besar */
+    }
+
+    /* Padding konten lebih besar di desktop */
+    .form-container {
+        padding: 40px; 
+    }
+    
+    .faq-container {
+        padding: 40px; /* Padding untuk konten FAQ */
+    }
+}
