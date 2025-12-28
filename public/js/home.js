@@ -1,147 +1,217 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const tabs = document.querySelectorAll(".tab-outline");
-    const grids = document.querySelectorAll(".cards-grid");
+    initTabs();
+    loadHomePrograms();
+});
 
-    document
-        .querySelector('.cards-grid[data-category="donasi"]')
-        ?.classList.add("active");
+function initTabs() {
+    const tabs = document.querySelectorAll(".tab-outline");
+    const wrappers = document.querySelectorAll(".cards-wrapper");
 
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-            const target = tab.dataset.tab;
-
             tabs.forEach(t => t.classList.remove("active"));
             tab.classList.add("active");
 
-            grids.forEach(grid => {
-                grid.classList.toggle(
-                    "active",
-                    grid.dataset.category === target
-                );
+            wrappers.forEach(w =>
+            w.classList.toggle("active", w.dataset.category === tab.dataset.tab)
+            );
+        });
+    }); 
+}
+
+async function loadHomePrograms() {
+    const res = await fetch("/api/home/programs");
+    const programs = await res.json();
+    console.log(programs);
+
+    // Pisahkan data donasi dan relawan
+    const donasi = [];
+    const relawan = [];
+
+    programs.forEach(p => {
+        if (p.type === "donasi" && p.donasi) {
+            donasi.push({
+                id: p.id,
+                judul: p.judul,
+                kategori: p.donasi.kategori || "Umum",  // perbaikan di sini
+                tenggat: p.tenggat,
+                foto: p.donasi.foto,
+                target: p.donasi.target,
+                terkumpul: p.donasi.jumlahsaatini,
+                donatur: 0,
+                deskripsi: p.donasi.deskripsi,
+                organisasi: p.organisasi.nama,
             });
-        });
-    });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    // ===== NAV ACTIVE =====
-    const links = document.querySelectorAll(".nav-link");
-    const currentPage = window.location.pathname.split("/").pop();
-
-    links.forEach(link => {
-        const href = link.getAttribute("href");
-
-        // exact match
-        if (href === currentPage) {
-            link.classList.add("active");
         }
-
-        // parent override (organization profile, etc)
-        if (
-            document.body.dataset.activeNav &&
-            link.dataset.page === document.body.dataset.activeNav
-        ) {
-            link.classList.add("active");
+        if (p.type === "relawan" && p.relawan) {
+            relawan.push({
+                id: p.id,
+                judul: p.judul,
+                kategori: p.relawan.kategori || "Umum",
+                tenggat: p.tenggat,
+                foto: p.relawan.foto,
+                lokasi: p.relawan.lokasi,
+                komitmen: p.relawan.komitmen,
+                keahlian: p.relawan.keahlian,
+                deskripsi: p.relawan.deskripsi,
+                organisasi: p.organisasi.nama,
+            });
         }
     });
 
-    // ===== MOBILE MENU =====
-    const menuBtn = document.getElementById("menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu");
+    renderDonasi(donasi);
+    renderRelawan(relawan);
+}
 
-    if (menuBtn && mobileMenu) {
-        menuBtn.addEventListener("click", () => {
-            const isOpen = mobileMenu.classList.toggle("open");
+function renderDonasi(programs) {
+    const grid = document.getElementById("donasiGrid");
+    grid.innerHTML = "";
 
-            menuBtn.innerHTML = isOpen
-                ? '<i data-lucide="x"></i>'
-                : '<i data-lucide="menu"></i>';
+    programs.forEach(p => {
+        const percent = Math.min(100, Math.round((p.terkumpul / p.target) * 100));
+        const daysLeft = diffDays(p.tenggat);
 
-            lucide.createIcons();
-        });
-    }
+        grid.innerHTML += `
+        <div class="card">
+            <img class="card-img" src="${p.foto}">
+            <div class="card-body">
+                <div class="card-tags">
+                    <span class="tag-red">${p.kategori}</span>
+                    <span class="tag-gray">
+                        <img src="/asset/time-left.png" alt="time-left">
+                        ${daysLeft} hari lagi
+                    </span>
+                </div>
 
-    // init icons ONCE
-    lucide.createIcons();
-});
+                <h3 class="card-title">${p.judul}</h3>
+                <a href="organization_profile.html" class="card-organizer">${p.organisasi}</a>
+                <p class="card-desc">${p.deskripsi}</p>
 
-document.addEventListener("DOMContentLoaded", function() {
-    const tabs = document.querySelectorAll(".tab-outline");
+                <div class="donate-progress">
+                    <div class="progress-info">
+                        <span>Terkumpul: <strong>Rp ${formatRupiah(p.terkumpul)}</strong></span>
+                        <span class="progress-percent">${percent}%</span>
+                    </div>
 
-    tabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            // remove active from all
-            tabs.forEach(btn => btn.classList.remove("active"));
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width:${percent}%"></div>
+                    </div>
 
-            // add active to clicked tab
-            tab.classList.add("active");
-        });
+                    <div class="progress-meta">
+                        <span>Target: Rp ${formatRupiah(p.target)}</span>
+                        <span>${p.donatur} donatur</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <button class="btn-daftar">Donasi</button>
+                </div>
+            </div>
+        </div>
+        `;
     });
-});
+}
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const tabs = document.querySelectorAll(".tab-outline");
+function renderRelawan(programs) {
+    const grid = document.getElementById("relawanGrid");
+    grid.innerHTML = "";
 
-//     tabs.forEach(tab => {
-//         tab.addEventListener("click", function() {
-//             // Remove active class from all
-//             tabs.forEach(t => t.classList.remove("active"));
+    programs.forEach(p => {
+        const daysLeft = diffDays(p.tenggat);
 
-//             // Add active to the clicked one
-//             this.classList.add("active");
-//         });
-//     });
-// });
+        grid.innerHTML += `
+        <div class="card">
+            <img class="card-img" src="${p.foto}">
+            <div class="card-body">
+                <div class="card-tags">
+                    <span class="tag-red">${p.kategori}</span>
+                    <span class="tag-gray">
+                        <img src="/asset/time-left.png" alt="time-left">
+                        ${daysLeft} hari lagi
+                    </span>
+                </div>
 
-// CHANGING TAB AND CARD
-const tabs = document.querySelectorAll(".tab-outline");
-const wrappers = document.querySelectorAll(".cards-wrapper");
+                <h3 class="card-title">${p.judul}</h3>
+                <a href="organization_profile.html" class="card-organizer">${p.organisasi}</a>
+                <p class="card-desc">${p.deskripsi}</p>
 
-// initial state
-document
-  .querySelector('.cards-wrapper[data-category="donasi"]')
-  ?.classList.add("active");
+                <div class="card-info">
+                    <div>
+                        <span>Lokasi:</span><br> ${p.lokasi}
+                    </div>
+                    <div>
+                        <span>Komitmen Waktu:</span><br> ${p.komitmen}
+                    </div>
+                    <div class="info-full">
+                        <span>Keahlian:</span><br> ${p.keahlian}
+                    </div>
+                </div>
 
-tabs.forEach(tab => {
-  tab.addEventListener("click", () => {
-    const target = tab.dataset.tab;
-
-    // tab UI
-    tabs.forEach(t => t.classList.remove("active"));
-    tab.classList.add("active");
-
-    // wrapper visibility
-    wrappers.forEach(wrapper => {
-      wrapper.classList.toggle(
-        "active",
-        wrapper.dataset.category === target
-      );
+                <div class="card-actions">
+                    <button class="btn-daftar">Daftar</button>
+                    <button class="btn-detail" data-id="${p.id}">Detail</button>
+                </div>
+            </div>
+        </div>
+        `;
     });
-  });
-});
 
-// DETAIL BUTTON
-const detailButtons = document.querySelectorAll(".btn-detail");
+    bindDetailButtons();
+}
 
-detailButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const card = btn.closest(".card");
-        const modalContainer = card.querySelector(".detail-modal-container");
+function bindDetailButtons() {
+    document.querySelectorAll(".btn-detail").forEach(btn => {
+        btn.onclick = async () => {
+            const id = btn.dataset.id;
+            const res = await fetch(`/api/relawan/${id}`);
+            const data = await res.json();
 
-        modalContainer.classList.add("show");
+            const modal = document.getElementById("detailModal");
+            modal.innerHTML = `
+                <div class="modal">
+                <button class="close">×</button>
+                <h1>${data.judul}</h1>
+                <p>${data.deskripsi}</p>
+                </div>
+            `;
 
-        // close button
-        const closeBtn = modalContainer.querySelector(".close");
-        closeBtn.onclick = () => {
-            modalContainer.classList.remove("show");
+            modal.classList.add("show");
+            modal.querySelector(".close").onclick = () =>
+                modal.classList.remove("show");
         };
+    });
+}
 
-        // click outside modal
-        modalContainer.onclick = (e) => {
-            const modal = modalContainer.querySelector(".detail-modal");
-            if (!modal.contains(e.target)) {
-                modalContainer.classList.remove("show");
-            }
+function bindDetailButtons() {
+    document.querySelectorAll(".btn-detail").forEach(btn => {
+        btn.onclick = async () => {
+            const id = btn.dataset.id;
+            const res = await fetch(`/api/relawan/${id}`);
+            const data = await res.json();
+
+            const modal = document.getElementById("detailModal");
+            modal.innerHTML = `
+                <div class="modal">
+                    <button class="close">×</button>
+                    <h1>${data.judul}</h1>
+                    <p>${data.deskripsi}</p>
+                </div>
+            `;
+
+            modal.classList.add("show");
+            modal.querySelector(".close").onclick = () =>
+                modal.classList.remove("show");
         };
     });
-});
+}
+
+function diffDays(date) {
+    return Math.max(
+        0,
+        Math.ceil((new Date(date) - new Date()) / (1000 * 60 * 60 * 24))
+    );
+}
+
+function formatRupiah(num) {
+    return num.toLocaleString("id-ID");
+}

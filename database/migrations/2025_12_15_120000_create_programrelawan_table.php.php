@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('program_id');  // harus unsignedBigInteger
             $table->string('kategori')->nullable();
-            $table->date('tenggat')->nullable();
             $table->text('deskripsi')->nullable();
             $table->string('lokasi')->nullable();
             $table->string('komitmen')->nullable();

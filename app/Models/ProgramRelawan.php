@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProgramRelawan extends Model
 {
-    protected $table = 'programrelawan'; // kalau nama tabel bukan plural standar
+    protected $table = 'programrelawan';
 
     protected $fillable = [
         'program_id', 
         'kategori', 
-        'tenggat', 
-        'deskripsi', 
+        'deskripsi',
         'lokasi', 
         'komitmen', 
         'keahlian', 

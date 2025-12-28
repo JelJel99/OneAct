@@ -232,11 +232,12 @@ body.body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     width: 100%;
-    max-width: 650px;
+    max-width: 450px;
     margin-bottom: 20px;
     margin: 0 auto 1.5rem;
 
@@ -328,6 +329,7 @@ body.body {
     overflow: hidden;
     transition: 0.2s;
     height: 600px;
+    margin-bottom: 50px;
 }
 
 .card:hover {
@@ -822,6 +824,54 @@ body.body {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Dua kolom dengan lebar sama */
     gap: 2rem; /* Jarak antara kolom */
+    align-items: start;
+}
+
+.program-card-scroll {
+    max-height: 500px; /* Atur tinggi sesuai kebutuhan layar */
+    overflow-y: auto;
+    padding-right: 10px; /* Ruang untuk scrollbar agar tidak menempel ke kartu */
+}
+
+/* Styling Scrollbar agar Estetik */
+.program-card-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.program-card-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.program-card-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.program-card-scroll::-webkit-scrollbar-thumb:hover {
+    background: #800000;
+}
+
+/* Styling Kartu agar terlihat terpisah dalam list */
+.program-card.program-history {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1rem; /* Jarak antar kartu saat di-scroll */
+    transition: transform 0.2s;
+}
+
+.program-card.program-history:hover {
+    border-color: #800000;
+}
+
+/* Meta Grid agar rapi */
+.history-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
 }
 
 .history-column h3 {
@@ -831,6 +881,12 @@ body.body {
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid #e5e7eb;
+}
+
+.program-header {
+    font-size: 0.9rem;
+    color: #7d8187;
+    font-weight: bold;
 }
 
 .program-card.program-history .history-meta {

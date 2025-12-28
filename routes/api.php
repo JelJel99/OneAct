@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ProgramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,14 @@ use App\Http\Controllers\Admin\AdminController;
 */
 Route::post('/signup', [AuthController::class, 'signup']);
 Route::post('/login', [AuthController::class, 'login']);
+
+/*
+|--------------------------------------------------------------------------
+| HOME
+|--------------------------------------------------------------------------
+*/
+Route::get('/home/programs', [ProgramController::class, 'index']);
+// Route::get('/programs', [ProgramController::class, 'index']);
 
 /*
 |--------------------------------------------------------------------------

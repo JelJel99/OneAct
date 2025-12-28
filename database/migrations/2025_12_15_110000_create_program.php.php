@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('judul');
             $table->enum('type', ['relawan', 'donasi']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->dateTime('tenggat')->nullable();
             $table->timestamps();
 
             $table->foreign('organisasi_id')->references('id')->on('organisasi')->onDelete('cascade');
