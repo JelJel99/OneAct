@@ -10,10 +10,12 @@ class Program extends Model
     use HasFactory;
 
     protected $fillable = [
-        'organisasi_id',
-        'judul',
-        'type',
-        'status'
+        'organisasi_id', 
+        'judul', 
+        'type', 
+        'tenggat', 
+        'status',
+        'created_at'
     ];
 
     public function relawan()

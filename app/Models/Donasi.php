@@ -9,11 +9,11 @@ class Donasi extends Model
     protected $table = 'donasi';
 
     protected $fillable = [
-        'program_id',
-        'deskripsi',
-        'foto',
-        'target',
-        'jumlahsaatini'
+        'program_id', 
+        'deskripsi', 
+        'foto', 'target', 
+        'jumlahsaatini', 
+        'laporan'
     ];
 
     public function program()

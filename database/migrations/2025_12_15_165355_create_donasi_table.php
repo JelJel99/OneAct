@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->bigInteger('target')->default(0);
             $table->bigInteger('jumlahsaatini')->default(0);
+            $table->string('laporan')->nullable();
             $table->timestamps();
 
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');

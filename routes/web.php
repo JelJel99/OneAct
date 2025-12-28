@@ -2,7 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\IndexController;
+
+Route::prefix('api')->group(function () {
+    Route::get('/home/programs', [ProgramController::class, 'index']);
+    Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
+    // tambahkan route API lain yang diperlukan
+});
 
 Route::get('/', function () {
     return view('welcome');
