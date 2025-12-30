@@ -25,7 +25,7 @@
             </div>
 
             <div class="nav-menu">
-                <a href="index.html" class="nav-link">Beranda</a>
+                <a href="home" class="nav-link">Beranda</a>
                 <a href="DonationPage.html" class="nav-link">Donasi</a>
                 <a href="programrelawan.blade.php" class="nav-link">Relawan</a>
                 <a href="community.html" class="nav-link">Komunitas</a>
@@ -33,30 +33,40 @@
             </div>
 
             <div class="nav-right">
-                <button class="icon-btn"><i data-lucide="bell"></i></button>
-                <a href="login.html" class="auth-btn">Masuk</a>
-                <span class="auth-separator">/</span> 
-                <a href="signup.html" class="auth-btn">Daftar</a>
-                <button class="icon-btn"><i data-lucide="user"></i></button>
-                <!-- <button id="menu-btn" class="mobile-menu-btn"><i data-lucide="menu"></i></button> -->
+                <button id="notifBtn" class="icon-btn hidden">
+                    <i data-lucide="bell"></i>
+                </button>
+
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
+                <span id="authSep" class="auth-separator">/</span>
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
+
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div class="dropdown">
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">Sign out</button>
+                    </div>
+                </div>
             </div>
+
         </div>
 
-        <!-- <div id="mobile-menu" class="mobile-menu">
+        <div id="mobile-menu" class="mobile-menu">
             <a class="mobile-item">Beranda</a>
             <a class="mobile-item">Donasi</a>
             <a class="mobile-item">Relawan</a>
             <a class="mobile-item">Komunitas</a>
             <a class="mobile-item">Hubungi Kami</a>
             <a class="mobile-login">Masuk / Daftar</a>
-        </div> -->
+        </div>
     </nav>
 
     <!-- HERO -->
     <header class="hero">
-        <div class="hero-overlay">
-            <img src="/asset/hero_img1.png" alt="">
-        </div>
+        <img src="/asset/hero_img1.png" alt="" class="hero-bg">
 
         <div class="hero-content">
             <h1 class="hero-title">Bersama Kita Membuat Perubahan</h1>
@@ -65,6 +75,7 @@
             </p>
         </div>
     </header>
+
 
     <!-- MAIN SECTION -->
     <main class="main">
