@@ -41,12 +41,12 @@ class AuthController extends Controller
             ]);
 
             // Opsional: Buat token saat pendaftaran berhasil (untuk langsung login)
-            $token = $user->createToken('authToken')->plainTextToken;
+            // $token = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
                 'success' => true,
-                'message' => 'Pendaftaran berhasil. Silakan masuk.',
-                'token' => $token
+                'message' => 'Pendaftaran berhasil. Silakan masuk.'
+                // 'token' => $token
             ], 201);
 
         } catch (ValidationException $e) {
@@ -79,12 +79,12 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             // Buat token autentikasi menggunakan Laravel Sanctum
-            $token = $user->createToken('authToken')->plainTextToken;
+            // $token = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
                 'success' => true,
                 'message' => 'Login berhasil.',
-                'token' => $token,
+                // 'token' => $token,
                 'user' => $user
             ]);
         }

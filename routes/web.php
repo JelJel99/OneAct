@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\AuthController;
 
 Route::prefix('api')->group(function () {
     Route::get('/home/programs', [ProgramController::class, 'index']);
@@ -33,9 +34,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/admin/programs/{id}/detail', [AdminController::class, 'programDetail']);
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/login', function () {
+//     return view('login');
+// });
+Route::get('/login', fn () => view('login'))->name('login');
+
+// proses login (AJAX)
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
 
 Route::get('/signup', function () {
     return view('signup');
