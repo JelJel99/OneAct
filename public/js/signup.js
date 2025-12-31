@@ -27,6 +27,12 @@ function goToStep2() {
 }
 
 function finishSignup() {
+    const csrfTokenMeta = document.querySelector('meta[name="csrf-token"]');
+    if (!csrfTokenMeta) {
+        showError('CSRF token tidak ditemukan.');
+        return;
+    }
+    
     const data = {
         email: document.getElementById("signupEmail").value.trim(),
         password: document.getElementById("signupPassword").value.trim(),
@@ -36,9 +42,11 @@ function finishSignup() {
         tanggallahir: document.getElementById("signupYear").value.trim()
     };
 
-    fetch('/api/signup', {
+    fetch('/signup', {
         method: 'POST',
         headers: {
+            'X-CSRF-TOKEN': document
+                    .querySelector('meta[name="csrf-token"]').content,
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         },
