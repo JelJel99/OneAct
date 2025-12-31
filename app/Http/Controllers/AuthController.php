@@ -15,54 +15,37 @@ class AuthController extends Controller
     // =========================================================
     public function signup(Request $request)
     {
-        try {
-            // Validasi data yang masuk dari form signup.js
-            $request->validate([
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:6',
-                'name' => 'required|string|max:255',
-                'nohp' => 'nullable|string|max:255',
-                'kabupatenkotadomisili' => 'nullable|string|max:255',
-                'tanggallahir' => 'nullable|integer|digits:4', // Menerima tahun (signupYear)
-            ]);
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'name' => 'required|string|max:255',
+            'nohp' => 'nullable|string|max:255',
+            'kabupatenkotadomisili' => 'nullable|string|max:255',
+            'tanggallahir' => 'nullable|integer|digits:4',
+        ]);
 
-            // Konversi Tahun Lahir (signupYear) ke format DATE 'YYYY-01-01'
-            $year = $request->tanggallahir;
-            $birthDate = $year ? $year . '-01-01' : null;
+        $birthDate = $request->tanggallahir
+            ? $request->tanggallahir . '-01-01'
+            : null;
 
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password), // PENTING: Password di-hash
-                'nohp' => $request->nohp,
-                'kabupatenkotadomisili' => $request->kabupatenkotadomisili,
-                'tanggallahir' => $birthDate,
-                'role' => 'Relawan', // Set default role
-            ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'nohp' => $request->nohp,
+            'kabupatenkotadomisili' => $request->kabupatenkotadomisili,
+            'tanggallahir' => $birthDate,
+            'role' => 'Relawan',
+        ]);
 
-            // Opsional: Buat token saat pendaftaran berhasil (untuk langsung login)
-            $token = $user->createToken('authToken')->plainTextToken;
+        // 🔥 AUTO LOGIN KE SESSION
+        Auth::login($user);
+        $request->session()->regenerate();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Pendaftaran berhasil. Silakan masuk.',
-                'token' => $token
-            ], 201);
-
-        } catch (ValidationException $e) {
-            // Tangani error validasi (misal: email sudah terdaftar)
-            return response()->json([
-                'success' => false,
-                'message' => $e->getMessage(),
-                'errors' => $e->errors()
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan server.',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'user' => $user
+        ], 201);
     }
 
 
@@ -72,26 +55,23 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required'
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            // Buat token autentikasi menggunakan Laravel Sanctum
-            $token = $user->createToken('authToken')->plainTextToken;
+        if (Auth::guard('web')->attempt($credentials)) {
+            // 🔥 WAJIB
+            $request->session()->regenerate();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Login berhasil.',
-                'token' => $token,
-                'user' => $user
+                'user'    => auth()->user()
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => 'Kombinasi email dan password tidak valid.'
+            'message' => 'Email atau password salah'
         ], 401);
     }
 }

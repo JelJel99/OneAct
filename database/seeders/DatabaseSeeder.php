@@ -22,7 +22,9 @@ class DatabaseSeeder extends Seeder
             OrganisasiSeeder::class,
             ProgramSeeder::class,
             ProgramRelawanSeeder::class,
-            DonasiSeeder::class
+            DonasiSeeder::class,
+            TransaksiSeeder::class,
+            RelawanDaftarSeeder::class,
         ]);
     }
 }

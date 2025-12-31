@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-// use Laravel\Sanctum\HasApiTokens; // <--- PENTING: Tambahkan ini untuk API Login
+use Laravel\Sanctum\HasApiTokens; // <--- PENTING: Tambahkan ini untuk API Login
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable /*, HasApiTokens*/;
+    use HasApiTokens, HasFactory, Notifiable; // <--- PENTING: Tambahkan HasApiTokens
 
     /**
      * The attributes that are mass assignable.
@@ -50,6 +50,17 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'program_history' => 'array',
         ];
+    }
+
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class);
+    }
+
+    public function relawanDaftar()
+    {
+        return $this->hasMany(RelawanDaftar::class);
     }
 }

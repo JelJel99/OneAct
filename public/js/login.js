@@ -25,38 +25,35 @@ function validateForm(email, password) {
     return true;
 }
 
-function submitLogin() {
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
+async function submitLogin() {
+    console.log("SUBMIT LOGIN DIPANGGIL");
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
 
-    if (!validateForm(email, password)) return;
+    try {
+        const res = await fetch('/login', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'X-CSRF-TOKEN': document
+                    .querySelector('meta[name="csrf-token"]').content,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
 
-    fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({ email, password })
-    })
-    .then(async response => {
-        const data = await response.json();
+        const data = await res.json();
 
-        if (!response.ok) {
-            throw new Error(data.message || 'Login gagal');
+        if (!res.ok) {
+            alert(data.message || 'Login gagal');
+            return;
         }
 
-        return data;
-    })
-    .then(result => {
-        // Login berhasil
-        localStorage.setItem('authToken', result.token);
+        window.location.href = '/home';
 
-        // Redirect ke route Laravel, BUKAN file html
-        window.location.href = "/home";
-    })
-    .catch(error => {
-        document.getElementById("errorMessage").innerText = error.message;
-        console.error(error);
-    });
+    } catch (err) {
+        console.error(err);
+        alert('Terjadi kesalahan');
+    }
 }

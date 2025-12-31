@@ -18,8 +18,18 @@ class ProgramRelawan extends Model
         'foto'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function program()
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(Program::class, 'program_id');
+    }
+
+    public function relawanDaftars()
+    {
+        return $this->hasMany(RelawanDaftar::class);
     }
 }

@@ -36,7 +36,7 @@ function finishSignup() {
         tanggallahir: document.getElementById("signupYear").value.trim()
     };
 
-    fetch('/signup', {
+    fetch('/api/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -53,13 +53,15 @@ function finishSignup() {
     })
     .then(result => {
         if (result.success) {
-            document.getElementById("popupSuccess").classList.remove("hidden");
-            window.location.href = "/home";
+            const popup = document.getElementById("popupSuccess");
+            popup.classList.remove("hidden");
 
-            // OPTIONAL: redirect otomatis setelah 1.5 detik
-            setTimeout(() => {
-                redirectHome();
-            }, 1500);
+            const okBtn = document.getElementById("okBtn");
+            if (okBtn) {
+                okBtn.onclick = () => {
+                    window.location.href = "/home";
+                };
+            }
         }
     })
     .catch(err => {

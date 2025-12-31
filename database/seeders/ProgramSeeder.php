@@ -41,9 +41,9 @@ class ProgramSeeder extends Seeder
 
         Program::create([
             'organisasi_id' => 4,
-            'judul' => 'Donasi Panti Jompo',
+            'judul' => 'Donasi Panti Jompo Tiara Kasih, Grogor',
             'type' => 'Donasi',
-            'status' => 'pending',
+            'status' => 'approved',
             'tenggat' => now()->addDays(30),
             'created_at' => now(),
         ]);

@@ -25,7 +25,7 @@ class Program extends Model
 
     public function organisasi()
     {
-        return $this->belongsTo(Organisasi::class);
+        return $this->belongsTo(Organisasi::class, 'organisasi_id');
     }
 
     public function programRelawan()

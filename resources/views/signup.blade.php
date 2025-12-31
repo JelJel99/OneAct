@@ -36,7 +36,6 @@
         </div>
 
         <p id="errorMessage" class="error-message"></p>
-
     </div>
 </div>
 
@@ -44,7 +43,7 @@
 <div id="popupSuccess" class="popup hidden">
     <div class="popup-box">
         <h3>Daftar Berhasil!</h3>
-        <button type="button" onclick="redirectHome()" class="btn">OK</button>
+        <button type="button" id="okBtn" class="btn">OK</button>
     </div>
 </div>
 

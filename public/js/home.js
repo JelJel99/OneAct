@@ -1,7 +1,74 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const userMenu = document.getElementById('userMenu');
+
+    const user = await getAuthUser();
+    console.log("AUTH USER:", user);
+
     initTabs();
     loadHomePrograms();
+
+    if (user) {
+        loadUserHistory(user.id);
+        updateNavbarAuth(user);
+    } else {
+        updateNavbarGuest();
+    }
+
+    lucide.createIcons();
 });
+
+function updateNavbarAuth(user) {
+    document.getElementById("loginBtn").classList.add("hidden");
+    document.getElementById("registerBtn").classList.add("hidden");
+    document.getElementById("authSep").classList.add("hidden");
+
+    document.getElementById("notifBtn").classList.remove("hidden");
+    document.getElementById("userMenu").classList.remove("hidden");
+
+    document.getElementById("userEmail").innerText = user.email;
+}
+
+function updateNavbarGuest() {
+    // Sembunyikan menu user
+    document.getElementById("notifBtn").classList.add("hidden");
+    document.getElementById("userMenu").classList.add("hidden");
+
+    // Tampilkan kembali tombol login/daftar
+    document.getElementById("loginBtn").classList.remove("hidden");
+    document.getElementById("registerBtn").classList.remove("hidden");
+    document.getElementById("authSep").classList.remove("hidden");
+}
+
+document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+    await fetch('/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    window.location.reload();
+});
+
+async function getAuthUser() {
+    try {
+        const res = await fetch('/auth/user', {
+            credentials: 'same-origin',
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!res.ok) return null;
+        return await res.json();
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
 
 function initTabs() {
     const tabs = document.querySelectorAll(".tab-outline");
@@ -20,7 +87,11 @@ function initTabs() {
 }
 
 async function loadHomePrograms() {
-    const res = await fetch("/api/home/programs");
+    const res = await fetch("/api/home/programs", {
+        headers: {
+            'Accept': 'application/json'
+        }
+    });
     const programs = await res.json();
     console.log(programs);
 
@@ -65,7 +136,8 @@ async function loadHomePrograms() {
 
 function renderDonasi(programs) {
     const grid = document.getElementById("donasiGrid");
-    grid.innerHTML = "";
+    if(!grid) return;
+    // grid.innerHTML = "";
 
     programs.forEach(p => {
         const percent = Math.min(100, Math.round((p.terkumpul / p.target) * 100));
@@ -182,29 +254,6 @@ function bindDetailButtons() {
     });
 }
 
-function bindDetailButtons() {
-    document.querySelectorAll(".btn-detail").forEach(btn => {
-        btn.onclick = async () => {
-            const id = btn.dataset.id;
-            const res = await fetch(`/api/relawan/${id}`);
-            const data = await res.json();
-
-            const modal = document.getElementById("detailModal");
-            modal.innerHTML = `
-                <div class="modal">
-                    <button class="close">×</button>
-                    <h1>${data.judul}</h1>
-                    <p>${data.deskripsi}</p>
-                </div>
-            `;
-
-            modal.classList.add("show");
-            modal.querySelector(".close").onclick = () =>
-                modal.classList.remove("show");
-        };
-    });
-}
-
 function diffDays(date) {
     return Math.max(
         0,
@@ -214,4 +263,122 @@ function diffDays(date) {
 
 function formatRupiah(num) {
     return num.toLocaleString("id-ID");
+}
+
+async function loadUserHistory() {
+    const res = await fetch("/api/user/history", {
+        credentials: "include"
+    });
+    const data = await res.json();
+
+    console.log("User history donasi:", data.donasi);
+    console.log("User history relawan:", data.relawan);
+
+    renderHistoryDonasi(data.donasi);
+    renderHistoryRelawan(data.relawan);
+}
+
+function renderHistoryDonasi(list) {
+    const container = document.getElementById("donasiHistoryGrid");
+    container.innerHTML = "";
+
+    if (!list.length) {
+        container.innerHTML = `<p class="empty">Belum ada riwayat donasi.</p>`;
+        return;
+    }
+
+    list.forEach(d => {
+        const donasi = d.donasi;
+        const program = donasi.program;
+
+        container.innerHTML += `
+        <div class="program-card program-history">
+            <div class="program-content">
+                <div class="program-header">
+                    <span class="tag donasi">Donasi</span>
+                    <span class="status selesai">Selesai</span>
+                </div>
+
+                <h4>${program.judul}</h4>
+                <p class="desc">${donasi.deskripsi}</p>
+                <p class="date">Tenggat: ${formatDate(program.tenggat)}</p>
+
+                <div class="history-meta-grid">
+                    <div class="meta-item-history">
+                        <span>Dana Terkumpul</span>
+                        <strong>Rp ${formatRupiah(donasi.jumlahsaatini)}</strong>
+                    </div>
+                    <div class="meta-item-history">
+                        <span>Target</span>
+                        <strong>Rp ${formatRupiah(donasi.target)}</strong>
+                    </div>
+                    <div class="meta-item-history">
+                        <span>Donasi Anda</span>
+                        <strong>Rp ${formatRupiah(d.jumlah)}</strong>
+                    </div>
+                </div>
+
+                ${
+                    donasi.laporan
+                        ? `<a href="/storage/${donasi.laporan}" class="btn-download available" download>
+                            Download Laporan
+                          </a>`
+                        : `<a class="btn-download disabled">
+                            Laporan Belum Tersedia
+                          </a>`
+                }
+            </div>
+        </div>
+        `;
+    });
+}
+
+function renderHistoryRelawan(list) {
+    const container = document.getElementById("relawanHistoryGrid");
+    container.innerHTML = "";
+
+    if (!list.length) {
+        container.innerHTML = `<p class="empty">Belum ada riwayat relawan.</p>`;
+        return;
+    }
+
+    list.forEach(r => {
+        const pr = r.program_relawan;
+        const program = pr.program;
+
+        container.innerHTML += `
+        <div class="program-card program-history">
+            <div class="program-content">
+                <div class="program-header">
+                    <span class="tag relawan">Relawan</span>
+                    <span class="status ${r.status.toLowerCase()}">
+                        ${r.status}
+                    </span>
+                </div>
+
+                <h4>${program.judul}</h4>
+                <p class="desc">${pr.deskripsi}</p>
+
+                <div class="history-meta-grid">
+                    <div class="meta-item-history">
+                        <span>Lokasi</span>
+                        <strong>${pr.lokasi}</strong>
+                    </div>
+                    <div class="meta-item-history">
+                        <span>Komitmen</span>
+                        <strong>${pr.komitmen}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    });
+}
+
+function formatDate(date) {
+    return new Date(date).toLocaleDateString("id-ID");
+}
+
+function capitalize(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
 }
