@@ -60,17 +60,17 @@ Route::post('/contact', [SupportController::class, 'submitContact']);
 | ADMIN API (PROTECTED)
 |--------------------------------------------------------------------------
 */
-Route::middleware('auth:sanctum')
-    ->prefix('admin')
-    ->group(function () {
+// Route::middleware('auth:sanctum')
+//     ->prefix('admin')
+//     ->group(function () {
 
-        Route::get('/programs', [AdminController::class, 'programs']);
-        Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
+//         Route::get('/programs', [AdminController::class, 'programs']);
+//         Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
 
-        Route::post('/programs/{id}/approve', [AdminController::class, 'approveProgram']);
-        Route::post('/programs/{id}/reject', [AdminController::class, 'rejectProgram']);
+//         Route::post('/programs/{id}/approve', [AdminController::class, 'approveProgram']);
+//         Route::post('/programs/{id}/reject', [AdminController::class, 'rejectProgram']);
 
-        Route::get('/users', [AdminController::class, 'users']);
-        Route::post('/users/{id}/suspend', [AdminController::class, 'suspendUser']);
-        Route::post('/users/{id}/unsuspend', [AdminController::class, 'unsuspendUser']);
-    });
+//         Route::get('/users', [AdminController::class, 'users']);
+//         Route::post('/users/{id}/suspend', [AdminController::class, 'suspendUser']);
+//         Route::post('/users/{id}/unsuspend', [AdminController::class, 'unsuspendUser']);
+//     });

@@ -3,7 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ===== USERS ===== */
     async function loadUsers() {
-        const res = await fetch('/admin/users');
+        const res = await fetch('/api/admin/users', {
+            credentials: 'include'
+        });
         const users = await res.json();
 
         const tbody = document.getElementById("user-table-body");
@@ -48,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
             credentials: 'include'   // <- di sini harusnya
         });
         loadUsers();
-        
     };
 
     window.unsuspendUser = async (id) => {
@@ -66,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* ===== PROGRAMS ===== */
     async function loadPrograms() {
-        const res = await fetch('/admin/programs');
+        const res = await fetch('/api/admin/programs');
         const programs = await res.json();
 
         console.log(programs); // DEBUG
@@ -106,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function showProgramDetail(id, type) {
         try {
-            const res = await fetch(`/admin/programs/${id}/detail`);
+            const res = await fetch(`/api/admin/programs/${id}/detail`);
             if (!res.ok) throw new Error('Failed to fetch detail');
             const detail = await res.json();
 
@@ -161,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     window.approveProgram = async (id) => {
-        const res = await fetch(`/admin/programs/${id}/approve`, { 
+        const res = await fetch(`/api/admin/programs/${id}/approve`, { 
             method: "POST", 
             headers: {
                 "X-CSRF-TOKEN": csrf,
@@ -174,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     window.rejectProgram = async (id) => {
-        const res = await fetch(`/admin/programs/${id}/reject`, { 
+        const res = await fetch(`/api/admin/programs/${id}/reject`, { 
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": csrf,

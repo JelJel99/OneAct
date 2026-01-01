@@ -158,8 +158,8 @@ async function loadHomePrograms() {
         }
     });
 
-    renderDonasi(donasi);
-    renderRelawan(relawan);
+    renderDonasi(donasi.slice(0, 3));
+    renderRelawan(relawan.slice(0, 3));
 }
 
 function renderDonasi(programs) {

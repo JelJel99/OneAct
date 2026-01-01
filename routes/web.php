@@ -47,3 +47,18 @@ Route::get('/auth/debug', function () {
         'session_id' => session()->getId()
     ];
 });
+
+Route::middleware(['auth'])
+    ->prefix('api/admin')
+    ->group(function () {
+
+        Route::get('/programs', [AdminController::class, 'programs']);
+        Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
+
+        Route::post('/programs/{id}/approve', [AdminController::class, 'approveProgram']);
+        Route::post('/programs/{id}/reject', [AdminController::class, 'rejectProgram']);
+
+        Route::get('/users', [AdminController::class, 'users']);
+        Route::post('/users/{id}/suspend', [AdminController::class, 'suspendUser']);
+        Route::post('/users/{id}/unsuspend', [AdminController::class, 'unsuspendUser']);
+    });
