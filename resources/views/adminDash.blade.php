@@ -48,30 +48,26 @@
                 <div class="stats-grid">
                     
                     <div class="stat-card donation-card">
-                        <!-- <div class="stat-icon-bg"><i data-lucide="wallet"></i></div> -->
                         <p class="stat-label">Total Donasi</p>
-                        <div class="stat-value">Rp 1.250.000</div>
+                        <div class="stat-value" id="total-donasi">-</div>
                         <span class="stat-period">Hari Ini</span>
-                        <span class="stat-comparison">vs Rp 25.4M Bulan Ini</span>
                     </div>
 
                     <div class="stat-card program-card">
-                        <!-- <div class="stat-icon-bg"><i data-lucide="briefcase"></i></div> -->
                         <p class="stat-label">Program Aktif</p>
-                        <div class="stat-value" id="program-aktif">7</div>
+                        <div class="stat-value" id="program-aktif">-</div>
                     </div>
 
                     <div class="stat-card volunteer-card">
-                        <!-- <div class="stat-icon-bg"><i data-lucide="hand-heart"></i></div> -->
                         <p class="stat-label">Volunteer Aktif</p>
-                        <div class="stat-value" id="volunteer-aktif">189</div>
+                        <div class="stat-value" id="volunteer-aktif">-</div>
                     </div>
 
                     <a href="#approval-list" class="stat-card alert-card">
-                        <!-- <div class="stat-icon-bg alert-icon"><i data-lucide="alert-triangle"></i></div> -->
                         <p class="stat-label">Pending Approval (⚠️ Penting)</p>
-                        <div class="stat-value alert-value" id="pending-approval">12</div>
+                        <div class="stat-value alert-value" id="pending-approval">-</div>
                     </a>
+
                 </div>
 
                 <!-- <div class="quick-management">

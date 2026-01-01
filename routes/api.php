@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Auth;
 //         : response()->json(null, 401);
 // });
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user/history', [UserHistoryController::class, 'index']);
-    // Tambah route API user yang butuh autentikasi di sini
-});
+// Route::middleware('auth:sanctum')->group(function () {
+//     Route::get('/user/history', [UserHistoryController::class, 'index']);
+//     // Tambah route API user yang butuh autentikasi di sini
+// });
 
 /*
 |--------------------------------------------------------------------------

@@ -40,7 +40,7 @@ Route::prefix('admin')
         Route::get('/users', [AdminController::class, 'users']);
 });
 
-// Route::middleware('auth')->get('/user/history', [UserHistoryController::class, 'index']);
+Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
 Route::get('/auth/debug', function () {
     return [
@@ -54,6 +54,8 @@ Route::middleware(['auth'])
     ->prefix('api/admin')
     ->group(function () {
 
+        Route::get('/stats', [AdminController::class, 'stats']);
+
         Route::get('/programs', [AdminController::class, 'programs']);
         Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
 
@@ -63,4 +65,11 @@ Route::middleware(['auth'])
         Route::get('/users', [AdminController::class, 'users']);
         Route::post('/users/{id}/suspend', [AdminController::class, 'suspendUser']);
         Route::post('/users/{id}/unsuspend', [AdminController::class, 'unsuspendUser']);
+    });
+
+// ADMIN STATS
+Route::middleware(['auth'])
+    ->prefix('api/admin')
+    ->group(function () {
+        Route::get('/stats', [AdminController::class, 'stats']);
     });

@@ -234,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-
     logoutfn();
 
     async function authFetch(url, options = {}) {
@@ -252,5 +251,32 @@ document.addEventListener("DOMContentLoaded", () => {
         return res;
     }
 
+    async function loadStats() {
+        try {
+            const res = await fetch('/api/admin/stats', {
+                credentials: 'include'
+            });
+
+            if (!res.ok) throw new Error('Gagal ambil stats');
+
+            const data = await res.json();
+
+            document.getElementById('total-donasi').innerText =
+                'Rp ' + Number(data.total_donasi).toLocaleString('id-ID');
+
+            document.getElementById('program-aktif').innerText =
+                data.program_aktif;
+
+            document.getElementById('volunteer-aktif').innerText =
+                data.volunteer_aktif;
+
+            document.getElementById('pending-approval').innerText =
+                data.pending_approval;
+
+        } catch (err) {
+            console.error('Load stats error:', err);
+        }
+    }
+    loadStats();
 
 });

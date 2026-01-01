@@ -1029,6 +1029,10 @@ body {
 /* ======================================================
     ACTIVITY HISTORY (KEGIATAN)
 ====================================================== */
+.empty {
+    color: #7d8187;
+    font-style: italic;     /* Opsional: pembeda untuk teks pesan kosong */
+}
 
 .history-container {
     display: grid;

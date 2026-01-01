@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 use App\Models\User;
 use App\Models\Program;
-
 use App\Models\ProgramRelawan;
 use App\Models\Donasi;
+use App\Models\RelawanDaftar;
 
 class AdminController extends Controller
 {
@@ -215,6 +216,27 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Program rejected']);
     }
+
+    /* =====================
+    | DASHBOARD STATS
+    ===================== */
+    public function stats()
+    {
+        return response()->json([
+            // Total donasi terkumpul
+            'total_donasi' => Donasi::sum('jumlahsaatini'),
+
+            // Program aktif (approved)
+            'program_aktif' => Program::where('status', 'approved')->count(),
+
+            // Volunteer aktif (unik user yang daftar relawan)
+            'volunteer_aktif' => RelawanDaftar::distinct('user_id')->count('user_id'),
+
+            // Pending approval
+            'pending_approval' => Program::where('status', 'pending')->count(),
+        ]);
+    }
+
 
 
 
