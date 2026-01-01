@@ -205,4 +205,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     //loadPrograms(); // default tab
+
+    // ===LOGOUT===
+    async function logoutfn() {
+        console.log("LOGOUT DIPANGGIL");
+        const logoutBtn = document.getElementById("logoutBtn");
+        if (!logoutBtn) return;
+
+        logoutBtn.addEventListener("click", async () => {
+            try {
+                fetch('/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin', // 🔥 WAJIB
+                    headers: {
+                        'X-CSRF-TOKEN': document
+                            .querySelector('meta[name="csrf-token"]')
+                            .content,
+                        'Accept': 'application/json'
+                    }
+                });
+
+                console.log('Logout berhasil2');
+                // 🔥 PAKSA PINDAH HALAMAN
+                window.location.href = '/login';
+
+            } catch (err) {
+                console.error('Logout gagal', err);
+            }
+        });
+    }
+
+    logoutfn();
+
+    async function authFetch(url, options = {}) {
+        const res = await fetch(url, {
+            credentials: 'include'
+            // ...options
+        });
+
+        if (res.status === 401 || res.status === 419) {
+            // session mati / CSRF invalid
+            window.location.href = '/login';
+            throw new Error('Session expired');
+        }
+
+        return res;
+    }
+
+
 });

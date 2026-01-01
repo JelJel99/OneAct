@@ -59,20 +59,26 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::guard('web')->attempt($credentials)) {
-            // 🔥 WAJIB
-            $request->session()->regenerate();
-
+        if (!Auth::guard('web')->attempt($credentials)) {
             return response()->json([
-                'success' => true,
-                'user'    => auth()->user()
-            ]);
+                'success' => false,
+                'message' => 'Email atau password salah'
+            ], 401);
         }
 
+        // 🔥 WAJIB
+        $request->session()->regenerate();
+
+        // 🔥 INI YANG KURANG KEMARIN
+        $user = auth()->user();
+
         return response()->json([
-            'success' => false,
-            'message' => 'Email atau password salah'
-        ], 401);
+            'success' => true,
+            'user' => $user,
+            'redirect_to' => $user->role === 'admin'
+                ? '/admin/dashboard'
+                : '/home'
+        ]);
     }
 
     // =========================================================

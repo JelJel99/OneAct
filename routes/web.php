@@ -32,10 +32,12 @@ Route::middleware('auth')->get('/auth/user', function () {
 
 
 // ADMIN PAGES (VIEW)
-Route::prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index']);
-    Route::get('/programs', [AdminController::class, 'programs']);
-    Route::get('/users', [AdminController::class, 'users']);
+Route::prefix('admin')
+    ->middleware('auth')
+    ->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index']);
+        Route::get('/programs', [AdminController::class, 'programs']);
+        Route::get('/users', [AdminController::class, 'users']);
 });
 
 // Route::middleware('auth')->get('/user/history', [UserHistoryController::class, 'index']);

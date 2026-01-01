@@ -30,9 +30,9 @@
                     <i data-lucide="settings"></i> Pengaturan
                 </a> -->
             </nav>
-            <a href="#" class="logout-btn">
+            <button class="logout-btn" id="logoutBtn">
                 <i data-lucide="log-out"></i> Logout
-            </a>
+            </button>
         </aside>
 
         <main class="main-content">

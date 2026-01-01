@@ -27,17 +27,15 @@ function validateForm(email, password) {
 
 async function submitLogin() {
     console.log("SUBMIT LOGIN DIPANGGIL");
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
     try {
         const res = await fetch('/login', {
             method: 'POST',
-            credentials: 'same-origin',
+            credentials: 'include', // 🔥 ganti ini
             headers: {
-                'X-CSRF-TOKEN': document
-                    .querySelector('meta[name="csrf-token"]').content,
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
@@ -51,7 +49,8 @@ async function submitLogin() {
             return;
         }
 
-        window.location.href = '/home';
+        // 🔥 SATU-SATUNYA REDIRECT
+        window.location.href = data.redirect_to;
 
     } catch (err) {
         console.error(err);
