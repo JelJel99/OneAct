@@ -9,11 +9,7 @@ use App\Http\Controllers\AuthController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
-/*
-|--------------------------------------------------------------------------
-| PUBLIC PAGES
-|--------------------------------------------------------------------------
-*/
+// PUBLIC PAGES
 Route::get('/', fn () => view('welcome'));
 Route::get('/signup', fn () => view('signup'));
 Route::get('/login', fn () => view('login'))->name('login');
@@ -22,35 +18,20 @@ Route::get('/hubungi', fn () => view('hubungi'));
 
 Route::get('/home', [IndexController::class, 'index'])->name('home');
 
-/*
-|--------------------------------------------------------------------------
-| AUTH (SESSION BASED)
-|--------------------------------------------------------------------------
-*/
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
-/*
-|--------------------------------------------------------------------------
-| SIGNUP
-|--------------------------------------------------------------------------
-*/
+// AUTH (SESSION BASED)
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
 Route::post('/signup', [AuthController::class, 'signup']);
 
-/*
-|--------------------------------------------------------------------------
-| AUTH CHECK (UNTUK NAVBAR)
-|--------------------------------------------------------------------------
-*/
+
+// AUTH CHECK (UNTUK NAVBAR)
 Route::middleware('auth')->get('/auth/user', function () {
     return response()->json(auth()->user());
 });
 
-/*
-|--------------------------------------------------------------------------
-| ADMIN PAGES (VIEW)
-|--------------------------------------------------------------------------
-*/
+
+// ADMIN PAGES (VIEW)
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index']);
     Route::get('/programs', [AdminController::class, 'programs']);

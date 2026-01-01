@@ -74,4 +74,20 @@ class AuthController extends Controller
             'message' => 'Email atau password salah'
         ], 401);
     }
+
+    // =========================================================
+    // 3. FUNGSI LOGOUT
+    // =========================================================
+    public function logout(Request $request)
+    {
+        Auth::logout();                    // Logout user dari session
+        $request->session()->invalidate(); // Batalkan semua session saat ini
+        $request->session()->regenerateToken(); // Regenerate CSRF token agar aman
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout berhasil'
+        ]);
+    }
+
 }

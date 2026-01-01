@@ -27,6 +27,7 @@ function validateForm(email, password) {
 
 async function submitLogin() {
     console.log("SUBMIT LOGIN DIPANGGIL");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 

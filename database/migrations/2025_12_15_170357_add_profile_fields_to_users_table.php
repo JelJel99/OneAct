@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('kecamatandomisili')->nullable();
             $table->string('kelurahandomisili')->nullable();
 
-            $table->string('role')->default('Relawan');
+            $table->string('role')->default('General');
             $table->string('status')->default('active');
         });
 

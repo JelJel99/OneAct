@@ -12,9 +12,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (user) {
         loadUserHistory(user.id);
         updateNavbarAuth(user);
+
+        // --- TAMBAHAN LOGIKA DROPDOWN ---
+        const userBtn = document.getElementById("userBtn");
+        const userMenu = document.getElementById("userMenu");
+        const dropdown = userMenu?.querySelector(".dropdown");
+
+        // Toggle menu saat ikon user diklik
+        userBtn?.addEventListener("click", (e) => {
+            e.stopPropagation(); // Agar tidak langsung tertutup oleh event document
+            dropdown?.classList.toggle("show");
+        });
+
+        // Tutup menu jika klik di luar area userMenu
+        document.addEventListener("click", (e) => {
+            if (!userMenu?.contains(e.target)) {
+                dropdown?.classList.remove("show");
+            }
+        });
     } else {
         updateNavbarGuest();
     }
+
+    logoutfn();
 
     lucide.createIcons();
 });
@@ -41,17 +61,25 @@ function updateNavbarGuest() {
     document.getElementById("authSep").classList.remove("hidden");
 }
 
-document.getElementById("logoutBtn")?.addEventListener("click", async () => {
-    await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        }
+function logoutfn() {
+    console.log("LOGOUT FN DIPANGGIL");
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (!logoutBtn) return;
+    
+    logoutBtn.addEventListener("click", async () => {
+        await fetch('/logout', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            }
+        });
+
+        // window.location.reload();
+        window.location.href = '/login';
     });
 
-    window.location.reload();
-});
+}
 
 async function getAuthUser() {
     try {

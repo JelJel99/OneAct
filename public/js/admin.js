@@ -1,6 +1,5 @@
-const csrf = document.querySelector('meta[name="csrf-token"]').content;
-
 document.addEventListener("DOMContentLoaded", () => {
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
 
     /* ===== USERS ===== */
     async function loadUsers() {
@@ -10,52 +9,57 @@ document.addEventListener("DOMContentLoaded", () => {
         const tbody = document.getElementById("user-table-body");
         tbody.innerHTML = "";
 
-        // users.forEach(u => {
-        //     const status = (u.status || '').toLowerCase();
+        users.forEach(u => {
+            const status = (u.status || '').toLowerCase();
 
-        //     tbody.innerHTML += `
-        //         <tr>
-        //             <td>${u.id}</td>
-        //             <td>${u.name}</td>
-        //             <td>${u.email}</td>
-        //             <td>${u.role}</td>
-        //             <td>
-        //                 ${status === 'active'
-        //                     ? '<span style="color:green">Active</span>'
-        //                     : '<span style="color:red">Inactive</span>'
-        //                 }
-        //             </td>
-        //             <td>
-        //                 ${u.role === 'admin'
-        //                     ? '-'
-        //                     : status === 'active'
-        //                         ? `<button onclick="suspendUser(${u.id})">Suspend</button>`
-        //                         : `<button onclick="unsuspendUser(${u.id})">Unsuspend</button>`
-        //                 }
-        //             </td>
-        //         </tr>
-        //     `;
-        // });
+            tbody.innerHTML += `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.name}</td>
+                    <td>${u.email}</td>
+                    <td>${u.role}</td>
+                    <td>
+                        ${status === 'active'
+                            ? '<span style="color:green">Active</span>'
+                            : '<span style="color:red">Inactive</span>'
+                        }
+                    </td>
+                    <td>
+                        ${u.role === 'admin'
+                            ? '-'
+                            : status === 'active'
+                                ? `<button onclick="suspendUser(${u.id})">Suspend</button>`
+                                : `<button onclick="unsuspendUser(${u.id})">Unsuspend</button>`
+                        }
+                    </td>
+                </tr>
+            `;
+        });
     }
 
     window.suspendUser = async (id) => {
-        await fetch(`/admin/users/${id}/suspend`, {
+        await fetch(`/api/admin/users/${id}/suspend`, {
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": csrf,
-                "Accept": "application/json"
-            }
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'   // <- di sini harusnya
         });
         loadUsers();
+        
     };
 
     window.unsuspendUser = async (id) => {
-        await fetch(`/admin/users/${id}/unsuspend`, {
+        await fetch(`/api/admin/users/${id}/unsuspend`, {
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": csrf,
-                "Accept": "application/json"
-            }
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            credentials: 'include'  // <- juga di sini
         });
         loadUsers();
     };

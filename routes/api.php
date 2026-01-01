@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Auth;
 //         : response()->json(null, 401);
 // });
 
-Route::middleware('auth')->get('/user/history', [UserHistoryController::class, 'index']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user/history', [UserHistoryController::class, 'index']);
+    // Tambah route API user yang butuh autentikasi di sini
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +38,7 @@ Route::middleware('auth')->get('/user/history', [UserHistoryController::class, '
 Route::get('/home/programs', [ProgramController::class, 'index']);
 Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 
-/*
-|--------------------------------------------------------------------------
-| SUPPORT
-|--------------------------------------------------------------------------
-*/
+// Support routes
 Route::get('/faq', [SupportController::class, 'getFaqs']);
 Route::post('/contact', [SupportController::class, 'submitContact']);
 

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomePage</title>
 
@@ -47,7 +48,7 @@
                     </button>
                     <div class="dropdown">
                         <p id="userEmail"></p>
-                        <button id="logoutBtn">Sign out</button>
+                        <button id="logoutBtn">logout</button>
                     </div>
                 </div>
             </div>
