@@ -57,7 +57,8 @@ Route::middleware(['auth'])
         Route::get('/stats', [AdminController::class, 'stats']);
 
         Route::get('/programs', [AdminController::class, 'programs']);
-        Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
+        // Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
+        Route::get('/programs/{id}/detail', [AdminController::class, 'programDetail']);
 
         Route::post('/programs/{id}/approve', [AdminController::class, 'approveProgram']);
         Route::post('/programs/{id}/reject', [AdminController::class, 'rejectProgram']);

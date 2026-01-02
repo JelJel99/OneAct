@@ -97,78 +97,66 @@ class AdminController extends Controller
 
     public function programDetail($id)
     {
-        $program = Program::with(['organisasi', 'programRelawan', 'donasi'])
-            ->findOrFail($id);
+        $program = Program::with('organisasi')->find($id);
 
-        $detail = [
-            'id' => $program->id,
-            'judul' => $program->judul,
-            'type' => $program->type,
-            'status' => $program->status,
-            'organisasi_nama' => $program->organisasi->nama ?? null,
-        ];
-
-        if ($program->type === 'relawan' && $program->programRelawan) {
-            $r = $program->programRelawan;
-            $detail += [
-                'kategori' => $r->kategori,
-                'tenggat' => $r->tenggat,
-                'deskripsi' => $r->deskripsi,
-                'lokasi' => $r->lokasi,
-                'komitmen' => $r->komitmen,
-                'keahlian' => $r->keahlian,
-                'foto' => $r->foto ? asset('storage/'.$r->foto) : null,
-            ];
+        if (!$program) {
+            return response()->json(['message' => 'Program not found'], 404);
         }
 
-        if ($program->type === 'donasi' && $program->donasi) {
-            $d = $program->donasi;
-            $detail += [
-                'deskripsi' => $d->deskripsi,
-                'target' => $d->target,
-                'jumlahsaatini' => $d->jumlahsaatini,
-                'foto' => $d->foto ? asset('storage/'.$d->foto) : null,
-            ];
+        if ($program->type === 'relawan') {
+            $relawan = $program->programRelawan; // pakai method yang kamu pakai di model
+
+            return response()->json([
+                'id' => $program->id,
+                'judul' => $program->judul,
+                'type' => $program->type,
+                'status' => $program->status,
+                'organisasi_nama' => $program->organisasi->nama ?? null,
+
+                'kategori' => $relawan->kategori ?? null,
+                'tenggat' => $program->tenggat ?? null,
+                'deskripsi' => $relawan->deskripsi ?? null,
+                'lokasi' => $relawan->lokasi ?? null,
+                'komitmen' => $relawan->komitmen ?? null,
+                'kuota' => $relawan->kuota ?? null,
+                'keahlian' => $relawan->keahlian ?? null,
+                'start_date' => $program->programRelawan->start_date ?? null,
+                'end_date' => $program->programRelawan->end_date ?? null,
+                'tanggung_jawab' => $program->programRelawan->tanggung_jawab
+                    ? explode('|', $program->programRelawan->tanggung_jawab)
+                    : [],
+
+                'persyaratan' => $program->programRelawan->persyaratan
+                    ? explode('|', $program->programRelawan->persyaratan)
+                    : [],
+
+                'benefit' => $program->programRelawan->benefit
+                    ? explode('|', $program->programRelawan->benefit)
+                    : [],
+                // 'foto' => $relawan->foto ?? null,
+            ]);
+        } elseif ($program->type === 'donasi') {
+            $donasi = $program->donasi;
+
+            return response()->json([
+                'id' => $program->id,
+                'judul' => $program->judul,
+                'type' => $program->type,
+                'status' => $program->status,
+                'organisasi_nama' => $program->organisasi->nama ?? null,
+
+                'deskripsi' => $donasi->deskripsi ?? null,
+                'target' => $donasi->target ?? null,
+                'jumlahsaatini' => $donasi->jumlahsaatini ?? null,
+                // 'foto' => $donasi->foto ?? null,
+                'tenggat' => $program->tenggat ?? null,
+            ]);
         }
 
-        return response()->json($detail);
-        // $program = Program::findOrFail($id);
-
-        // $detail = [
-        //     'id' => $program->id,
-        //     'judul' => $program->judul,
-        //     'type' => $program->type,
-        //     'status' => $program->status,
-        //     'organisasi_nama' => $program->organisasi->nama ?? null,
-        // ];
-
-        // if ($program->type === 'relawan') {
-        //     $relawan = ProgramRelawan::where('program_id', $id)->first();
-        //     if ($relawan) {
-        //         $detail = array_merge($detail, [
-        //             'kategori' => $relawan->kategori,
-        //             'tenggat' => $relawan->tenggat,
-        //             'deskripsi' => $relawan->deskripsi,
-        //             'lokasi' => $relawan->lokasi,
-        //             'komitmen' => $relawan->komitmen,
-        //             'keahlian' => $relawan->keahlian,
-        //             'foto' => $relawan->foto ? asset('storage/' . $relawan->foto) : null,
-        //         ]);
-        //     }
-        // } elseif ($program->type === 'donasi') {
-        //     $donasi = Donasi::where('program_id', $id)->first();
-        //     if ($donasi) {
-        //         $detail = array_merge($detail, [
-        //             'deskripsi' => $donasi->deskripsi,
-        //             'target' => $donasi->target,
-        //             'jumlahsaatini' => $donasi->jumlahsaatini,
-        //             'foto' => $donasi->foto ? asset('storage/' . $donasi->foto) : null,
-        //         ]);
-        //     }
-        // }
-
-        // return response()->json($detail);
+        // fallback
+        return response()->json($program);
     }
+
 
 
     public function approveProgram($id)
@@ -229,8 +217,8 @@ class AdminController extends Controller
             // Program aktif (approved)
             'program_aktif' => Program::where('status', 'approved')->count(),
 
-            // Volunteer aktif (unik user yang daftar relawan)
-            'volunteer_aktif' => RelawanDaftar::distinct('user_id')->count('user_id'),
+            // Pengguna aktif (unik user yang daftar relawan)
+            'pengguna_aktif' => User::where('status', 'active')->count(),
 
             // Pending approval
             'pending_approval' => Program::where('status', 'pending')->count(),

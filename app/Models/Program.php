@@ -36,5 +36,6 @@ class Program extends Model
     public function donasi()
     {
         return $this->hasOne(Donasi::class);
-    }
+    }    
+
 }

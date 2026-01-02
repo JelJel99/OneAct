@@ -389,36 +389,226 @@ body {
 }
 
 /* MODAL DETAIL POP UP */
+/* MODAL CONTAINER */
 .modal {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Sedikit lebih gelap agar fokus */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px); /* Efek blur modern */
 }
 
 .modal-content {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  max-width: 600px;
-  width: 90%;
-  max-height: 80vh;
-  overflow-y: auto;
-  position: relative;
+    background: white;
+    padding: 2.5rem 2rem; /* Padding lebih lega */
+    border-radius: 1rem; /* Border lebih melengkung */
+    max-width: 650px;
+    width: 95%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
 .close-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 1rem;
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    color: #9ca3af;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
 }
+
+.close-button:hover {
+    color: #111827;
+}
+
+/* HEADER SECTION */
+.donate-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modal-title-who h1.modal-title {
+    font-size: 1.8rem; /* Lebih besar dan tegas */
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+}
+
+.modal-organizer {
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+a.modal-organizer {
+    color: #A11D23; /* Sesuai warna brand donasi Anda */
+    font-weight: 600;
+}
+
+/* METRICS BOX */
+.modal-key-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    /* grid-template-columns: repeat(2, 1fr); */
+    gap: 1.5rem;
+    background: #f9fafb;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.metric-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.metric-title i {
+    width: 16px;
+    height: 16px;
+    color: #A11D23; /* Warna ikon konsisten */
+}
+
+.metric-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* DESCRIPTION SECTION */
+/* Memilih tag <p> yang ada di dalam modal-key-metrics secara khusus */
+.modal-key-metrics > p {
+    grid-column: 1 / -1; /* Deskripsi mengambil seluruh lebar baris */
+    /* margin-top: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #374151; */
+}
+
+/* --- Tambahan untuk Header Relawan --- */
+.first-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal-periode {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fee2e2; /* Latar merah muda lembut */
+    padding: 0.4rem 0.75rem;
+    border-radius: 2rem;
+    flex-shrink: 0;
+}
+
+.modal-periode img {
+    width: 14px;
+    height: 14px;
+}
+
+.modal-periode p {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #A11D23; /* Warna merah brand */
+    margin: 0;
+}
+
+@media (min-width: 480px) {
+    .modal-key-metrics {
+        grid-template-columns: repeat(4, 1fr); /* 4 kolom pada layar sedang */
+    }
+}
+
+/* --- Style untuk Section Detail (Bawah) --- */
+#modal-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+#modal-details section h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.75rem;
+}
+
+#modal-details section h2 i {
+    width: 20px;
+    height: 20px;
+    color: #A11D23;
+}
+
+#modal-details section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+/* Style untuk List (Tanggung Jawab, Persyaratan, Benefit) */
+#modal-details ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+#modal-details ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+#modal-details ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #A11D23;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .modal-key-metrics {
+        grid-template-columns: 1fr; /* Tumpuk ke bawah di mobile */
+    }
+    .modal-key-metrics > p {
+        grid-column: span 1;
+    }
+}
+
 .hidden {
   display: none !important;
 }

@@ -105,60 +105,205 @@ document.addEventListener("DOMContentLoaded", () => {
             programs.filter(p => (p.status || '').toLowerCase() === 'pending').length;
     }
 
-    async function showProgramDetail(id, type) {
+    window.showProgramDetail = async function(id, type) {
+        
         try {
             const res = await fetch(`/api/admin/programs/${id}/detail`);
             if (!res.ok) throw new Error('Failed to fetch detail');
             const detail = await res.json();
-
+            
+            console.log(detail);
             const modalBody = document.getElementById('modal-body');
+            const modalTitle = document.getElementById('modal-title');
 
-            // Buat isi modal berdasarkan tipe program
-            let html = `
-            <p><strong>ID:</strong> ${detail.id}</p>
-            <p><strong>Judul:</strong> ${detail.judul}</p>
-            <p><strong>Tipe:</strong> ${detail.type}</p>
-            <p><strong>Status:</strong> ${detail.status}</p>
-            <p><strong>Organisasi:</strong> ${detail.organisasi_nama ?? '-'}</p>
-            `;
+            modalTitle.innerText =
+                type === 'donasi' ? 'Detail Program Donasi' : 'Detail Program Relawan';
 
-            if (type === 'relawan') {
-                html += `
-                <hr>
-                <h4>Detail Relawan</h4>
-                <p><strong>Kategori:</strong> ${detail.kategori ?? '-'}</p>
-                <p><strong>Tenggat:</strong> ${detail.tenggat ?? '-'}</p>
-                <p><strong>Deskripsi:</strong> ${detail.deskripsi ?? '-'}</p>
-                <p><strong>Lokasi:</strong> ${detail.lokasi ?? '-'}</p>
-                <p><strong>Komitmen:</strong> ${detail.komitmen ?? '-'}</p>
-                <p><strong>Keahlian:</strong> ${detail.keahlian ?? '-'}</p>
-                <p><strong>Foto:</strong> ${detail.foto ? `<img src="${detail.foto}" alt="Foto" style="max-width:100%">` : '-'}</p>
-                `;
-            } else if (type === 'donasi') {
-                html += `
-                <hr>
-                <h4>Detail Donasi</h4>
-                <p><strong>Deskripsi:</strong> ${detail.deskripsi ?? '-'}</p>
-                <p><strong>Target:</strong> Rp ${detail.target?.toLocaleString() ?? '0'}</p>
-                <p><strong>Jumlah Saat Ini:</strong> Rp ${detail.jumlahsaatini?.toLocaleString() ?? '0'}</p>
-                <p><strong>Foto:</strong> ${detail.foto ? `<img src="${detail.foto}" alt="Foto" style="max-width:100%">` : '-'}</p>
+            let html = '';
+
+            if (type === 'donasi') {
+                html = `
+                <div class="donate-desc">
+                    <!-- Tags & Title -->
+                    <div class="modal-title-who">
+                        <div class="first-line">
+                            <h1 class="modal-title">${detail.judul}</h1>
+                        </div>
+
+                        <p class="modal-organizer">
+                            Oleh <a href="#" class="modal-organizer">${detail.organisasi_nama ?? '-'}</a>
+                        </p>
+                    </div>
+
+                    <!-- Key Metrics -->
+                    <div class="modal-key-metrics">
+
+                        <div class="metric">
+                            <div class="metric-title">
+                                <i data-lucide="map-pin"></i>
+                                <span>Lokasi</span>
+                            </div>
+                            <span class="metric-value">${detail.lokasi ?? '-'}</span>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-title">
+                                <i data-lucide="calendar"></i>
+                                <span>Tenggat</span>
+                            </div>
+                            <span class="metric-value">${detail.tenggat ? new Date(detail.tenggat).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}) : '-'}</span>
+                        </div>
+
+                        <div class="metric">
+                            <div class="metric-title">
+                                <i data-lucide="users"></i>
+                                <span>Target</span>
+                            </div>
+                            <span class="metric-value">Rp ${detail.target ? Number(detail.target).toLocaleString('id-ID') : '-'}</span>
+                        </div>
+
+                        <p>${detail.deskripsi ?? '-'}</p>
+
+                    </div>
+                </div>
                 `;
             }
+            else if (type === 'relawan') {
+            html = `
+            <div class="donate-desc">
+                <div class="modal-title-who">
+                    <div class="first-line">
+                        <h1 class="modal-title">${detail.judul}</h1>
+                    </div>
+
+                    <p class="modal-organizer">
+                        Oleh <a href="#" class="modal-organizer">${detail.organisasi_nama ?? '-'}</a>
+                    </p>
+                </div>
+
+                <div class="modal-key-metrics">
+                    <div class="metric">
+                        <div class="metric-title">
+                            <i data-lucide="map-pin"></i>
+                            <span>Lokasi</span>
+                        </div>
+                        <span class="metric-value">${detail.lokasi ?? '-'}</span>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-title">
+                            <i data-lucide="calendar"></i>
+                            <span>Periode</span>
+                        </div>
+                        <span class="metric-value">
+                            ${detail.start_date
+                                ? new Date(detail.start_date).toLocaleDateString('id-ID', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric'
+                                })
+                                : '-'}
+                            -
+                            ${detail.end_date
+                                ? new Date(detail.end_date).toLocaleDateString('id-ID', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric'
+                                })
+                                : '-'}
+                        </span>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-title">
+                            <i data-lucide="clock"></i>
+                            <span>Komitmen</span>
+                        </div>
+                        <span class="metric-value">${detail.komitmen ?? '-'}</span>
+                    </div>
+
+                    <div class="metric">
+                        <div class="metric-title">
+                            <i data-lucide="users"></i>
+                            <span>Kuota</span>
+                        </div>
+                        <span class="metric-value">
+                            ${detail.kuota ?? '-'}
+                        </span>
+                    </div>
+                </div>
+
+                <div id="modal-details">
+                    <section>
+                        <h2><i data-lucide="bookmark"></i> Tentang Program</h2>
+                        <p>${detail.deskripsi ?? '-'}</p>
+                    </section>
+
+                    <section>
+                        <h2><i data-lucide="check-square"></i> Tanggung Jawab</h2>
+                        <ul>
+                            ${(detail.tanggung_jawab ?? [])
+                                .map(item => `<li>${item}</li>`)
+                                .join('')}
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2><i data-lucide="list"></i> Persyaratan</h2>
+                        <ul>
+                            ${(detail.persyaratan ?? [])
+                                .map(item => `<li>${item}</li>`)
+                                .join('')}
+                        </ul>
+                    </section>
+
+                    <section>
+                        <h2><i data-lucide="heart"></i> Yang Akan Kamu Dapatkan</h2>
+                        <ul>
+                            ${(detail.benefit ?? [])
+                                .map(item => `<li>${item}</li>`)
+                                .join('')}
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            `;
+        }
 
             modalBody.innerHTML = html;
 
-            // Tampilkan modal
-            document.getElementById('program-detail-modal').classList.remove('hidden');
+            document.getElementById('program-detail-modal')
+                .classList.remove('hidden');
 
-        } catch (error) {
-            alert('Gagal mengambil detail program.');
-            console.error(error);
+            // re-render icon lucide
+            if (window.lucide) lucide.createIcons();
+
+        } catch (err) {
+            console.error(err);
+            alert('Gagal mengambil detail program');
         }
     }
 
-    function closeModal() {
+
+    window.closeModal = function (e) {
+        if (e) e.stopPropagation();
         document.getElementById('program-detail-modal').classList.add('hidden');
+    };
+
+    const modal = document.getElementById('program-detail-modal');
+
+    if (modal) {
+        const modalContent = modal.querySelector('.modal-content');
+
+        modal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        modalContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
     }
+
 
 
     window.approveProgram = async (id) => {
@@ -268,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 data.program_aktif;
 
             document.getElementById('volunteer-aktif').innerText =
-                data.volunteer_aktif;
+                data.pengguna_aktif;
 
             document.getElementById('pending-approval').innerText =
                 data.pending_approval;

@@ -14,12 +14,18 @@ return new class extends Migration
         Schema::create('programrelawan', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('program_id');  // harus unsignedBigInteger
-            $table->string('kategori')->nullable();
-            $table->text('deskripsi')->nullable();
-            $table->string('lokasi')->nullable();
-            $table->string('komitmen')->nullable();
-            $table->string('keahlian')->nullable();
-            $table->string('foto')->nullable();
+            $table->string('kategori');
+            $table->text('deskripsi');
+            $table->string('lokasi');
+            $table->string('komitmen');
+            $table->string('keahlian');
+            $table->text('tanggung_jawab');
+            $table->text('persyaratan');
+            $table->text('benefit');
+            $table->string('foto');
+            $table->integer('kuota');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
 
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
