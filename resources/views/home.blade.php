@@ -13,6 +13,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
 </head>
 
 <body class="body">
@@ -26,11 +27,11 @@
             </div>
 
             <div class="nav-menu">
-                <a href="home" class="nav-link">Beranda</a>
-                <a href="DonationPage.html" class="nav-link">Donasi</a>
-                <a href="programrelawan.blade.php" class="nav-link">Relawan</a>
-                <a href="community.html" class="nav-link">Komunitas</a>
-                <a href="faq.html" class="nav-link">FAQs</a>
+                <a href="home" class="nav-link active">Beranda</a>
+                <a href="DonationPage" class="nav-link">Donasi</a>
+                <a href="programrelawan" class="nav-link">Relawan</a>
+                <a href="community" class="nav-link">Komunitas</a>
+                <a href="faq" class="nav-link">FAQs</a>
             </div>
 
             <div class="nav-right">

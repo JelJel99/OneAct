@@ -4,33 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hubungi Kami - OneAct</title>
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/hubungi.css') }}">
 
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
 <body class="body">
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <img src="{{ asset('asset/round_logo.png') }}" alt="OneAct Logo" class="logo">
+                <img src="/asset/square_OneAct.png" alt="OneAct Logo" class="logo">
+                <!-- <span class="logo">OneAct</span> -->
             </div>
 
             <div class="nav-menu">
-                <a href="{{ url('/') }}" class="nav-link">Beranda</a>
-                <a href="{{ url('/donasi') }}" class="nav-link">Donasi</a>
-                <a href="{{ url('/relawan') }}" class="nav-link">Relawan</a>
-                <a href="{{ url('/komunitas') }}" class="nav-link">Komunitas</a>
-                <a href="{{ route('faq') }}" class="nav-link active">FAQs</a> 
+                <a href="home" class="nav-link">Beranda</a>
+                <a href="DonationPage" class="nav-link">Donasi</a>
+                <a href="programrelawan" class="nav-link">Relawan</a>
+                <a href="community" class="nav-link">Komunitas</a>
+                <a href="faq" class="nav-link active">FAQs</a>
             </div>
 
             <div class="nav-right">
-                <button class="icon-btn"><i data-lucide="bell"></i></button>
-                <a href="{{ url('/login') }}" class="auth-btn">Masuk</a>
-                <span class="auth-separator">/</span> 
-                <a href="{{ url('/signup') }}" class="auth-btn">Daftar</a>
-                <button class="icon-btn"><i data-lucide="user"></i></button>
+                <button id="notifBtn" class="icon-btn hidden">
+                    <i data-lucide="bell"></i>
+                </button>
+
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
+                <span id="authSep" class="auth-separator">/</span>
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
+
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div class="dropdown">
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">logout</button>
+                    </div>
+                </div>
             </div>
+
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a class="mobile-item">Beranda</a>
+            <a class="mobile-item">Donasi</a>
+            <a class="mobile-item">Relawan</a>
+            <a class="mobile-item">Komunitas</a>
+            <a class="mobile-item">Hubungi Kami</a>
+            <a class="mobile-login">Masuk / Daftar</a>
         </div>
     </nav>
 
@@ -95,6 +120,7 @@
         </div>
     </div>
 
+<script src="{{ asset('js/global.js') }}"></script>
 <script src="{{ asset('js/hubungi.js') }}"></script>
 </body>
 </html>

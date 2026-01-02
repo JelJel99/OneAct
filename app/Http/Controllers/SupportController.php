@@ -38,7 +38,7 @@ class SupportController extends Controller
             ])->validate();
 
             // Cek apakah user sedang login
-            $userId = auth('sanctum')->check() ? auth('sanctum')->id() : null;
+            $userId = auth()->check() ? auth()->id() : null;
 
             // Simpan pesan ke database
             ContactMessage::create([

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQs/Kontak - OneAct</title>
-    <link rel="stylesheet" href="{{ asset('css/faq.css') }}">
     <script src="https://unpkg.com/lucide@latest"></script> 
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/faq.css') }}">
 </head>
 
 <body class="body">
@@ -13,26 +14,52 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <img src="{{ asset('asset/round_logo.png') }}" alt="OneAct Logo" class="logo"> 
+                <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
             </div>
 
             <div class="nav-menu">
-                <a href="{{ url('/') }}" class="nav-link">Beranda</a>
-                <a href="{{ url('/donasi') }}" class="nav-link">Donasi</a>
-                <a href="{{ url('/relawan') }}" class="nav-link">Relawan</a>
-                <a href="{{ url('/komunitas') }}" class="nav-link">Komunitas</a>
-                <a href="{{ route('faq') }}" class="nav-link active">FAQs</a> 
+                <a href="home" class="nav-link">Beranda</a>
+                <a href="donasi" class="nav-link">Donasi</a>
+                <a href="relawan" class="nav-link">Relawan</a>
+                <a href="komunitas" class="nav-link">Komunitas</a>
+                <a href="faq" class="nav-link active">FAQs</a>
             </div>
 
             <div class="nav-right">
-                <button class="icon-btn"><i data-lucide="bell"></i></button>
-                <a href="{{ url('/login') }}" class="auth-btn">Masuk</a>
-                <span class="auth-separator">/</span> 
-                <a href="{{ url('/signup') }}" class="auth-btn">Daftar</a>
-                <button class="icon-btn"><i data-lucide="user"></i></button>
+                <!-- NOTIF -->
+                <button id="notifBtn" class="icon-btn hidden">
+                    <i data-lucide="bell"></i>
+                </button>
+
+                <!-- GUEST -->
+                <a id="loginBtn" href="{{ url('/login') }}" class="auth-btn">Masuk</a>
+                <span id="authSep" class="auth-separator">/</span>
+                <a id="registerBtn" href="{{ url('/signup') }}" class="auth-btn">Daftar</a>
+
+                <!-- AUTH USER -->
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div class="dropdown">
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">Logout</button>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <a href="{{ url('/') }}" class="mobile-item">Beranda</a>
+            <a href="{{ url('/donasi') }}" class="mobile-item">Donasi</a>
+            <a href="{{ url('/relawan') }}" class="mobile-item">Relawan</a>
+            <a href="{{ url('/komunitas') }}" class="mobile-item">Komunitas</a>
+            <a href="{{ url('/faq') }}" class="mobile-item">FAQs</a>
+            <a href="{{ url('/login') }}" class="mobile-login">Masuk / Daftar</a>
+        </div>
     </nav>
+
 
     <main id="faq-content">
 
@@ -149,6 +176,7 @@
     <script>
         lucide.createIcons();
     </script>
+    <script src="{{ asset('js/global.js') }}"></script>
     <script src="{{ asset('js/faq.js') }}"></script>
 </body>
 </html>
