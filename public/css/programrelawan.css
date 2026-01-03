@@ -1,0 +1,129 @@
+.relawan-page {
+    background-color: #F5F5DC;
+    min-height: 100vh;
+    padding: 80px 0;
+}
+
+.relawan-title {
+    color: #DC3545;
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.relawan-subtitle {
+    text-align: center;
+    color: #333;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    line-height: 1.8;
+}
+
+.relawan-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.relawan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.relawan-card-image {
+    position: relative;
+    width: 100%;
+    min-height: 500px;
+    overflow: hidden;
+}
+
+.relawan-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+}
+
+.relawan-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3),
+        rgba(0, 0, 0, 0.7)
+    );
+    z-index: 1;
+}
+
+.relawan-card-content {
+    position: relative;
+    z-index: 2;
+    padding: 25px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.relawan-card-title {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.relawan-card-description {
+    color: white;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    flex-grow: 1;
+}
+
+.relawan-card-button {
+    background-color: #DC3545;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    display: inline-block;
+}
+
+.relawan-card-button:hover {
+    background-color: #C82333;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .relawan-title {
+        font-size: 2.5rem;
+    }
+
+    .relawan-subtitle {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    .relawan-card-image {
+        min-height: 400px;
+    }
+
+    .relawan-card-title {
+        font-size: 1.5rem;
+    }
+}

@@ -13,8 +13,14 @@ use App\Http\Controllers\AuthController;
 Route::get('/', fn () => view('welcome'));
 Route::get('/signup', fn () => view('signup'));
 Route::get('/login', fn () => view('login'))->name('login');
+Route::get('/programrelawan', [IndexController::class, 'programrelawan']);
+Route::get('/programrelawan/{id}', [IndexController::class, 'programrelawandetail']);
 Route::get('/faq', fn () => view('faq'))->name('faq');
 Route::get('/hubungi', fn () => view('hubungi'));
+Route::get('/programrelawan', function () {
+    return view('programrelawan');
+});
+
 
 Route::get('/home', [IndexController::class, 'index'])->name('home');
 

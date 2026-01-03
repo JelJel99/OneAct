@@ -38,6 +38,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/home/programs', [ProgramController::class, 'index']);
 Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 
+// Relawan Programs
+Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);
+
 // Support routes
 Route::get('/faq', [SupportController::class, 'getFaqs']);
 Route::post('/contact', [SupportController::class, 'submitContact']);

@@ -12,8 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 </head>
 
 <body class="body">
@@ -213,6 +213,7 @@
         </div>
     </footer>
     
+    <script src="{{ asset('js/global.js') }}"></script>
     <script src="{{ asset('js/home.js') }}"></script>
 </body>
 </html>
