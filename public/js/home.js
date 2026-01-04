@@ -263,96 +263,124 @@ function bindDetailButtons() {
     document.querySelectorAll(".btn-detail").forEach(btn => {
         btn.onclick = async () => {
             const id = btn.dataset.id;
-
-            const res = await fetch(`/api/relawan/${id}`);
+            console.log("REL AWAN ID:", id);
+            
+            const res = await fetch(`/api/detail-relawan/${id}`);
             if (!res.ok) {
                 console.error("Gagal load detail relawan");
                 return;
             }
-
+            
             const data = await res.json();
+            console.log("program ID:", data.program_id);
+            console.log("DETAIL RELAWAN:", data);
 
             const modal = document.getElementById("detailModal");
             if (!modal) return;
 
-            const daysLeft = Math.max(
-                0,
-                Math.ceil((new Date(data.tenggat) - new Date()) / (1000 * 60 * 60 * 24))
-            );
+            const daysLeft = diffDays(data.program.tenggat);
+
+            console.log("ORGANISASI:", data.organisasi);
 
             modal.innerHTML = `
-            <div class="detail-modal-container">
-                <button class="close">
-                    <i data-lucide="x"></i>
-                </button>
+            <button class="close">
+                <i data-lucide="x"></i>
+            </button>
 
-                <div id="detail-modal">
-                    <div id="modal-main-content">
+            <div id="detail-modal">
+                <div id="modal-main-content">
 
-                        <div class="modal-image-section">
-                            <img src="${data.foto}" alt="${data.judul}">
-                            <div class="modal-tags">
-                                <span class="modal-tag-primary">${data.kategori}</span>
-                            </div>
+                    <div class="modal-image-section">
+                        <img src="${data.foto}" alt="${data.judul}">
+                        <div class="modal-tags">
+                            <span class="modal-tag-primary">${data.kategori}</span>
                         </div>
+                    </div>
 
-                        <div class="donate-desc">
-                            <div class="modal-title-who">
-                                <div class="first-line">
-                                    <h1 class="modal-title">${data.judul}</h1>
-                                    <div class="modal-periode">
-                                        <img src="/asset/time-left.png">
-                                        <p>${daysLeft} hari lagi</p>
-                                    </div>
+                    <div class="donate-desc">
+                        <div class="modal-title-who">
+                            <div class="first-line">
+                                <h1 class="modal-title">${data.program.judul}</h1>
+                                <div class="modal-periode">
+                                    <img src="/asset/time-left.png">
+                                    <p>${daysLeft} hari lagi</p>
                                 </div>
-
-                                <span>Oleh </span>
-                                <a href="organization_profile.html" class="modal-organizer">
-                                    ${data.organisasi.nama}
-                                </a>
                             </div>
 
-                            <div id="modal-details">
+                            <span>Oleh </span>
+                            <a href="organization_profile.html" class="modal-organizer">
+                                ${data.program.organisasi.nama ?? "undefined"}
+                            </a>
+                        </div>
 
-                                <section>
-                                    <h2><i data-lucide="bookmark"></i> Tentang Program</h2>
-                                    <p>${data.deskripsi}</p>
-                                </section>
+                        <div class="modal-key-metrics">
+                            <div class="metric">
+                                <div class="metric-title">
+                                    <i data-lucide="map-pin"></i>
+                                    <span>Lokasi</span>
+                                </div>
+                                <span class="metric-value">${data.lokasi}</span>
+                            </div>
 
-                                <section>
-                                    <h2><i data-lucide="check-square"></i> Tanggung Jawab</h2>
-                                    <ul>
-                                        ${data.tanggung_jawab.map(item => `<li>${item}</li>`).join("")}
-                                    </ul>
-                                </section>
+                            <div class="metric">
+                                <div class="metric-title">
+                                    <i data-lucide="calendar"></i>
+                                    <span>Periode</span>
+                                </div>
+                                <span class="metric-value">${data.start_date} - ${data.end_date}</span>
+                            </div>
 
-                                <section>
-                                    <h2><i data-lucide="list"></i> Persyaratan</h2>
-                                    <ul>
-                                        ${data.persyaratan.map(item => `<li>${item}</li>`).join("")}
-                                    </ul>
-                                </section>
-
-                                <section>
-                                    <h2><i data-lucide="heart"></i> Yang Akan Kamu Dapatkan</h2>
-                                    <ul>
-                                        ${data.benefit.map(item => `<li>${item}</li>`).join("")}
-                                    </ul>
-                                </section>
-
+                            <div class="metric">
+                                <div class="metric-title">
+                                    <i data-lucide="clock"></i>
+                                    <span>Komitmen</span>
+                                </div>
+                                <span class="metric-value">${data.komitmen}</span>
+                            </div>
+                            
+                            <div class="metric">
+                                <div class="metric-title">
+                                    <i data-lucide="users"></i>
+                                    <span>Peserta</span>
+                                </div>
+                                <span class="metric-value">12/${data.kuota}</span>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button id="relawan-detail-daftar">
-                            Daftar Sekarang
-                        </button>
+                        <div id="modal-details">
+
+                            <section>
+                                <h2><i data-lucide="bookmark"></i> Tentang Program</h2>
+                                <p>${data.deskripsi}</p>
+                            </section>
+
+                            <section>
+                                <h2><i data-lucide="check-square"></i> Tanggung Jawab</h2>
+                                <ul>${toList(data.tanggung_jawab)}</ul>
+                            </section>
+
+                            <section>
+                                <h2><i data-lucide="list"></i> Persyaratan</h2>
+                                <ul>${toList(data.persyaratan)}</ul>
+                            </section>
+
+                            <section>
+                                <h2><i data-lucide="heart"></i> Yang Akan Kamu Dapatkan</h2>
+                                <ul>${toList(data.benefit)}</ul>
+                            </section>
+
+                        </div>
                     </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button id="relawan-detail-daftar">
+                        Daftar Sekarang
+                    </button>
                 </div>
             </div>
             `;
-
+            // const container = modal.querySelector(".detail-modal-container");
             modal.classList.add("show");
 
             // close
@@ -361,8 +389,17 @@ function bindDetailButtons() {
                 modal.innerHTML = "";
             };
 
+            lucide.createIcons();
         };
     });
+}
+
+function toList(str) {
+  if (!str) return "";
+  return str
+    .split("|")
+    .map(item => `<li>${item.trim()}</li>`)
+    .join("");
 }
 
 function diffDays(date) {

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\RelawanController;
 use App\Http\Controllers\UserHistoryController;
 
 use Illuminate\Http\Request;
@@ -36,11 +37,14 @@ use Illuminate\Support\Facades\Auth;
 |--------------------------------------------------------------------------
 */
 Route::get('/home/programs', [ProgramController::class, 'index']);
-Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
+Route::get('/relawan/{id}', [RelawanController::class, 'show']);
 
 // Relawan Programs
 Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);
 Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
+Route::get('/detail-relawan/{id}', [RelawanController::class, 'show']);
+Route::get('/api/relawan', [RelawanController::class, 'index']);
+
 Route::middleware('auth:api')->post('/relawan/daftar', [ProgramController::class, 'relawandaftar']);
 
 

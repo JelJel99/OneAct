@@ -27,7 +27,6 @@ Route::get('/relawan/cek-status/{programId}',
     [ProgramController::class, 'cekStatusRelawan']
 )->middleware('auth');
 
-
 Route::get('/faq', fn () => view('faq'))->name('faq');
 Route::get('/hubungi', fn () => view('hubungi'));
 
