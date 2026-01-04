@@ -263,21 +263,104 @@ function bindDetailButtons() {
     document.querySelectorAll(".btn-detail").forEach(btn => {
         btn.onclick = async () => {
             const id = btn.dataset.id;
+
             const res = await fetch(`/api/relawan/${id}`);
+            if (!res.ok) {
+                console.error("Gagal load detail relawan");
+                return;
+            }
+
             const data = await res.json();
 
             const modal = document.getElementById("detailModal");
+            if (!modal) return;
+
+            const daysLeft = Math.max(
+                0,
+                Math.ceil((new Date(data.tenggat) - new Date()) / (1000 * 60 * 60 * 24))
+            );
+
             modal.innerHTML = `
-                <div class="modal">
-                <button class="close">×</button>
-                <h1>${data.judul}</h1>
-                <p>${data.deskripsi}</p>
+            <div class="detail-modal-container">
+                <button class="close">
+                    <i data-lucide="x"></i>
+                </button>
+
+                <div id="detail-modal">
+                    <div id="modal-main-content">
+
+                        <div class="modal-image-section">
+                            <img src="${data.foto}" alt="${data.judul}">
+                            <div class="modal-tags">
+                                <span class="modal-tag-primary">${data.kategori}</span>
+                            </div>
+                        </div>
+
+                        <div class="donate-desc">
+                            <div class="modal-title-who">
+                                <div class="first-line">
+                                    <h1 class="modal-title">${data.judul}</h1>
+                                    <div class="modal-periode">
+                                        <img src="/asset/time-left.png">
+                                        <p>${daysLeft} hari lagi</p>
+                                    </div>
+                                </div>
+
+                                <span>Oleh </span>
+                                <a href="organization_profile.html" class="modal-organizer">
+                                    ${data.organisasi.nama}
+                                </a>
+                            </div>
+
+                            <div id="modal-details">
+
+                                <section>
+                                    <h2><i data-lucide="bookmark"></i> Tentang Program</h2>
+                                    <p>${data.deskripsi}</p>
+                                </section>
+
+                                <section>
+                                    <h2><i data-lucide="check-square"></i> Tanggung Jawab</h2>
+                                    <ul>
+                                        ${data.tanggung_jawab.map(item => `<li>${item}</li>`).join("")}
+                                    </ul>
+                                </section>
+
+                                <section>
+                                    <h2><i data-lucide="list"></i> Persyaratan</h2>
+                                    <ul>
+                                        ${data.persyaratan.map(item => `<li>${item}</li>`).join("")}
+                                    </ul>
+                                </section>
+
+                                <section>
+                                    <h2><i data-lucide="heart"></i> Yang Akan Kamu Dapatkan</h2>
+                                    <ul>
+                                        ${data.benefit.map(item => `<li>${item}</li>`).join("")}
+                                    </ul>
+                                </section>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button id="relawan-detail-daftar">
+                            Daftar Sekarang
+                        </button>
+                    </div>
                 </div>
+            </div>
             `;
 
             modal.classList.add("show");
-            modal.querySelector(".close").onclick = () =>
+
+            // close
+            modal.querySelector(".close").onclick = () => {
                 modal.classList.remove("show");
+                modal.innerHTML = "";
+            };
+
         };
     });
 }

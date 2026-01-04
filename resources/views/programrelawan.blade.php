@@ -8,42 +8,43 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Bootstrap (optional, tapi grid kamu pakai row/col) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
     <link rel="stylesheet" href="{{ asset('css/programrelawan.css') }}">
 </head>
 
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-left">
+    <nav class="main-navbar">
+        <div class="main-nav-container">
+            <div class="main-nav-left">
                 <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
             </div>
     
-            <div class="nav-menu">
-                <a href="home" class="nav-link">Beranda</a>
-                <a href="donasi" class="nav-link">Donasi</a>
-                <a href="relawan" class="nav-link active">Relawan</a>
-                <a href="komunitas" class="nav-link">Komunitas</a>
-                <a href="faq" class="nav-link">FAQs</a>
+            <div class="main-nav-menu">
+                <a href="home" class="main-nav-link">Beranda</a>
+                <a href="donasi" class="main-nav-link">Donasi</a>
+                <a href="relawan" class="main-nav-link active">Relawan</a>
+                <a href="komunitas" class="main-nav-link">Komunitas</a>
+                <a href="faq" class="main-nav-link">FAQs</a>
             </div>
     
-            <div class="nav-right">
+            <div class="main-nav-right">
                 <!-- NOTIF -->
-                <button id="notifBtn" class="icon-btn hidden">
+                <button id="notifBtn" class="main-icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
     
                 <!-- GUEST -->
-                <a id="loginBtn" href="{{ url('/login') }}" class="auth-btn">Masuk</a>
+                <a id="loginBtn" href="{{ url('/login') }}" class="main-auth-btn">Masuk</a>
                 <span id="authSep" class="auth-separator">/</span>
-                <a id="registerBtn" href="{{ url('/signup') }}" class="auth-btn">Daftar</a>
+                <a id="registerBtn" href="{{ url('/signup') }}" class="main-auth-btn">Daftar</a>
     
                 <!-- AUTH USER -->
-                <div id="userMenu" class="user-menu hidden">
-                    <button class="icon-btn" id="userBtn">
+                <div id="userMenu" class="main-user-menu hidden">
+                    <button class="main-icon-btn" id="userBtn">
                         <i data-lucide="user"></i>
                     </button>
-                    <div class="dropdown">
+                    <div class="user-dropdown">
                         <p id="userEmail"></p>
                         <button id="logoutBtn">Logout</button>
                     </div>
@@ -79,7 +80,81 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/global.js') }}"></script>
+    <footer class="footer">
+        <div class="footer-container">
+    
+            <!-- Left Section -->
+            <div class="footer-left">
+                <h2 class="footer-title">OneAct</h2>
+                <p class="footer-description">
+                    Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
+                </p>
+    
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram" class="social-btn">
+                        <img src="/asset/instagram.png" alt="Instagram" />
+                    </a>
+                    <a href="#" aria-label="Twitter" class="social-btn">
+                        <img src="/asset/twitter.png" alt="Twitter" />
+                    </a>
+                    <a href="#" aria-label="Facebook" class="social-btn">
+                        <img src="/asset/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="#" aria-label="Youtube" class="social-btn">
+                        <img src="/asset/youtube.png" alt="Youtube" />
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social-btn">
+                        <img src="/asset/linkedin.png" alt="LinkedIn" />
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3 class="footer-heading">Quick Links</h3>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Use</a>
+                <a href="#" class="footer-link">Tim Kami</a>
+                <a href="#" class="footer-link">FAQs/Kontak</a>
+                <a href="#" class="footer-link">Karir</a>
+                <a href="#" class="footer-link">Sponsorship</a>
+            </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3 class="footer-heading">Hubungi Kami</h3>
+    
+                <div class="contact-item">
+                    <img src="" class="contact-icon" />
+                    <div>
+                        <p class="contact-title">Kantor Pusat OneAct</p>
+                        <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
+                    </div>
+                </div>
+    
+                <a href="tel:+6281656782" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <img src="" />
+                    </div>
+                    <span>+62 81 656 7824</span>
+                </a>
+    
+                <a href="mailto:oneact@oneact.or.id" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <img src="" />
+                    </div>
+                    <span>oneact@oneact.or.id</span>
+                </a>
+            </div>
+    
+        </div>
+    
+        <div class="footer-bottom">
+            <p>© 2025 OneAct. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
     <script src="{{ asset('js/programrelawan.js') }}"></script>
 </body>
 </html>

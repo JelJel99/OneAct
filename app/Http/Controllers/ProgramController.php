@@ -39,7 +39,9 @@ class ProgramController extends Controller
 
     public function showRelawan($program_id)
     {
-        $programRelawan = ProgramRelawan::where('program_id', $program_id)->first();
+        $programRelawan = ProgramRelawan::with('program')
+            ->where('program_id', $program_id)
+            ->first();
 
         if (!$programRelawan) {
             return response()->json(['message' => 'Program tidak ditemukan'], 404);
@@ -47,6 +49,7 @@ class ProgramController extends Controller
 
         return response()->json($programRelawan);
     }
+
 
     public function relawandaftar(Request $request)
     {

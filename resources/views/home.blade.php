@@ -103,11 +103,10 @@
             <div class="cards-wrapper" data-category="relawan">
                 <div class="cards-grid" id="relawanGrid">
                     <!-- program relawan akan dirender di sini -->
-                    <div class="detail-modal-container" id="detailModal"></div>
                 </div>
-
+                
             </div>
-
+            
             
             <!-- <div class="cards-wrapper" data-category="darurat">
                 <div class="cards-grid">
@@ -116,10 +115,10 @@
                     <div class="card"> ... </div>
                 </div>
             </div> -->
-
+            
             <section class="org-content" id="kegiatan">
                 <h2>Riwayat Kegiatan Selesai</h2>
-
+                
                 <div class="history-container">
                     <div class="history-column" id="history-donasi">
                         <h3>Riwayat Program Donasi</h3>
@@ -127,7 +126,7 @@
                             <!-- Data donasi akan di-inject JS -->
                         </div>
                     </div>
-
+                    
                     <div class="history-column" id="history-relawan">
                         <h3>Riwayat Program Relawan</h3>
                         <div class="program-card-scroll" id="relawanHistoryGrid">
@@ -138,6 +137,7 @@
             </section>
         </div>
     </main>
+    <div class="detail-modal-container" id="detailModal"></div>
 
     <footer class="footer">
         <div class="footer-container">

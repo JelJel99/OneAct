@@ -17,50 +17,52 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-left">
-                <img src="/asset/square_OneAct.png" alt="OneAct Logo" class="logo">
-                <!-- <span class="logo">OneAct</span> -->
+    <nav class="main-navbar">
+        <div class="main-nav-container">
+            <div class="main-nav-left">
+                <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
             </div>
-
-            <div class="nav-menu">
-                <a href="/home" class="nav-link">Beranda</a>
-                <a href="/donation" class="nav-link">Donasi</a>
-                <a href="/programrelawan" class="nav-link active">Relawan</a>
-                <a href="/community" class="nav-link">Komunitas</a>
-                <a href="/faq" class="nav-link">FAQs</a>
+    
+            <div class="main-nav-menu">
+                <a href="/home" class="main-nav-link">Beranda</a>
+                <a href="/donasi" class="main-nav-link">Donasi</a>
+                <a href="/relawan" class="main-nav-link active">Relawan</a>
+                <a href="/komunitas" class="main-nav-link">Komunitas</a>
+                <a href="/faq" class="main-nav-link">FAQs</a>
             </div>
-
-            <div class="nav-right">
-                <button id="notifBtn" class="icon-btn hidden">
+    
+            <div class="main-nav-right">
+                <!-- NOTIF -->
+                <button id="notifBtn" class="main-icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
-
-                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
+    
+                <!-- GUEST -->
+                <a id="loginBtn" href="{{ url('/login') }}" class="main-auth-btn">Masuk</a>
                 <span id="authSep" class="auth-separator">/</span>
-                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
-
-                <div id="userMenu" class="user-menu hidden">
-                    <button class="icon-btn" id="userBtn">
+                <a id="registerBtn" href="{{ url('/signup') }}" class="main-auth-btn">Daftar</a>
+    
+                <!-- AUTH USER -->
+                <div id="userMenu" class="main-user-menu hidden">
+                    <button class="main-icon-btn" id="userBtn">
                         <i data-lucide="user"></i>
                     </button>
-                    <div class="dropdown">
+                    <div class="user-dropdown">
                         <p id="userEmail"></p>
-                        <button id="logoutBtn">logout</button>
+                        <button id="logoutBtn">Logout</button>
                     </div>
                 </div>
             </div>
-
         </div>
-
-        <div id="mobile-menu" class="mobile-menu">
-            <a class="mobile-item">Beranda</a>
-            <a class="mobile-item">Donasi</a>
-            <a class="mobile-item">Relawan</a>
-            <a class="mobile-item">Komunitas</a>
-            <a class="mobile-item">Hubungi Kami</a>
-            <a class="mobile-login">Masuk / Daftar</a>
+    
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+            <a href="home" class="mobile-item">Beranda</a>
+            <a href="donasi" class="mobile-item">Donasi</a>
+            <a href="programrelawan" class="mobile-item">Relawan</a>
+            <a href="komunitas" class="mobile-item">Komunitas</a>
+            <a href="faq" class="mobile-item">FAQs</a>
+            <a href="login" class="mobile-login">Masuk / Daftar</a>
         </div>
     </nav>
 
@@ -209,7 +211,7 @@
         </div>
     </footer>
 
-    <script src="{{ asset('js/global.js') }}"></script>
+    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
     <script src="{{ asset('js/programrelawandetail.js') }}"></script>
 </body>
 </html>
