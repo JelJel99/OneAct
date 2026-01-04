@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Program;
+use App\Models\ProgramRelawan;
+use App\Models\RelawanDaftar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class ProgramController extends Controller
 {
@@ -24,5 +28,72 @@ class ProgramController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    public function show($program_id)
+    {
+        $programRelawan = ProgramRelawan::with('program')->where('program_id', $program_id)->firstOrFail();
+
+        return view('programrelawandetail', compact('programRelawan'));
+    }
+
+
+    public function showRelawan($program_id)
+    {
+        $programRelawan = ProgramRelawan::where('program_id', $program_id)->first();
+
+        if (!$programRelawan) {
+            return response()->json(['message' => 'Program tidak ditemukan'], 404);
+        }
+
+        return response()->json($programRelawan);
+    }
+
+    public function relawandaftar(Request $request)
+    {
+        try {
+            $programrelawanId = $request->input('programrelawan_id');
+            $userId = Auth::id();
+
+            if (!$userId) {
+                return response()->json(['message' => 'User tidak terautentikasi'], 401);
+            }
+
+            if (!$programrelawanId) {
+                return response()->json(['message' => 'Program Relawan ID tidak boleh kosong'], 400);
+            }
+
+            $exist = RelawanDaftar::where('programrelawan_id', $programrelawanId)
+                ->where('user_id', $userId)
+                ->first();
+
+            if ($exist) {
+                return response()->json(['message' => 'Anda sudah terdaftar di program ini'], 409);
+            }
+
+            RelawanDaftar::create([
+                'programrelawan_id' => $programrelawanId,
+                'user_id' => $userId,
+                'status' => 'Diterima',
+            ]);
+
+            return response()->json(['message' => 'Pendaftaran relawan berhasil']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function cekStatusRelawan($programId)
+    {
+        $userId = Auth::id();
+
+        $exists = RelawanDaftar::where('programrelawan_id', $programId)
+            ->where('user_id', $userId)
+            ->exists();
+
+        return response()->json([
+            'terdaftar' => $exists
+        ]);
+    }
+
 
 }

@@ -1,0 +1,187 @@
+/********** GLOBAL VARIABLES **********/
+:root {
+    --primary: #004bad;
+    --secondary: #8D9297;
+    --light: #F8F9FA;
+    --dark: #182333;
+}
+
+/********** PAGE HEADER **********/
+.page-header {
+    background: linear-gradient(rgba(0, 0, 0, .65), rgba(0, 0, 0, .65)),
+                url("foto/bg.jpeg") center center no-repeat;
+    background-size: cover;
+}
+
+.page-header h1 {
+    font-weight: 700;
+}
+
+.page-header .breadcrumb {
+    background: transparent;
+}
+
+.page-header .breadcrumb-item a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.page-header .breadcrumb-item+.breadcrumb-item::before {
+    color: #999999;
+}
+
+/********** BUTTON **********/
+.btn {
+    font-weight: 500;
+    transition: .3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background-color: #003b8a;
+    border-color: #003b8a;
+}
+
+/********** DETAIL SECTION (PENYESUAIAN UKURAN) **********/
+
+/* Judul Utama - Diperkecil agar tidak mendominasi */
+.col-lg-7 h2.fw-bold {
+    font-size: 1.75rem !important; /* Ukuran lebih proporsional */
+    color: #182333;
+    margin-bottom: 1rem !important;
+    letter-spacing: -0.02em;
+}
+
+/* Container metrik list */
+.col-lg-7 p.mb-2 {
+    display: flex;
+    align-items: center;
+    color: #8D9297; 
+    font-size: 0.95rem !important; /* Ukuran font standar yang rapi */
+    margin-bottom: 0.5rem !important; /* Jarak antar baris lebih rapat */
+}
+
+/* Ukuran Ikon disesuaikan */
+.col-lg-7 p.mb-2 i {
+    color: #8D9297;
+    width: 20px; /* Lebar container ikon lebih kecil */
+    font-size: 1rem; /* Ukuran ikon mengecil */
+    margin-right: 8px;
+}
+
+/* Value (Teks Tebal) */
+.col-lg-7 p.mb-2 b {
+    color: #182333;
+    font-weight: 600;
+}
+
+/* Garis pemisah lebih halus */
+hr {
+    opacity: .1;
+    margin: 1.25rem 0 !important;
+}
+
+/* Deskripsi Program */
+.col-lg-7 p.text-muted {
+    font-size: 0.95rem !important;
+    line-height: 1.5;
+    color: #6c757d !important;
+    /* margin-bottom: 1.5rem !important; */
+}
+
+.description-section {
+    margin-top: 2rem;
+}
+
+.detail-block {
+    margin-top: 1.5rem;
+}
+
+.detail-block h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #182333;
+    margin-bottom: 0.5rem;
+}
+
+.detail-block ul {
+    padding-left: 1.2rem;
+    color: #6c757d;
+}
+
+.detail-block ul li {
+    margin-bottom: 0.3rem;
+    line-height: 1.6;
+}
+
+.meta-info {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.meta-info p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+/* Penyesuaian ikon agar konsisten dengan Gambar 2 */
+.info-section i {
+    color: #8D9297;
+    width: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+/********** BUTTON (UKURAN PROPORSI) **********/
+.relawan-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #e6f9ed;      /* hijau muda */
+    color: #1e7e34;                 /* hijau gelap */
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.relawan-alert .icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: #1e7e34;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-danger {
+    background-color: #A11D23 !important;
+    border-color: #A11D23 !important;
+    border-radius: 6px; 
+    padding: 10px 20px !important; /* Padding lebih kecil */
+    font-weight: 600;
+    font-size: 0.95rem !important; /* Font tombol disesuaikan */
+    display: inline-flex;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.btn-danger i {
+    font-size: 1.1rem;
+    margin-right: 8px;
+}

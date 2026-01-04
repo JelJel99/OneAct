@@ -213,7 +213,7 @@
         </div>
     </footer>
     
-    <script src="{{ asset('js/global.js') }}"></script>
+    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
     <script src="{{ asset('js/home.js') }}"></script>
 </body>
 </html>

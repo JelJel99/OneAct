@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Program;
-use App\Models\ProgramrelawanModel;
+use App\Models\ProgramRelawan;
+use App\Models\RelawanDaftar;
 
 
 class IndexController extends Controller
@@ -28,8 +30,8 @@ class IndexController extends Controller
             ->take(3)
             ->get();
 
-        // ===== RELAWAN LAMA (ProgramrelawanModel) =====
-        $programrelawan = ProgramrelawanModel::orderBy('id', 'desc')
+        // ===== RELAWAN LAMA (ProgramRelawan) =====
+        $programrelawan = ProgramRelawan::orderBy('id', 'desc')
             ->limit(5)
             ->get();
 
@@ -42,11 +44,11 @@ class IndexController extends Controller
 
     public function programrelawandetail($id)
     {
-        $programrelawan = ProgramrelawanModel::findOrFail($id);
+        $programrelawan = ProgramRelawan::findOrFail($id);
 
         $sudahdaftar = false;
         if (Auth::check()) {
-            $sudahdaftar = RelawandaftarModel::where('user_id', Auth::id())
+            $sudahdaftar = RelawanDaftar::where('user_id', Auth::id())
                 ->where('programrelawan_id', $id)
                 ->exists();
         }
@@ -59,7 +61,7 @@ class IndexController extends Controller
 
     public function relawandaftar($id)
     {
-        $exist = RelawandaftarModel::where('programrelawan_id', $id)
+        $exist = RelawanDaftar::where('programrelawan_id', $id)
             ->where('user_id', Auth::id())
             ->exists();
 
@@ -67,7 +69,7 @@ class IndexController extends Controller
             return back()->with('error', 'Anda Sudah Terdaftar');
         }
 
-        RelawandaftarModel::create([
+        RelawanDaftar::create([
             'programrelawan_id' => $id,
             'user_id' => Auth::id(),
             'status' => 'Diterima',

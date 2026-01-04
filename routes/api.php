@@ -40,6 +40,9 @@ Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 
 // Relawan Programs
 Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);
+Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
+Route::middleware('auth:api')->post('/relawan/daftar', [ProgramController::class, 'relawandaftar']);
+
 
 // Support routes
 Route::get('/faq', [SupportController::class, 'getFaqs']);

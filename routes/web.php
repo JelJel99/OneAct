@@ -6,6 +6,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UserHistoryController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProgramController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
@@ -13,13 +14,22 @@ use App\Http\Controllers\AuthController;
 Route::get('/', fn () => view('welcome'));
 Route::get('/signup', fn () => view('signup'));
 Route::get('/login', fn () => view('login'))->name('login');
+
 Route::get('/programrelawan', [IndexController::class, 'programrelawan']);
 Route::get('/programrelawan/{id}', [IndexController::class, 'programrelawandetail']);
-Route::get('/faq', fn () => view('faq'))->name('faq');
-Route::get('/hubungi', fn () => view('hubungi'));
+Route::get('/programrelawan/{id}', [ProgramController::class, 'show']);
 Route::get('/programrelawan', function () {
     return view('programrelawan');
 });
+Route::post('/relawan/daftar', [ProgramController::class, 'relawandaftar'])
+    ->middleware('auth');
+Route::get('/relawan/cek-status/{programId}', 
+    [ProgramController::class, 'cekStatusRelawan']
+)->middleware('auth');
+
+
+Route::get('/faq', fn () => view('faq'))->name('faq');
+Route::get('/hubungi', fn () => view('hubungi'));
 
 
 Route::get('/home', [IndexController::class, 'index'])->name('home');
