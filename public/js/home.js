@@ -413,45 +413,57 @@ function bindDetailButtons() {
             // const container = modal.querySelector(".detail-modal-container");
             modal.classList.add("show");
 
+            cekStatusRelawan(data.id);
+            // console.log("Cek status relawan untuk program ID:", cekStatusRelawan(data.id));
             // close
             modal.querySelector(".close").onclick = () => {
                 modal.classList.remove("show");
                 modal.innerHTML = "";
             };
 
+            
             lucide.createIcons();
         };
     });
+
+    // programs.forEach(p => {
+    // });
 }
 
-function daftarRelawan(programRelawanId) {
-    fetch('/api/relawan/daftar', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document
-                .querySelector('meta[name="csrf-token"]').content
-        },
-        body: JSON.stringify({
-            programrelawan_id: programRelawanId
-        })
-    })
-    .then(res => {
+async function daftarRelawan(programRelawanId) {
+    try {
+        const res = await fetch('/relawan/daftar', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document
+                    .querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                programrelawan_id: programRelawanId
+            })
+        });
+
+        const data = await res.json();
+
         if (res.status === 401) {
             window.location.href = "/login";
             return;
         }
 
-        if (res.status === 409 || res.ok) {
-            kunciTombolDaftar(programRelawanId);
+        if (!res.ok) {
+            alert(data.message || "Gagal daftar relawan");
+            return;
         }
-    })
-    .catch(err => {
-        alert("Gagal daftar relawan");
+
+        // ✅ hanya jika benar-benar sukses
+        kunciTombolDaftar(programRelawanId);
+
+    } catch (err) {
         console.error(err);
-    });
-    console.log("DAFTAR RELAWAN ID:", programRelawanId);
+        alert("Terjadi kesalahan jaringan");
+    }
 }
 
 function kunciTombolDaftar(programRelawanId) {
@@ -468,6 +480,8 @@ async function cekStatusRelawan(programId) {
     const res = await fetch(`/relawan/cek-status/${programId}`, {
         credentials: "include"
     });
+
+    if (!res.ok) return;
 
     const data = await res.json();
 

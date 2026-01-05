@@ -45,8 +45,11 @@ Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 Route::get('/detail-relawan/{id}', [RelawanController::class, 'show']);
 Route::get('/api/relawan', [RelawanController::class, 'index']);
 
-Route::middleware('auth:api')->post('/relawan/daftar', [ProgramController::class, 'relawandaftar']);
-
+// Route::middleware('auth:api')->post('/relawan/daftar', [ProgramController::class, 'relawandaftar']);
+// Route::middleware('auth')->post(
+//     '/relawan/daftar',
+//     [ProgramController::class, 'relawandaftar']
+// );
 
 // Support routes
 Route::get('/faq', [SupportController::class, 'getFaqs']);
