@@ -413,7 +413,7 @@ function bindDetailButtons() {
             // const container = modal.querySelector(".detail-modal-container");
             modal.classList.add("show");
 
-            cekStatusRelawan(data.id);
+            cekStatusRelawan(data.program_id);
             // console.log("Cek status relawan untuk program ID:", cekStatusRelawan(data.id));
             // close
             modal.querySelector(".close").onclick = () => {

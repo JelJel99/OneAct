@@ -41,7 +41,7 @@ Route::get('/relawan/{id}', [RelawanController::class, 'show']);
 
 // Relawan Programs
 Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);
-Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
+// Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 Route::get('/detail-relawan/{id}', [RelawanController::class, 'show']);
 Route::get('/api/relawan', [RelawanController::class, 'index']);
 
