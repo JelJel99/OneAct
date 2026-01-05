@@ -33,7 +33,7 @@ async function submitLogin() {
     try {
         const res = await fetch('/login', {
             method: 'POST',
-            credentials: 'include', // 🔥 ganti ini
+            credentials: 'same-origin', // 🔥 ganti ini
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                 'Accept': 'application/json',
