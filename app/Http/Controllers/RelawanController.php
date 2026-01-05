@@ -39,4 +39,14 @@ class RelawanController extends Controller
             ]
         ]);
     }
+
+    public function detail($id)
+    {
+        $relawan = ProgramRelawan::with([
+            'program.organisasi'
+        ])->findOrFail($id);
+
+        return response()->json($relawan);
+    }
+
 }

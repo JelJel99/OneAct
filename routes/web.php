@@ -21,8 +21,10 @@ Route::get('/programrelawan/{id}', [ProgramController::class, 'show']);
 Route::get('/programrelawan', function () {
     return view('programrelawan');
 });
+
 Route::post('/relawan/daftar', [ProgramController::class, 'relawandaftar'])
     ->middleware('auth');
+
 Route::get('/relawan/cek-status/{programId}', 
     [ProgramController::class, 'cekStatusRelawan']
 )->middleware('auth');

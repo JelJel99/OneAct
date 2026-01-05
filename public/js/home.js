@@ -34,6 +34,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateNavbarGuest();
     }
 
+    document.addEventListener("click", e => {
+        const btn = e.target.closest(".btn-daftar-relawan");
+        if (!btn) return;
+
+        const programRelawanId = btn.dataset.id;
+
+        if (!programRelawanId) {
+            console.error("programRelawanId kosong");
+            return;
+        }
+
+        daftarRelawan(programRelawanId);
+    });
+
     logoutfn();
 
     lucide.createIcons();
@@ -144,7 +158,8 @@ async function loadHomePrograms() {
         }
         if (p.type === "relawan" && p.relawan) {
             relawan.push({
-                id: p.id,
+                program_id: p.id,           // program
+                program_relawan_id: p.relawan.id, // ✅ INI YANG DIPAKAI DAFTAR
                 judul: p.judul,
                 kategori: p.relawan.kategori || "Umum",
                 tenggat: p.tenggat,
@@ -155,6 +170,7 @@ async function loadHomePrograms() {
                 deskripsi: p.relawan.deskripsi,
                 organisasi: p.organisasi.nama,
             });
+
         }
     });
 
@@ -248,12 +264,24 @@ function renderRelawan(programs) {
                 </div>
 
                 <div class="card-actions">
-                    <button class="btn-daftar">Daftar</button>
-                    <button class="btn-detail" data-id="${p.id}">Detail</button>
+                    <button
+                        class="btn-daftar-relawan"
+                        data-id="${p.program_relawan_id}">
+                        Daftar
+                    </button>
+                    <button
+                        class="btn-detail"
+                        data-id="${p.program_id}">
+                        Detail
+                    </button>
                 </div>
             </div>
         </div>
         `;
+    });
+
+    programs.forEach(p => {
+        cekStatusRelawan(p.program_id);
     });
 
     bindDetailButtons();
@@ -374,7 +402,9 @@ function bindDetailButtons() {
                 </div>
 
                 <div class="modal-footer">
-                    <button id="relawan-detail-daftar">
+                    <button
+                        class="btn-daftar-relawan"
+                        data-id="${data.id}">
                         Daftar Sekarang
                     </button>
                 </div>
@@ -392,6 +422,58 @@ function bindDetailButtons() {
             lucide.createIcons();
         };
     });
+}
+
+function daftarRelawan(programRelawanId) {
+    fetch('/api/relawan/daftar', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document
+                .querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({
+            programrelawan_id: programRelawanId
+        })
+    })
+    .then(res => {
+        if (res.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+
+        if (res.status === 409 || res.ok) {
+            kunciTombolDaftar(programRelawanId);
+        }
+    })
+    .catch(err => {
+        alert("Gagal daftar relawan");
+        console.error(err);
+    });
+    console.log("DAFTAR RELAWAN ID:", programRelawanId);
+}
+
+function kunciTombolDaftar(programRelawanId) {
+    document
+        .querySelectorAll(`.btn-daftar-relawan[data-id="${programRelawanId}"]`)
+        .forEach(btn => {
+            btn.textContent = "Sudah Terdaftar";
+            btn.disabled = true;
+            btn.classList.add("btn-disabled");
+        });
+}
+
+async function cekStatusRelawan(programId) {
+    const res = await fetch(`/relawan/cek-status/${programId}`, {
+        credentials: "include"
+    });
+
+    const data = await res.json();
+
+    if (data.terdaftar) {
+        kunciTombolDaftar(data.programrelawan_id);
+    }
 }
 
 function toList(str) {
@@ -520,6 +602,7 @@ function renderHistoryRelawan(list) {
             </div>
         </div>
         `;
+        cekStatusRelawan(program.program_id);
     });
 }
 

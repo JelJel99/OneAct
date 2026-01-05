@@ -89,14 +89,24 @@ class ProgramController extends Controller
     {
         $userId = Auth::id();
 
-        $exists = RelawanDaftar::where('programrelawan_id', $programId)
+        if (!$userId) {
+            return response()->json(['terdaftar' => false]);
+        }
+
+        $programRelawan = ProgramRelawan::where('program_id', $programId)->first();
+
+        if (!$programRelawan) {
+            return response()->json(['terdaftar' => false]);
+        }
+
+        $exists = RelawanDaftar::where('programrelawan_id', $programRelawan->id)
             ->where('user_id', $userId)
             ->exists();
 
         return response()->json([
-            'terdaftar' => $exists
+            'terdaftar' => $exists,
+            'programrelawan_id' => $programRelawan->id // 🔥 penting buat frontend
         ]);
     }
-
 
 }
