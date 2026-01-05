@@ -355,7 +355,7 @@ function bindDetailButtons() {
                                     <i data-lucide="calendar"></i>
                                     <span>Periode</span>
                                 </div>
-                                <span class="metric-value">${data.start_date} - ${data.end_date}</span>
+                                <span class="metric-value">${formatDate(data.start_date)} - ${formatDate(data.end_date)}</span>
                             </div>
 
                             <div class="metric">
@@ -602,6 +602,7 @@ function renderHistoryRelawan(list) {
 
                 <h4>${program.judul}</h4>
                 <p class="desc">${pr.deskripsi}</p>
+                <p class="date">Periode: ${formatDate(pr.start_date)} - ${formatDate(pr.end_date)}</p>
 
                 <div class="history-meta-grid">
                     <div class="meta-item-history">
@@ -620,8 +621,9 @@ function renderHistoryRelawan(list) {
     });
 }
 
-function formatDate(date) {
-    return new Date(date).toLocaleDateString("id-ID");
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
 function capitalize(text) {

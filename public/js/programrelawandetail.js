@@ -132,7 +132,7 @@ function renderProgramRelawanDetail() {
             renderList("listPersyaratan", data.persyaratan);
             renderList("listBenefit", data.benefit);
 
-            document.getElementById("infoDurasi").innerText = `${data.start_date} s/d ${data.end_date}`;
+            document.getElementById("infoDurasi").innerText = `${formatDate(data.start_date)} - ${formatDate(data.end_date)}`;
             document.getElementById("infoKuota").innerText = data.kuota;
 
             cekStatusRelawan();
@@ -206,4 +206,9 @@ function tampilkanAlertSudahTerdaftar() {
     // const info = document.createElement('p');
     // info.innerText = "✔ Sudah Terdaftar";
     // btn.parentNode.appendChild(info);
+}
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }

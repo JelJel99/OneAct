@@ -78,3 +78,8 @@ function logoutfn() {
         window.location.href = '/login';
     });
 }
+
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+}
