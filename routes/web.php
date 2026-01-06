@@ -18,9 +18,9 @@ Route::get('/login', fn () => view('login'))->name('login');
 Route::get('/programrelawan', [IndexController::class, 'programrelawan']);
 Route::get('/programrelawan/{id}', [IndexController::class, 'programrelawandetail']);
 // Route::get('/programrelawan/{id}', [ProgramController::class, 'show']);
-Route::get('/programrelawan', function () {
-    return view('programrelawan');
-});
+// Route::get('/programrelawan', function () {
+//     return view('programrelawan');
+// });
 
 Route::middleware('auth')->post(
     '/relawan/daftar',

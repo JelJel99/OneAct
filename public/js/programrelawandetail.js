@@ -121,9 +121,10 @@ function logoutfn() {
 function renderProgramRelawanDetail() {
     
     const pathParts = window.location.pathname.split("/");
-    const programId = pathParts[pathParts.length - 1]; 
-    
-    fetch(`/api/relawan/${programId}`)
+    // const programId = pathParts[pathParts.length - 1]; 
+    const programId = window.location.pathname.split('/').pop();
+
+    fetch(`/api/detail-relawan/${programId}`)
     .then(res => {
         if (!res.ok) throw new Error("Program tidak ditemukan");
         return res.json();

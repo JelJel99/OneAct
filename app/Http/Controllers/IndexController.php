@@ -42,9 +42,14 @@ class IndexController extends Controller
         ));
     }
 
+    public function programrelawan()
+    {
+        return view('programrelawan');
+    }
+
     public function programrelawandetail($id)
     {
-        $programrelawan = ProgramRelawan::findOrFail($id);
+        $programrelawan = ProgramRelawan::where('program_id', $id)->firstOrFail();
 
         $sudahdaftar = false;
         if (Auth::check()) {
