@@ -131,6 +131,7 @@ function renderProgramRelawanDetail() {
     })
     .then(data => {
         window.programRelawanId = data.id;
+        window.programId = data.program_id;    
         console.log("ProgramRelawanId saat daftar:", window.programRelawanId);
             // Title
             document.getElementById("programTitle").innerText = `Program Relawan: ${data.kategori}`;
@@ -213,10 +214,15 @@ function daftarRelawan() {
 }
 
 function cekStatusRelawan() {
-    fetch(`/relawan/cek-status/${window.programRelawanId}`)
-    .then(res => res.json())
+    fetch(`/relawan/cek-status/${window.programId}`, {
+        credentials: 'include'
+    })
+    .then(res => {
+        if (!res.ok) return;
+        return res.json();
+    })
     .then(data => {
-        if (data.terdaftar) {
+        if (data?.terdaftar) {
             tampilkanAlertSudahTerdaftar();
         }
     })
@@ -224,6 +230,7 @@ function cekStatusRelawan() {
         console.error("Gagal cek status relawan", err);
     });
 }
+
 
 function tampilkanAlertSudahTerdaftar() { 
     const alertBox = document.getElementById("relawanAlert");
