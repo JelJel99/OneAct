@@ -18,14 +18,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         const userMenu = document.getElementById("userMenu");
         const dropdown = userMenu?.querySelector(".dropdown");
 
-        // Toggle menu saat ikon user diklik
-        userBtn?.addEventListener("click", (e) => {
-            e.stopPropagation(); // Agar tidak langsung tertutup oleh event document
+        userBtn?.addEventListener("click", e => {
+            e.stopPropagation();
             dropdown?.classList.toggle("show");
         });
 
-        // Tutup menu jika klik di luar area userMenu
-        document.addEventListener("click", (e) => {
+        document.addEventListener("click", e => {
             if (!userMenu?.contains(e.target)) {
                 dropdown?.classList.remove("show");
             }
@@ -48,31 +46,60 @@ document.addEventListener("DOMContentLoaded", async () => {
         daftarRelawan(programRelawanId);
     });
 
+    initMobileMenu();
     logoutfn();
-
     lucide.createIcons();
 });
 
+function initMobileMenu() {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!hamburgerBtn || !mobileMenu) return;
+
+    hamburgerBtn.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("show");
+
+        // GANTI ICON DENGAN INNERHTML (AMAN)
+        hamburgerBtn.innerHTML = `
+            <i data-lucide="${isOpen ? "x" : "menu"}"></i>
+        `;
+
+        // Render ulang icon HANYA SEKALI DI SINI
+        lucide.createIcons();
+    });
+}
+
 function updateNavbarAuth(user) {
-    document.getElementById("loginBtn").classList.add("hidden");
-    document.getElementById("registerBtn").classList.add("hidden");
-    document.getElementById("authSep").classList.add("hidden");
+    // Sembunyikan auth guest
+    document.getElementById("loginBtn")?.classList.add("hidden");
+    document.getElementById("registerBtn")?.classList.add("hidden");
+    document.getElementById("authSep")?.classList.add("hidden");
 
-    document.getElementById("notifBtn").classList.remove("hidden");
-    document.getElementById("userMenu").classList.remove("hidden");
+    // Tampilkan bell
+    const notifBtn = document.getElementById("notifBtn");
+    notifBtn?.classList.remove("hidden");
 
-    document.getElementById("userEmail").innerText = user.email;
+    // Tampilkan user menu
+    const userMenu = document.getElementById("userMenu");
+    userMenu?.classList.remove("hidden");
+
+    // Set email di dropdown
+    const userEmail = document.getElementById("userEmail");
+    if (userEmail) {
+        userEmail.innerText = user.email;
+    }
 }
 
 function updateNavbarGuest() {
-    // Sembunyikan menu user
-    document.getElementById("notifBtn").classList.add("hidden");
-    document.getElementById("userMenu").classList.add("hidden");
+    // Tampilkan auth guest
+    document.getElementById("loginBtn")?.classList.remove("hidden");
+    document.getElementById("registerBtn")?.classList.remove("hidden");
+    document.getElementById("authSep")?.classList.remove("hidden");
 
-    // Tampilkan kembali tombol login/daftar
-    document.getElementById("loginBtn").classList.remove("hidden");
-    document.getElementById("registerBtn").classList.remove("hidden");
-    document.getElementById("authSep").classList.remove("hidden");
+    // Sembunyikan bell & user
+    document.getElementById("notifBtn")?.classList.add("hidden");
+    document.getElementById("userMenu")?.classList.add("hidden");
 }
 
 function logoutfn() {

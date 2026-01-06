@@ -20,14 +20,18 @@
             </div>
 
             <div class="nav-menu">
-                <a href="home" class="nav-link">Beranda</a>
+                <a href="home" class="nav-link active">Beranda</a>
                 <a href="DonationPage" class="nav-link">Donasi</a>
                 <a href="programrelawan" class="nav-link">Relawan</a>
                 <a href="community" class="nav-link">Komunitas</a>
-                <a href="faq" class="nav-link active">FAQs</a>
+                <a href="faq" class="nav-link">FAQs</a>
             </div>
 
             <div class="nav-right">
+                <button id="hamburgerBtn" class="icon-btn mobile-only">
+                    <i data-lucide="menu"></i>
+                </button>
+
                 <button id="notifBtn" class="icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
@@ -50,12 +54,14 @@
         </div>
 
         <div id="mobile-menu" class="mobile-menu">
-            <a class="mobile-item">Beranda</a>
-            <a class="mobile-item">Donasi</a>
-            <a class="mobile-item">Relawan</a>
-            <a class="mobile-item">Komunitas</a>
-            <a class="mobile-item">Hubungi Kami</a>
-            <a class="mobile-login">Masuk / Daftar</a>
+            <a href="home" class="mobile-item">Beranda</a>
+            <a href="DonationPage" class="mobile-item">Donasi</a>
+            <a href="programrelawan" class="mobile-item">Relawan</a>
+            <a href="community" class="mobile-item">Komunitas</a>
+            <a href="faq" class="mobile-item">FAQs</a>
+            <!-- <hr class="mobile-divider">
+            <a id="mobileLogin" href="/login" class="auth-btn">Masuk</a>
+            <a id="mobileRegister" href="/signup" class="auth-btn">Daftar</a> -->
         </div>
     </nav>
 

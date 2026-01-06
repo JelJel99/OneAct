@@ -9,11 +9,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         updateNavbarGuest();
     }
 
+    initMobileMenu();
     logoutfn();
     lucide.createIcons();
 
     loadRelawanPrograms();
 });
+
+function initMobileMenu() {
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (!hamburgerBtn || !mobileMenu) return;
+
+    hamburgerBtn.addEventListener("click", () => {
+        const isOpen = mobileMenu.classList.toggle("show");
+
+        // GANTI ICON DENGAN INNERHTML (AMAN)
+        hamburgerBtn.innerHTML = `
+            <i data-lucide="${isOpen ? "x" : "menu"}"></i>
+        `;
+
+        // Render ulang icon HANYA SEKALI DI SINI
+        lucide.createIcons();
+    });
+}
 
 async function getAuthUser() {
     try {
@@ -29,22 +49,35 @@ async function getAuthUser() {
 }
 
 function updateNavbarAuth(user) {
+    // Sembunyikan auth guest
     document.getElementById("loginBtn")?.classList.add("hidden");
     document.getElementById("registerBtn")?.classList.add("hidden");
     document.getElementById("authSep")?.classList.add("hidden");
 
-    document.getElementById("notifBtn")?.classList.remove("hidden");
-    document.getElementById("userMenu")?.classList.remove("hidden");
-    document.getElementById("userEmail").innerText = user.email;
+    // Tampilkan bell
+    const notifBtn = document.getElementById("notifBtn");
+    notifBtn?.classList.remove("hidden");
+
+    // Tampilkan user menu
+    const userMenu = document.getElementById("userMenu");
+    userMenu?.classList.remove("hidden");
+
+    // Set email di dropdown
+    const userEmail = document.getElementById("userEmail");
+    if (userEmail) {
+        userEmail.innerText = user.email;
+    }
 }
 
 function updateNavbarGuest() {
-    document.getElementById("notifBtn")?.classList.add("hidden");
-    document.getElementById("userMenu")?.classList.add("hidden");
-
+    // Tampilkan auth guest
     document.getElementById("loginBtn")?.classList.remove("hidden");
     document.getElementById("registerBtn")?.classList.remove("hidden");
     document.getElementById("authSep")?.classList.remove("hidden");
+
+    // Sembunyikan bell & user
+    document.getElementById("notifBtn")?.classList.add("hidden");
+    document.getElementById("userMenu")?.classList.add("hidden");
 }
 
 function initUserDropdown() {

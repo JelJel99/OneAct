@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const faqContainer = document.querySelector('.faq-container');
 
     // --- 1. Event Delegation (Hanya 1 listener untuk semua pertanyaan) ---

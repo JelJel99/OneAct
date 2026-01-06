@@ -2,6 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQs/Kontak - OneAct</title>
     <script src="https://unpkg.com/lucide@latest"></script> 
@@ -11,52 +13,57 @@
 
 <body class="body">
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
-                <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
+                <img src="/asset/square_OneAct.png" alt="OneAct Logo" class="logo">
+                <!-- <span class="logo">OneAct</span> -->
             </div>
 
             <div class="nav-menu">
-                <a href="home" class="nav-link">Beranda</a>
-                <a href="donasi" class="nav-link">Donasi</a>
-                <a href="relawan" class="nav-link">Relawan</a>
-                <a href="komunitas" class="nav-link">Komunitas</a>
-                <a href="faq" class="nav-link active">FAQs</a>
+                <a href="home" class="nav-link active">Beranda</a>
+                <a href="DonationPage" class="nav-link">Donasi</a>
+                <a href="programrelawan" class="nav-link">Relawan</a>
+                <a href="community" class="nav-link">Komunitas</a>
+                <a href="faq" class="nav-link">FAQs</a>
             </div>
 
             <div class="nav-right">
-                <!-- NOTIF -->
+                <button id="hamburgerBtn" class="icon-btn mobile-only">
+                    <i data-lucide="menu"></i>
+                </button>
+
                 <button id="notifBtn" class="icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
 
-                <!-- GUEST -->
-                <a id="loginBtn" href="{{ url('/login') }}" class="auth-btn">Masuk</a>
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
                 <span id="authSep" class="auth-separator">/</span>
-                <a id="registerBtn" href="{{ url('/signup') }}" class="auth-btn">Daftar</a>
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
 
-                <!-- AUTH USER -->
                 <div id="userMenu" class="user-menu hidden">
                     <button class="icon-btn" id="userBtn">
                         <i data-lucide="user"></i>
                     </button>
                     <div class="dropdown">
                         <p id="userEmail"></p>
-                        <button id="logoutBtn">Logout</button>
+                        <button id="logoutBtn">logout</button>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="mobile-menu hidden">
-            <a href="{{ url('/') }}" class="mobile-item">Beranda</a>
-            <a href="{{ url('/donasi') }}" class="mobile-item">Donasi</a>
-            <a href="{{ url('/relawan') }}" class="mobile-item">Relawan</a>
-            <a href="{{ url('/komunitas') }}" class="mobile-item">Komunitas</a>
-            <a href="{{ url('/faq') }}" class="mobile-item">FAQs</a>
-            <a href="{{ url('/login') }}" class="mobile-login">Masuk / Daftar</a>
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="home" class="mobile-item">Beranda</a>
+            <a href="DonationPage" class="mobile-item">Donasi</a>
+            <a href="programrelawan" class="mobile-item">Relawan</a>
+            <a href="community" class="mobile-item">Komunitas</a>
+            <a href="faq" class="mobile-item">FAQs</a>
+            <!-- <hr class="mobile-divider">
+            <a id="mobileLogin" href="/login" class="auth-btn">Masuk</a>
+            <a id="mobileRegister" href="/signup" class="auth-btn">Daftar</a> -->
         </div>
     </nav>
 

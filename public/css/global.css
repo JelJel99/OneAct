@@ -148,7 +148,7 @@ body {
 
 /* Class untuk menampilkan dropdown via JS */
 .dropdown.show {
-    display: block;
+    display: block !important;
     animation: fadeIn 0.2s ease-out;
 }
 
@@ -184,7 +184,7 @@ body {
     background: #fef2f2;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 320px) {
     .auth-btn {
         display: inline-block;
         border: 1px;
@@ -203,6 +203,10 @@ body {
     }
 }
 
+.mobile-only {
+    display: none !important;
+}
+
 .mobile-menu-btn {
     background: none;
     border: none;
@@ -212,46 +216,72 @@ body {
 
 .mobile-menu {
     display: none;
-    background: #B91C1C;
+    background: #800000;
     padding: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1010px) {
     .nav-container {
-        padding: 0 1rem;
+        padding: 0 1.5rem; /* Padding lebih kecil di mobile */
     }
 
-    .nav-left img {
-        max-width: 40px; /* FIX: jangan pakai % */
+    .nav-menu, .auth-group {
+        display: none !important; /* Sembunyikan menu desktop & auth group */
     }
 
-    .nav-menu {
-        display: none;
+    .mobile-only {
+        display: flex !important; /* Tampilkan hamburger di mobile */
     }
 
-    .mobile-menu-btn {
-        display: inline-flex;
-    }
-
+    /* Perbaikan Mobile Menu Design */
     .mobile-menu {
         display: none;
+        position: absolute;
+        top: 64px; /* Sesuai tinggi navbar */
+        left: 0;
+        width: 100%;
+        background: #800000;
         flex-direction: column;
-        gap: 0.5rem;
+        padding: 1rem 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     .mobile-menu.show {
         display: flex;
+        animation: slideDown 0.3s ease-out;
     }
 
-    .mobile-menu a {
+    .mobile-item {
         color: white;
-        padding: 0.75rem;
-        border-radius: 6px;
+        padding: 1rem 2rem;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: 0.2s;
     }
 
-    .mobile-menu a:hover {
-        background: rgba(255,255,255,0.15);
+    .mobile-item:hover {
+        background: rgba(255,255,255,0.1);
     }
+
+    .mobile-divider {
+        border: 0;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin: 0.5rem 2rem;
+    }
+
+    .mobile-login {
+        padding: 1rem 2rem;
+        color: #FFE3E3;
+        font-weight: 600;
+        text-decoration: none;
+    }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* FOOTER */
