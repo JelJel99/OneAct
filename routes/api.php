@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RelawanController;
 use App\Http\Controllers\UserHistoryController;
+use App\Http\Controllers\OrganisasiController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,13 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::get('/home/programs', [ProgramController::class, 'apiHomePrograms']);
 Route::get('/relawan/{id}', [RelawanController::class, 'show']);
+Route::get('/organisasi/{id}', [OrganisasiController::class, 'showOrg']);
+Route::get('/programs', [ProgramController::class, 'getProgramsByOrganisasi']);
+Route::get('/laporan', [LaporanController::class, 'byOrganisasi']);
+
+// Route::get('/organisasi/{id}', function ($id) {
+//     return view('organisasi.profile', compact('id'));
+// });
 
 // Relawan Programs
 Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);

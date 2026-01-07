@@ -192,6 +192,7 @@ async function loadHomePrograms() {
                 donatur: p.donasi.donatur,
                 deskripsi: p.donasi.deskripsi,
                 organisasi: p.organisasi,
+                organisasi_id: p.organisasi_id,
             });
         }
         if (p.type === "relawan" && p.relawan) {
@@ -240,7 +241,7 @@ function renderDonasi(programs) {
                 </div>
 
                 <h3 class="card-title">${p.judul}</h3>
-                <a href="organization_profile.html" class="card-organizer">${p.organisasi}</a>
+                <a href="/organisasi/${p.organisasi_id}" class="card-organizer">${p.organisasi}</a>
                 <p class="card-desc">${p.deskripsi}</p>
 
                 <div class="donate-progress">

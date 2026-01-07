@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaksi extends Model
+class notUse_Transaksi extends Model
 {
     protected $table = 'transaksi';
 

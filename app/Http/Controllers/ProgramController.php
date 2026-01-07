@@ -8,6 +8,7 @@ use App\Models\RelawanDaftar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
+use Carbon\Carbon;
 
 class ProgramController extends Controller
 {
@@ -31,6 +32,7 @@ class ProgramController extends Controller
                     'judul' => $p->judul,
                     'tenggat' => $p->tenggat,
                     'organisasi' => $p->organisasi->nama ?? '-',
+                    'organisasi_id' => $p->organisasi->id ?? null,
                     'type' => $p->type, // 'donasi' atau 'relawan'
                     'donasi' => $p->donasi ? [
                         'id' => $p->donasi->id,
@@ -55,6 +57,55 @@ class ProgramController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
     }
+
+    // public function organizationProfile($organisasiId)
+    // {
+    //     $organisasi = Organisasi::with([
+    //         'programs' => function ($query) {
+    //             $query->where('status', 'approved');
+    //         },
+    //         'programs.donasi',
+    //         'programs.relawan',
+    //     ])->findOrFail($organisasiId);
+
+    //     // Hitung statistik
+    //     $statistik = [
+    //         'program_donasi' => $organisasi->programs->where('type', 'donasi')->count(),
+    //         'program_relawan' => $organisasi->programs->where('type', 'relawan')->count(),
+    //         'relawan_aktif' => RelawanDaftar::whereHas('programRelawan.program', function ($q) use ($organisasiId) {
+    //             $q->where('organisasi_id', $organisasiId)
+    //             ->whereDate('end_date', '>', Carbon::today());
+    //             })->count(),
+    //         'relawan_aktif' => RelawanDaftar::where('status', 'Diterima')
+    //             ->whereHas('programrelawan.program', function ($q) use ($organisasiId) {
+    //                 $q->where('organisasi_id', $organisasiId)
+    //                 ->where('status', 'approved')
+    //                 ->whereDate('end_date', '>=', Carbon::today());
+    //             })
+    //             ->count(),
+    //     ];
+
+    //     // Kemas data sesuai kebutuhan frontend
+    //     return response()->json([
+    //         'organisasi' => $organisasi,
+    //         'statistik' => $statistik,
+    //         // Bisa tambah data lain kalau perlu
+    //     ]);
+    // }
+
+    public function getProgramsByOrganisasi(Request $request)
+    {
+        $organisasiId = $request->query('organisasi_id');
+        $status = $request->query('status', 'approved');
+
+        $programs = Program::with(['donasi', 'relawan'])
+            ->where('organisasi_id', $organisasiId)
+            ->where('status', $status)
+            ->get();
+
+        return response()->json($programs);
+    }
+
 
     public function show($program_id)
     {

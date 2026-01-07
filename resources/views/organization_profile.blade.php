@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organization-Profile</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <link rel="stylesheet" href="/css/organization_profile.css">
+    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/organization_profile.css') }}">
 </head>
 
 <body data-active-nav="donasi">
@@ -22,55 +26,56 @@
             </div>
 
             <div class="nav-menu">
-                <a href="index.html" class="nav-link">Beranda</a>
-                <a href="donasi.html" class="nav-link">Donasi</a>
-                <a href="relawan.html" class="nav-link">Relawan</a>
-                <a href="komunitas.html" class="nav-link">Komunitas</a>
-                <a href="faq.html" class="nav-link">FAQs</a>
+                <a href="/home" class="nav-link active">Beranda</a>
+                <a href="/donation" class="nav-link">Donasi</a>
+                <a href="/programrelawan" class="nav-link">Relawan</a>
+                <a href="/community" class="nav-link">Komunitas</a>
+                <a href="/faq" class="nav-link">FAQs</a>
             </div>
 
             <div class="nav-right">
-                <button class="icon-btn"><i data-lucide="bell"></i></button>
-                <a href="login.html" class="auth-btn">Masuk</a>
-                <span class="auth-separator">/</span> 
-                <a href="signup.html" class="auth-btn">Daftar</a>
-                <button class="icon-btn"><i data-lucide="user"></i></button>
-                <!-- <button id="menu-btn" class="mobile-menu-btn"><i data-lucide="menu"></i></button> -->
+                <button id="hamburgerBtn" class="icon-btn mobile-only">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <button id="notifBtn" class="icon-btn hidden">
+                    <i data-lucide="bell"></i>
+                </button>
+
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
+                <span id="authSep" class="auth-separator">/</span>
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
+
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div class="dropdown">
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">logout</button>
+                    </div>
+                </div>
             </div>
+
         </div>
 
-        <!-- <div id="mobile-menu" class="mobile-menu">
-            <a class="mobile-item">Beranda</a>
-            <a class="mobile-item">Donasi</a>
-            <a class="mobile-item">Relawan</a>
-            <a class="mobile-item">Komunitas</a>
-            <a class="mobile-item">Hubungi Kami</a>
-            <a class="mobile-login">Masuk / Daftar</a>
-        </div> -->
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="/home" class="mobile-item">Beranda</a>
+            <a href="/donation" class="mobile-item">Donasi</a>
+            <a href="/programrelawan" class="mobile-item">Relawan</a>
+            <a href="/community" class="mobile-item">Komunitas</a>
+            <a href="/faq" class="mobile-item">FAQs</a>
+            <!-- <hr class="mobile-divider">
+            <a id="mobileLogin" href="/login" class="auth-btn">Masuk</a>
+            <a id="mobileRegister" href="/signup" class="auth-btn">Daftar</a> -->
+        </div>
     </nav>
 
     <main class="org-main">
         <!-- HEADER -->
         <section class="org-header">
-            <div class="org-header-left">
-                <div class="org-avatar">
-                    <i data-lucide="heart"></i>
-                </div>
-
-                <div class="org-info">
-                    <h1>
-                        Rumah Cinta Indonesia
-                        <i data-lucide="badge-check" class="verified"></i>
-                    </h1>
-                    <p class="org-tagline">
-                        Setiap orang membutuhkan berhak mendapatkan bantuan yang layak.
-                    </p>
-
-                    <div class="org-meta">
-                        <span>Bantuan Sosial</span>
-                        <span>• Jakarta Pusat</span>
-                    </div>
-                </div>
+            <div class="org-header-left" id="orgProfileContainer">
+                <!-- render js -->
             </div>
 
         </section>
@@ -86,57 +91,17 @@
         <section class="org-content" data-category="ringkasan">
 
             <!-- STATISTIC -->
-            <div class="card-box">
-                <h3>Statistik</h3>
-                <div class="stats-grid">
-                    <div class="stat">
-                        <span class="stat-number">245</span>
-                        <span class="stat-cat">Program Donasi</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">8</span>
-                        <span class="stat-cat">Program Relawan</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">87</span>
-                        <span class="stat-cat">Relawan Aktif</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5</span>
-                        <span class="stat-cat">Program Aktif</span>
-                    </div>
-                </div>
+            <div class="card-box" id="statistikContainer">
+                <!-- render js -->
             </div>
 
             <!-- VISI MISI -->
-            <div class="card-box">
-                <h3>Visi & Misi</h3>
-
-                <div class="visi-misi-wrapper">
-                    <div class="visi-left">
-                        <div class="visi">
-                            <h4>Visi</h4>
-                            <p>
-                                Menciptakan masa depan yang lebih cerah bagi anak-anak jalanan
-                                melalui pendidikan berkualitas
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <div class="misi-right">
-                        <div class="misi">
-                            <h4>Misi</h4>
-                            <p>
-                                Memberikan akses pendidikan dasar dan pendampingan kepada anak
-                                jalanan di Jakarta untuk meningkatkan kualitas hidup mereka
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="card-box" id="visiMisiContainer">
+                <!-- render js -->
             </div>
 
             <!-- DAMPAK SOSIAL -->
-            <div class="card-box">
+            <!-- <div class="card-box">
                 <h3>Dampak Sosial</h3>
                 <div class="impact-wrapper">
 
@@ -159,205 +124,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </section>
 
-        <section class="org-content" data-category="kegiatan">
-            <div class="program-card" data-status="ongoing" data-report="laporan-literasi.pdf">
-                <img src="/asset/img_2nwfWGQ.jpeg" alt="Program Literasi">
-
-                <div class="program-content">
-                    <div class="program-header">
-                        <span class="tag relawan">Relawan</span>
-                        <span class="status ongoing">Sedang Berjalan</span>
-                    </div>
-
-                    <h3>Program Literasi Weekend</h3>
-                    <p class="date">1–15 Januari 2025</p>
-                    <p class="desc">
-                        Mengajari membaca, menulis, dan berhitung untuk anak jalanan usia 6–12 tahun
-                    </p>
-
-                    <p class="meta"><i data-lucide="users" class="meta-icon"></i>10</p>
-
-                    <!-- <div class="fund">
-                        <div class="fund-text">
-                            <span>Dana terkumpul</span>
-                            <strong>Rp 15.000.000 / Rp 15.000.000</strong>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="width:100%"></div>
-                        </div>
-                    </div> -->
-
-                </div>
-            </div>
-            
-            <!-- PROGRAM ITEM -->
-            <div class="program-card" data-status="selesai">
-                <img src="/asset/img_2nwfWGQ.jpeg" alt="Distribusi Buku">
-                
-                <div class="program-content">
-                    <div class="program-header">
-                        <span class="tag donasi">Donasi</span>
-                        <span class="status selesai">Selesai</span>
-                    </div>
-                    
-                    <h3>Distribusi Buku & Alat Tulis</h3>
-                    <p class="date">20–25 Januari 2025</p>
-                    <p class="desc">
-                        Memberikan perlengkapan sekolah kepada 150 anak jalanan
-                    </p>
-                    
-                    <p class="meta"><i data-lucide="users" class="meta-icon"></i> 87 partisipan</p>
-                    
-                    <div class="fund">
-                        <div class="fund-text">
-                            <span>Dana terkumpul</span>
-                            <strong>Rp 18.000.000 / Rp 25.000.000</strong>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar" style="width:72%"></div>
-                        </div>
-                        <button class="report-btn">Lihat Laporan</button>
-                    </div>
-                </div>
-            </div>
+        <section class="org-content" data-category="kegiatan" id="programContainer">
+            <!-- render js -->
         </section>
         
-        <section class="org-content" data-category="transparansi">
-            <div class="report-list">
-                
-                <div class="report-card">
-                    <div class="report-icon-wrapper">
-                        <i data-lucide="file-text" class="report-icon"></i>
-                    </div>
-                    
-                    <div class="report-info">
-                        <div class="report-tags">
-                            <span class="tag donasi">Program Donasi</span>
-                            <span class="status published">Dipublikasi</span>
-                        </div>
-                        
-                        <h3>Bantu Pendidikan Anak Tidak Mampu - Periode November 2024</h3>
-                        
-                        <div class="report-meta-grid">
-                            <div class="meta-item">
-                                <span>Total Donasi</span>
-                                <strong>Rp 15.5M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Dana Tersalurkan</span>
-                                <strong>Rp 12.3M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Penerima Manfaat</span>
-                                <strong>150 orang</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Dipublikasi</span>
-                                <strong>1 Des 2024</strong>
-                            </div>
-                        </div>
-                        
-                        <div class="report-actions-meta">
-                            <div class="meta-stats">
-                                <!-- <i data-lucide="eye" class="meta-stats-icon"></i> 234 -->
-                                <i data-lucide="download" class="meta-stats-icon"></i> 45
-                            </div>
-                            
-                            <a href="laporan_november_2024.pdf" class="btn-download" download>
-                                <i data-lucide="download"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="report-card">
-                    <div class="report-icon-wrapper">
-                        <i data-lucide="file-text" class="report-icon"></i>
-                    </div>
-                    
-                    <div class="report-info">
-                        <div class="report-tags">
-                            <span class="tag donasi">Program Donasi</span>
-                            <span class="status published">Dipublikasi</span>
-                        </div>
-                        
-                        <h3>Beasiswa Anak Yatim 2024 - Laporan Triwulan 4</h3>
-                        
-                        <div class="report-meta-grid">
-                            <div class="meta-item">
-                                <span>Total Donasi</span>
-                                <strong>Rp 25M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Dana Tersalurkan</span>
-                                <strong>Rp 23.8M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Penerima Manfaat</span>
-                                <strong>200 orang</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Dipublikasi</span>
-                                <strong>28 Nov 2024</strong>
-                            </div>
-                        </div>
-                        
-                        <div class="report-actions-meta">
-                            <div class="meta-stats">
-                                <!-- <i data-lucide="eye" class="meta-stats-icon"></i> 456 -->
-                                <i data-lucide="download" class="meta-stats-icon"></i> 89
-                            </div>
-                            
-                            <a href="laporan_triwulan4_2024.pdf" class="btn-download" download>
-                                <i data-lucide="download"></i> Download
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="report-card draft">
-                    <div class="report-icon-wrapper">
-                        <i data-lucide="file-text" class="report-icon"></i>
-                    </div>
-                    
-                    <div class="report-info">
-                        <div class="report-tags">
-                            <span class="tag donasi">Program Donasi</span>
-                            <span class="status draft">Belum Dipublikasikan</span>
-                        </div>
-                        
-                        <h3>Donasi Buku untuk Perpustakaan Desa - Laporan Penggunaan Dana - Draft</h3>
-                        
-                        <div class="report-meta-grid">
-                            <div class="meta-item">
-                                <span>Total Donasi</span>
-                                <strong>Rp 8.2M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Dana Tersalurkan</span>
-                                <strong>Rp 7.9M</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Penerima Manfaat</span>
-                                <strong>45 orang</strong>
-                            </div>
-                            <div class="meta-item">
-                                <span>Terakhir Diedit</span>
-                                <strong>2 hari lalu</strong>
-                            </div>
-                        </div>
-                        
-                        <p class="draft-note">Laporan sedang dalam pembuatan</p>
-                        
-                        <div class="report-actions-meta">
-                            </div>
-                    </div>
-                </div>
-
-            </div>
+        <section class="org-content" data-category="transparansi" id="laporanContainer">
+            <!-- render js -->
         </section>
         
     </main>
@@ -436,8 +211,8 @@
         </div>
     </footer>
     
-    <!-- <script src="navbar.js"></script> -->
-    <script src="/js/organization_profile.js"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
+    <script src="{{ asset('js/organization_profile.js') }}"></script>
 
 </body>
 </html>

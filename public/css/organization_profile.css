@@ -9,162 +9,6 @@ body {
 }
 
 
-/* ======================================================
-   NAVBAR
-====================================================== */
-.navbar {
-    background: #800000;
-    position: fixed;
-    width: 100%;
-    z-index: 20;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.nav-container {
-    margin: auto;
-    padding: 0 4rem;
-    height: 64px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.nav-left img {
-    max-width: 13%;
-    height: auto;
-    border-radius: 100rem;
-}
-
-.nav-menu {
-    display: flex;
-    gap: 1rem;
-}
-
-/* ---------- Nav Links ---------- */
-.nav-link {
-    position: relative;
-    color: white;
-    font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 10px;
-    text-decoration: none;
-}
-
-/* underline default (hidden) */
-.nav-link::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-
-    width: 0%;
-    height: 1px;
-    background-color: white;
-    transform: translateX(-50%);
-    transition: width 0.2s ease;
-}
-
-/* hover only if not active */
-.nav-link:not(.active):hover::after {
-    width: 50%;
-}
-
-/* active state */
-.nav-link.active {
-    background: #FFE3E3;
-    color: #800000;
-    font-weight: 600;
-}
-
-.nav-link.active::after {
-    width: 0;
-}
-
-
-/* ---------- Nav Right ---------- */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.icon-btn {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 9999px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: 0.2s;
-}
-
-.icon-btn i {
-    width: 20px;
-    height: 20px;
-}
-
-.icon-btn:hover {
-    background: #660000;
-}
-
-.auth-separator {
-    color: white;
-    font-size: 0.9rem;
-    margin: 0 -0.25rem;
-}
-
-.auth-btn {
-    display: none;
-    padding: 0.25rem 0.75rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
-    color: white;
-    transition: 0.2s;
-}
-
-.auth-btn:hover {
-    color: #f0f0f0;
-    text-decoration: underline;
-}
-
-
-/* ---------- Auth Button (Desktop) ---------- */
-@media (min-width: 640px) {
-    .auth-btn {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 0.5rem;
-        font-size: 0.9rem;
-        color: white;
-        transition: 0.2s;
-    }
-
-    .auth-btn:hover {
-        border-color: white;
-        color: #e5e7eb;
-    }
-}
-
-
-/* ---------- Mobile Menu ---------- */
-.mobile-menu-btn {
-    background: none;
-    border: none;
-    color: white;
-    display: inline-block;
-}
-
-.mobile-menu {
-    display: none;
-    background: #B91C1C;
-    padding: 1rem;
-}
-
 
 /* ======================================================
    MAIN LAYOUT
@@ -184,7 +28,8 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-top: 20px;
+    margin-bottom: 2rem;
 }
 
 .org-header-left {
@@ -212,13 +57,21 @@ body {
 }
 
 .org-info h1 {
+    display: flex;
+    align-items: center; /* Menyeimbangkan posisi ikon dengan teks secara vertikal */
+    gap: 0.5rem;         /* Jarak antara nama dan badge */
     font-size: 1.4rem;
-    font-weight: 700;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
 }
 
 .verified {
     color: #2563eb;
-    margin-left: 6px;
+    margin-left: 3px;
+    width: 22px;         /* Sesuaikan ukuran agar proporsional dengan h1 */
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .org-tagline {
@@ -291,39 +144,85 @@ body {
     border-radius: 1rem;
     /* padding: 1.5rem; */
     margin-bottom: 1.5rem;
-    
 }
 
+.card-box h3{
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+/* Judul Utama Section */
+.report-info h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+/* Container Wrapper */
 .visi-misi-wrapper {
     display: flex;
-    gap: 30px;
-    /* justify-content: center; */
+    gap: 20px;
+    align-items: stretch; /* Memastikan kotak kiri dan kanan sama tinggi secara otomatis */
+    width: 100%;
 }
 
+/* Kotak Visi dan Misi */
 .visi-left,
 .misi-right {
-    display: flex;
-    justify-content: center;   /* vertical */
-    align-items: center;       /* horizontal */
+    flex: 1; /* Memberi pembagian lebar 50/50 yang lebih presisi */
     background: white;
-    box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.08),
-        0 1px 3px rgba(0, 0, 0, 0.05);
-    width: 50%;
-    border-radius: 7px;
+    border: 1px solid #e5e7eb; /* Border halus seperti pada card donasi */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    border-radius: 12px; /* Melengkung halus sesuai gaya card-box */
+    transition: transform 0.2s ease;
 }
 
+.visi-left:hover,
+.misi-right:hover {
+    transform: translateY(-5px); /* Efek interaktif saat kursor di atasnya */
+}
+
+/* Konten di dalam Kotak */
 .visi,
 .misi {
+    padding: 1rem; /* Padding lebih luas agar teks "bernapas" */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     text-align: center;
-    padding: 7px;
-    max-width: 90%;
 }
 
-.card-box h3 {
+/* Header Visi/Misi */
+.visi h4,
+.misi h4 {
     font-size: 1.1rem;
-    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #A11D23; /* Aksen merah sesuai warna brand organisasi */
+    margin-bottom: 0.8rem;
+    font-weight: 700;
 }
+
+/* Teks Visi/Misi */
+.visi p,
+.misi p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4b5563; /* Warna abu-abu teks standar agar nyaman dibaca */
+    margin: 0;
+}
+
+/* Responsif untuk layar HP */
+@media (max-width: 768px) {
+    .visi-misi-wrapper {
+        flex-direction: column; /* Kotak bertumpuk secara vertikal di mobile */
+    }
+}
+
 
 .impact-wrapper {
     background: white;
@@ -475,13 +374,6 @@ body {
 }
 
 /* Judul & teks */
-.program-content h3 {
-    font-size: 1.125rem; /* Make title slightly larger and more dominant */
-    margin: 0.4rem 0 0.2rem;
-    font-weight: 700;
-    color: #1f2937;
-}
-
 .program-content .date {
     font-size: 0.85rem; /* Slight size adjustment */
     color: #6b7280;
@@ -718,174 +610,4 @@ body {
 .btn-download:hover {
     background: #751b1b;
     color: white;
-}
-
-/* ======================================================
-   FOOTER
-====================================================== */
-/* FOOTER */
-.footer {
-    background: #800000;
-    color: white;
-    padding: 4rem 1.5rem;
-}
-
-/* Grid Container */
-.footer-container {
-    max-width: 1200px;
-    margin: auto;
-
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 3rem;
-}
-
-@media (min-width: 768px) {
-    .footer-container {
-        grid-template-columns: 5fr 3fr 4fr;
-    }
-}
-
-/* Left Section */
-.footer-title {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.footer-description {
-    opacity: 0.9;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-}
-
-/* Social Buttons */
-.footer-social {
-    display: flex;
-    gap: 0.8rem;
-}
-
-.social-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    transition: 0.25s ease;
-}
-
-.social-btn:hover {
-    background: rgba(215, 139, 139, 0.2);
-    transform: scale(1.1);
-}
-
-.social-btn img {
-    width: 22px;
-    height: 22px;
-}
-
-/* Quick Links */
-.footer-heading {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-}
-
-.footer-links {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-
-.footer-link {
-    color: white;
-    opacity: 0.9;
-    transition: 0.2s ease;
-    text-decoration: none;
-}
-
-.footer-link:hover {
-    opacity: 1;
-    transform: translateX(2px);
-}
-
-/* Contact Section */
-.footer-contact .contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    opacity: 0.9;
-    text-decoration: none;
-    color: white;
-    transition: 0.2s;
-}
-
-.footer-contact .contact-item:hover {
-    opacity: 1;
-}
-
-.contact-icon {
-    width: 20px;
-    margin-top: 4px;
-}
-
-.contact-icon-circle {
-    width: 40px;
-    height: 40px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 0.25s;
-}
-
-.contact-item:hover .contact-icon-circle {
-    background: rgba(255,255,255,0.2);
-}
-
-.contact-icon-circle img {
-    width: 18px;
-}
-
-/* Typography */
-.contact-title {
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-}
-
-.contact-text {
-    font-size: 0.85rem;
-}
-
-/* Bottom Bar */
-.footer-bottom {
-    /* max-width: 1200px; */
-    margin: 3rem auto 0;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.2);
-
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    text-align: center;
-
-    align-items: center; /* Add this */
-}
-
-@media (min-width: 768px) {
-    .footer-bottom {
-        flex-direction: row;
-        justify-content: space-between;
-        text-align: left;
-    }
-}
-
-.footer-bottom p {
-    opacity: 0.8;
-    font-size: 0.9rem;
 }

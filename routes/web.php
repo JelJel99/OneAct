@@ -8,6 +8,7 @@ use App\Http\Controllers\UserHistoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\OrganisasiController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
@@ -18,6 +19,10 @@ Route::get('/login', fn () => view('login'))->name('login');
 
 Route::get('/programrelawan', [IndexController::class, 'programrelawan']);
 Route::get('/programrelawan/{id}', [IndexController::class, 'programrelawandetail']);
+Route::get('/organisasi/{id}', function ($id) {
+    return view('organization_profile', compact('id'));
+});
+
 // Route::get('/programrelawan/{id}', [ProgramController::class, 'show']);
 // Route::get('/programrelawan', function () {
 //     return view('programrelawan');

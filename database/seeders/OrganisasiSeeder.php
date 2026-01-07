@@ -17,7 +17,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Memberikan bantuan sosial',
             'email' => 'info@rumahcinta.id',
             'telepon' => '08123456789',
-            'alamat' => 'Jakarta'
+            'alamat' => 'Jakarta',
+            'tagline' => 'Menebar Kasih, Merajut Asa untuk Sesama.'
         ]);
 
         Organisasi::create([
@@ -26,7 +27,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Mengajar anak-anak kurang mampu',
             'email' => 'info@pedulianak.id',
             'telepon' => '08198765432',
-            'alamat' => 'Bandung'
+            'alamat' => 'Bandung',
+            'tagline' => 'Wujudkan Mimpi Melalui Pendidikan yang Merata'
         ]);
 
         Organisasi::create([
@@ -35,7 +37,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Memberikan bantuan dan edukasi bencana alam',
             'email' => 'contact@pedulibencana.id',
             'telepon' => '0821122334455',
-            'alamat' => 'Surabaya'
+            'alamat' => 'Surabaya',
+            'tagline' => 'Siaga Bertindak, Tangguh Menghadapi Bencana'
         ]);
 
         Organisasi::create([
@@ -44,7 +47,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Mengadakan kegiatan kesehatan dan edukasi',
             'email' => 'info@sehatbersama.org',
             'telepon' => '0812999887766',
-            'alamat' => 'Yogyakarta'
+            'alamat' => 'Yogyakarta',
+            'tagline' => 'Langkah Nyata Menuju Hidup Sehat dan Produktif'
         ]);
 
         Organisasi::create([
@@ -53,7 +57,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Mendukung pendidikan anak-anak di daerah terpencil',
             'email' => 'contact@laskarpendidikan.id',
             'telepon' => '081355577899',
-            'alamat' => 'Malang'
+            'alamat' => 'Malang',
+            'tagline' => 'Melindungi Harapan, Mengubah Masa Depan'
         ]);
 
         Organisasi::create([
@@ -62,7 +67,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Memberikan pendampingan dan perawatan lansia',
             'email' => 'info@sahabatlansia.org',
             'telepon' => '081422233344',
-            'alamat' => 'Semarang'
+            'alamat' => 'Semarang',
+            'tagline' => 'Ketulusan Hati di Setiap Masa Tua'
         ]);
 
         Organisasi::create([
@@ -71,7 +77,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Mengkampanyekan penghijauan dan pelestarian alam',
             'email' => 'gerakan@hijauindonesia.id',
             'telepon' => '082233344455',
-            'alamat' => 'Bali'
+            'alamat' => 'Bali',
+            'tagline' => 'Lestarikan Alam, Wariskan Kebaikan untuk Bumi'
         ]);
 
         Organisasi::create([
@@ -80,7 +87,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Memberikan pendidikan dan perlindungan untuk anak jalanan',
             'email' => 'contact@anakjalanan.id',
             'telepon' => '081377799900',
-            'alamat' => 'Medan'
+            'alamat' => 'Medan',
+            'tagline' => 'Melindungi Harapan, Mengubah Masa Depan'
         ]);
 
         Organisasi::create([
@@ -89,7 +97,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Menyediakan bantuan untuk korban bencana dan konflik',
             'email' => 'info@relawankemanusiaan.org',
             'telepon' => '081455566677',
-            'alamat' => 'Palembang'
+            'alamat' => 'Palembang',
+            'tagline' => 'Cepat Bertindak, Tepat Memberi Bantuan'
         ]);
 
         Organisasi::create([
@@ -98,7 +107,8 @@ class OrganisasiSeeder extends Seeder
             'misi' => 'Mengembangkan kreativitas dan keterampilan anak muda',
             'email' => 'contact@kreatifmuda.id',
             'telepon' => '081488899900',
-            'alamat' => 'Bandung'
+            'alamat' => 'Bandung',
+            'tagline' => 'Inovasi Tanpa Batas, Karya Nyata Anak Muda'
         ]);
     }
 }
