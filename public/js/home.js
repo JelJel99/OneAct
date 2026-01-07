@@ -181,14 +181,15 @@ async function loadHomePrograms() {
     programs.forEach(p => {
         if (p.type === "donasi" && p.donasi) {
             donasi.push({
-                id: p.id,
+                donasi_id: p.donasi.id, // ✅ ambil id sebenarnya dari donasi
+                program_id: p.id,
                 judul: p.judul,
                 kategori: p.donasi.kategori || "Umum",  // perbaikan di sini
                 tenggat: p.tenggat,
                 foto: p.donasi.foto,
                 target: p.donasi.target,
                 terkumpul: p.donasi.jumlahsaatini,
-                donatur: 0,
+                // donatur: p.donatur,
                 deskripsi: p.donasi.deskripsi,
                 organisasi: p.organisasi.nama,
             });
@@ -257,7 +258,7 @@ function renderDonasi(programs) {
                 </div>
 
                 <div class="card-actions">
-                    <button class="btn-daftar" data-id="${p.id}">Donasi</button>
+                    <button class="btn-daftar" data-id="${p.donasi_id}">Donasi</button>
                 </div>
             </div>
         </div>

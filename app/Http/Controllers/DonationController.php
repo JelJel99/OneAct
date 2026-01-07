@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Donation;
 use App\Models\Transaction;
 
@@ -58,33 +57,27 @@ class DonationController extends Controller
             'payment_type' => 'required|in:bank,ewallet',
             'payment_method' => 'required|string',
         ]);
-        
+
         $paymentTypeLabel = match ($request->payment_type) {
             'ewallet' => 'e-wallet',
             'bank' => 'bank',
         };
 
-        DB::transaction(function () use ($request, $id) {
-            Transaction::create([
-                'donasi_id' => $id,
-                'user_id' => auth()->id(),
-                'jumlah' => $request->amount,
-                'payment_type' => $paymentTypeLabel,
-                'payment_method' => $request->payment_method,
-                'buktibayar' => $request->file('proof')
-                    ? $request->file('proof')->store('proofs', 'public')
-                    : null,
-            ]);
-        });
-
-        
+        Transaction::create([
+            'donasi_id' => $id,
+            'user_id' => auth()->id(),
+            'jumlah' => $request->amount,
+            'payment_type' => $paymentTypeLabel,
+            'payment_method' => $request->payment_method,
+            'buktibayar' => $request->file('proof')
+                ? $request->file('proof')->store('proofs', 'public')
+                : null,
+        ]);
 
         return response()->json([
             'success' => true
         ]);
     }
-
-
 
     // // HALAMAN STATUS
     // public function status()
@@ -92,4 +85,3 @@ class DonationController extends Controller
     //     return view('donation.status');
     // }
 }
-
