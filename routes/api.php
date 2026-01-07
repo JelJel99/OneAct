@@ -36,7 +36,7 @@ use Illuminate\Support\Facades\Auth;
 | HOME (PUBLIC API)
 |--------------------------------------------------------------------------
 */
-Route::get('/home/programs', [ProgramController::class, 'index']);
+Route::get('/home/programs', [ProgramController::class, 'apiHomePrograms']);
 Route::get('/relawan/{id}', [RelawanController::class, 'show']);
 
 // Relawan Programs

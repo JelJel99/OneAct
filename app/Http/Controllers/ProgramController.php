@@ -20,6 +20,33 @@ class ProgramController extends Controller
         return response()->json($programs);
     }
 
+    public function apiHomePrograms()
+    {
+        $programs = Program::with(['donasi.transactions', 'organisasi'])->where('status', 'approved')->get();
+
+        return response()->json(
+            $programs->map(function ($p) {
+                return [
+                    'id' => $p->id,
+                    'judul' => $p->judul,
+                    'tenggat' => $p->tenggat,
+                    'organisasi' => $p->organisasi->nama ?? '-',
+                    'type' => $p->type, // 'donasi' atau 'relawan'
+                    'donasi' => $p->donasi ? [
+                        'id' => $p->donasi->id,
+                        'foto' => $p->donasi->foto,
+                        'deskripsi' => $p->donasi->deskripsi,
+                        'target' => $p->donasi->target,
+                        'jumlahsaatini' => $p->donasi->jumlahsaatini,
+                        'kategori' => $p->donasi->kategori ?? 'Umum',
+                        'donatur' => $p->donasi->transactions->count(),
+                    ] : null,
+                    'relawan' => $p->relawan ?? null, // sesuaikan kalau ada
+                ];
+            })
+        );
+    }
+
     public function programRelawanApproved()
     {
         return Program::with(['relawan', 'organisasi'])

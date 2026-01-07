@@ -189,9 +189,9 @@ async function loadHomePrograms() {
                 foto: p.donasi.foto,
                 target: p.donasi.target,
                 terkumpul: p.donasi.jumlahsaatini,
-                // donatur: p.donatur,
+                donatur: p.donasi.donatur,
                 deskripsi: p.donasi.deskripsi,
-                organisasi: p.organisasi.nama,
+                organisasi: p.organisasi,
             });
         }
         if (p.type === "relawan" && p.relawan) {
@@ -206,11 +206,13 @@ async function loadHomePrograms() {
                 komitmen: p.relawan.komitmen,
                 keahlian: p.relawan.keahlian,
                 deskripsi: p.relawan.deskripsi,
-                organisasi: p.organisasi.nama,
+                organisasi: p.organisasi,
             });
-
         }
+        console.log('donasi:', p.donasi);
+        console.log('donatur:', p.donasi?.donatur);
     });
+
 
     renderDonasi(donasi.slice(0, 3));
     renderRelawan(relawan.slice(0, 3));

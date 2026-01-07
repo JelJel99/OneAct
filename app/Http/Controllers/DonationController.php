@@ -20,7 +20,7 @@ class DonationController extends Controller
         $donations = Donation::whereHas('program', function ($q) {
             $q->where('status', 'approved');
         })
-        ->with('program.organisasi')
+        ->with('program.organisasi', 'transactions')
         ->get();
 
         return response()->json(
