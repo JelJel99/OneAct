@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\UserHistoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\DonationController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
@@ -97,3 +98,9 @@ Route::middleware(['auth'])
     ->group(function () {
         Route::get('/stats', [AdminController::class, 'stats']);
     });
+
+Route::get('/donation', [DonationController::class, 'index']);
+Route::get('/api/donation', [DonationController::class, 'apiIndex']);
+Route::get('/donation/status', [DonationController::class, 'status']); // ⬅️ HARUS DI ATAS
+Route::get('/donation/{donation}', [DonationController::class, 'show']);
+Route::post('/donation/{id}/pay', [DonationController::class, 'pay']);

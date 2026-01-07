@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Program;
 use App\Models\ProgramRelawan;
-use App\Models\Donasi;
+use App\Models\Donation;
 use App\Models\RelawanDaftar;
 
 class AdminController extends Controller
@@ -136,7 +136,7 @@ class AdminController extends Controller
                 // 'foto' => $relawan->foto ?? null,
             ]);
         } elseif ($program->type === 'donasi') {
-            $donasi = $program->donasi;
+            $donation = $program->donasi;
 
             return response()->json([
                 'id' => $program->id,
@@ -145,10 +145,10 @@ class AdminController extends Controller
                 'status' => $program->status,
                 'organisasi_nama' => $program->organisasi->nama ?? null,
 
-                'deskripsi' => $donasi->deskripsi ?? null,
-                'target' => $donasi->target ?? null,
-                'jumlahsaatini' => $donasi->jumlahsaatini ?? null,
-                // 'foto' => $donasi->foto ?? null,
+                'deskripsi' => $donation->deskripsi ?? null,
+                'target' => $donation->target ?? null,
+                'jumlahsaatini' => $donation->jumlahsaatini ?? null,
+                // 'foto' => $donation->foto ?? null,
                 'tenggat' => $program->tenggat ?? null,
             ]);
         }
@@ -181,9 +181,9 @@ class AdminController extends Controller
                 ]);
             }
         } elseif ($program->type == 'donasi') {
-            $exists = Donasi::where('program_id', $program->id)->exists();
+            $exists = Donation::where('program_id', $program->id)->exists();
             if (!$exists) {
-                Donasi::create([
+                Donation::create([
                     'program_id' => $program->id,
                     'deskripsi' => null,
                     'foto' => null,
@@ -212,7 +212,7 @@ class AdminController extends Controller
     {
         return response()->json([
             // Total donasi terkumpul
-            'total_donasi' => Donasi::sum('jumlahsaatini'),
+            'total_donasi' => Donation::sum('jumlahsaatini'),
 
             // Program aktif (approved)
             'program_aktif' => Program::where('status', 'approved')->count(),

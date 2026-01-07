@@ -4,13 +4,13 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Donasi;
+use App\Models\Donation;
 
 class DonasiSeeder extends Seeder
 {
     public function run(): void
     {
-        Donasi::create([
+        Donation::create([
             'program_id' => 2,
             'deskripsi' => 'Bantuan untuk korban banjir di Sumatra berupa kebutuhan pokok dan logistik darurat.',
             'foto' => 'assets/donasi/banjir_sumatra.jpg',
@@ -19,7 +19,7 @@ class DonasiSeeder extends Seeder
             'laporan' => null,
         ]);
 
-        Donasi::create([
+        Donation::create([
             'program_id' => 3,
             'deskripsi' => 'Penggalangan dana untuk perbaikan fasilitas sekolah dan sarana belajar.',
             'foto' => 'assets/donasi/perbaikan_sekolah.jpg',
@@ -28,7 +28,7 @@ class DonasiSeeder extends Seeder
             'laporan' => null,
         ]);
 
-        Donasi::create([
+        Donation::create([
             'program_id' => 4,
             'deskripsi' => 'Donasi sembako dan kebutuhan medis untuk lansia di Panti Jompo Tiara Kasih.',
             'foto' => 'assets/donasi/panti_jompo.jpg',
@@ -37,7 +37,7 @@ class DonasiSeeder extends Seeder
             'laporan' => null,
         ]);
 
-        Donasi::create([
+        Donation::create([
             'program_id' => 6,
             'deskripsi' => 'Pengadaan buku pelajaran dan perlengkapan sekolah bagi siswa kurang mampu.',
             'foto' => 'assets/donasi/buku_sekolah.jpg',
@@ -46,7 +46,7 @@ class DonasiSeeder extends Seeder
             'laporan' => null,
         ]);
 
-        Donasi::create([
+        Donation::create([
             'program_id' => 8,
             'deskripsi' => 'Donasi pangan darurat untuk masyarakat terdampak krisis dan bencana.',
             'foto' => 'assets/donasi/pangan_darurat.jpg',
@@ -55,7 +55,7 @@ class DonasiSeeder extends Seeder
             'laporan' => null,
         ]);
 
-        Donasi::create([
+        Donation::create([
             'program_id' => 10,
             'deskripsi' => 'Penggalangan dana untuk pengadaan perlengkapan medis di daerah terpencil.',
             'foto' => 'assets/donasi/perlengkapan_medis.jpg',

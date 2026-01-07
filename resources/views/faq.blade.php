@@ -22,11 +22,11 @@
             </div>
 
             <div class="nav-menu">
-                <a href="home" class="nav-link active">Beranda</a>
-                <a href="DonationPage" class="nav-link">Donasi</a>
+                <a href="home" class="nav-link">Beranda</a>
+                <a href="donation" class="nav-link">Donasi</a>
                 <a href="programrelawan" class="nav-link">Relawan</a>
                 <a href="community" class="nav-link">Komunitas</a>
-                <a href="faq" class="nav-link">FAQs</a>
+                <a href="faq" class="nav-link active">FAQs</a>
             </div>
 
             <div class="nav-right">
@@ -57,7 +57,7 @@
 
         <div id="mobile-menu" class="mobile-menu">
             <a href="home" class="mobile-item">Beranda</a>
-            <a href="DonationPage" class="mobile-item">Donasi</a>
+            <a href="donation" class="mobile-item">Donasi</a>
             <a href="programrelawan" class="mobile-item">Relawan</a>
             <a href="community" class="mobile-item">Komunitas</a>
             <a href="faq" class="mobile-item">FAQs</a>

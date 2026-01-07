@@ -22,7 +22,7 @@ return new class extends Migration
                 ->constrained('programrelawan')
                 ->cascadeOnDelete();
 
-            $table->string('status')->default('Menunggu Konfirmasi');
+            // $table->string('status')->default('Menunggu Konfirmasi');
             $table->timestamps();
         });
     }

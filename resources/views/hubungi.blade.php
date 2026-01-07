@@ -55,7 +55,7 @@
 
         <div id="mobile-menu" class="mobile-menu">
             <a href="home" class="mobile-item">Beranda</a>
-            <a href="DonationPage" class="mobile-item">Donasi</a>
+            <a href="donation" class="mobile-item">Donasi</a>
             <a href="programrelawan" class="mobile-item">Relawan</a>
             <a href="community" class="mobile-item">Komunitas</a>
             <a href="faq" class="mobile-item">FAQs</a>

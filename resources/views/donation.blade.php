@@ -1,23 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePage</title>
-
-    <!-- Optional: Tailwind still loaded, but no Tailwind classes are used -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Donation Page</title>
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/Donation.css') }}">
 </head>
-
 <body class="body">
-
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-left">
@@ -26,8 +20,8 @@
             </div>
 
             <div class="nav-menu">
-                <a href="home" class="nav-link active">Beranda</a>
-                <a href="donation" class="nav-link">Donasi</a>
+                <a href="home" class="nav-link">Beranda</a>
+                <a href="donation" class="nav-link active">Donasi</a>
                 <a href="programrelawan" class="nav-link">Relawan</a>
                 <a href="community" class="nav-link">Komunitas</a>
                 <a href="faq" class="nav-link">FAQs</a>
@@ -71,78 +65,11 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="hero">
-        <img src="/asset/hero_img1.png" alt="" class="hero-bg">
-
-        <div class="hero-content">
-            <h1 class="hero-title">Bersama Kita Membuat Perubahan</h1>
-            <p class="hero-subtitle">
-                Bergabung dengan komunitas relawan dan donatur untuk bersama-sama mewujudkan perubahan positif di dunia.
-            </p>
+    <div class="container" id="donations-container">
+        <div class="cards-grid" id="donasiGrid">
+            <!-- program donasi akan dirender di sini -->
         </div>
-    </header>
-
-
-    <!-- MAIN SECTION -->
-    <main class="main">
-        <div class="container">
-
-            <h2 class="section-title">Bantuan yang Dibutuhkan</h2>
-            <p class="section-desc">
-                Temukan berbagai cara untuk membantu dan memberi harapan bagi mereka yang membutuhkan
-            </p>
-
-            <div class="tab-program">
-                <button class="tab-outline active" data-tab="donasi">Program Donasi</button>
-                <button class="tab-outline" data-tab="relawan">Kesempatan Relawan</button>
-                <!-- <button class="tab-outline" data-tab="darurat">Kampanye Darurat</button> -->
-            </div>
-
-            <div class="cards-wrapper active" data-category="donasi">
-                <div class="cards-grid" id="donasiGrid">
-                    <!-- program donasi akan dirender di sini -->
-                </div>
-            </div>
-
-            <div class="cards-wrapper" data-category="relawan">
-                <div class="cards-grid" id="relawanGrid">
-                    <!-- program relawan akan dirender di sini -->
-                </div>
-                
-            </div>
-            
-            
-            <!-- <div class="cards-wrapper" data-category="darurat">
-                <div class="cards-grid">
-                    <div class="card"> ... </div>
-                    <div class="card"> ... </div>
-                    <div class="card"> ... </div>
-                </div>
-            </div> -->
-            
-            <section class="org-content" id="kegiatan">
-                <h2>Riwayat Kegiatan Selesai</h2>
-                
-                <div class="history-container">
-                    <div class="history-column" id="history-donasi">
-                        <h3>Riwayat Program Donasi</h3>
-                        <div class="program-card-scroll" id="donasiHistoryGrid">
-                            <!-- Data donasi akan di-inject JS -->
-                        </div>
-                    </div>
-                    
-                    <div class="history-column" id="history-relawan">
-                        <h3>Riwayat Program Relawan</h3>
-                        <div class="program-card-scroll" id="relawanHistoryGrid">
-                            <!-- Data relawan akan di-inject JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </main>
-    <div class="detail-modal-container" id="detailModal"></div>
+    </div>
 
     <footer class="footer">
         <div class="footer-container">
@@ -218,7 +145,7 @@
         </div>
     </footer>
     
-    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
-    <script src="{{ asset('js/home.js') }}"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
+    <script src="{{ asset('js/donation.js') }}"></script>
 </body>
 </html>

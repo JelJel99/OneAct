@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Transaksi;
+use App\Models\Transaction;
 use App\Models\RelawanDaftar;
 
 class UserHistoryController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
+        $user = auth()->user();
 
-        $donasi = Transaksi::with('donasi.program.organisasi')
+        $donasi = Transaction::with('donasi.program.organisasi')
             ->where('user_id', $user->id)
             ->get();
 
@@ -31,7 +31,7 @@ class UserHistoryController extends Controller
     //     // Kita pakai user_id statis 2 supaya bisa cek data tanpa login
     //     $userId = 2;
 
-    //     $donasi = Transaksi::with('donasi.program')
+    //     $donasi = Transaction::with('donasi.program')
     //         ->where('user_id', $userId)
     //         ->get();
 

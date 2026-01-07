@@ -46,6 +46,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         daftarRelawan(programRelawanId);
     });
 
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest(".btn-daftar");
+        if (!btn) return;
+
+        const donationId = btn.dataset.id;
+        if (!donationId) return;
+
+        window.location.href = `/donation/${donationId}`;
+    });
+
     initMobileMenu();
     logoutfn();
     lucide.createIcons();
@@ -247,7 +257,7 @@ function renderDonasi(programs) {
                 </div>
 
                 <div class="card-actions">
-                    <button class="btn-daftar">Donasi</button>
+                    <button class="btn-daftar" data-id="${p.id}">Donasi</button>
                 </div>
             </div>
         </div>
@@ -538,6 +548,9 @@ function formatRupiah(num) {
 
 async function loadUserHistory() {
     const res = await fetch("/api/user/history", {
+        headers: {
+            "X-Requested-With": "XMLHttpRequest"
+        },
         credentials: "include"
     });
     const data = await res.json();
@@ -567,7 +580,9 @@ function renderHistoryDonasi(list) {
             <div class="program-content">
                 <div class="program-header">
                     <span class="tag donasi">Donasi</span>
-                    <span class="status selesai">Selesai</span>
+                    <span class="status ${donasi.status.replace(' ', '-')}">
+                        ${capitalize(donasi.status)}
+                    </span>
                 </div>
 
                 <h4>${program.judul}</h4>

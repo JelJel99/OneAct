@@ -31,5 +31,23 @@ class UserSeeder extends Seeder
             'status' => 'active',
             // 'program_history' => null,
         ]);
+
+        User::create([
+            'name' => 'aa User',
+            'email' => 'aa@gmail.com',
+            'password' => Hash::make('123123'),
+            'role' => 'general',
+            'status' => 'active',
+            // 'program_history' => null,
+        ]);
+
+        User::create([
+            'name' => 'bb User',
+            'email' => 'bb@gmail.com',
+            'password' => Hash::make('123123'),
+            'role' => 'general',
+            'status' => 'active',
+            // 'program_history' => null,
+        ]);
     }
 }

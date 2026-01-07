@@ -372,6 +372,8 @@ body {
     border-radius: 0.5rem;
     font-weight: 600;
     transition: 0.2s;
+
+    font-size: 1rem;
 }
 
 .btn-daftar:hover {

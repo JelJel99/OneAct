@@ -15,14 +15,14 @@ class RelawanDaftarSeeder extends Seeder
             [
                 'user_id' => 2,
                 'programrelawan_id' => 1,
-                'status' => 'Selesai',
+                // 'status' => 'Selesai',
                 'created_at' => now()->subMonths(2),
                 'updated_at' => now()->subMonths(2),
             ],
             [
                 'user_id' => 2,
                 'programrelawan_id' => 3,
-                'status' => 'Dalam Pelaksanaan',
+                // 'status' => 'Dalam Pelaksanaan',
                 'created_at' => now()->subWeeks(2),
                 'updated_at' => now()->subWeeks(2),
             ],

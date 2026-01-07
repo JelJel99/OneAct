@@ -25,7 +25,7 @@
     
             <div class="main-nav-menu">
                 <a href="/home" class="main-nav-link">Beranda</a>
-                <a href="/donasi" class="main-nav-link">Donasi</a>
+                <a href="/donation" class="main-nav-link">Donasi</a>
                 <a href="/programrelawan" class="main-nav-link active">Relawan</a>
                 <a href="/komunitas" class="main-nav-link">Komunitas</a>
                 <a href="/faq" class="main-nav-link">FAQs</a>
@@ -62,7 +62,7 @@
         <!-- MOBILE MENU -->
         <div id="mobile-menu" class="mobile-menu">
             <a href="/home" class="mobile-item">Beranda</a>
-            <a href="/donasi" class="mobile-item">Donasi</a>
+            <a href="/donation" class="mobile-item">Donasi</a>
             <a href="/programrelawan" class="mobile-item">Relawan</a>
             <a href="/komunitas" class="mobile-item">Komunitas</a>
             <a href="/faq" class="mobile-item">FAQs</a>

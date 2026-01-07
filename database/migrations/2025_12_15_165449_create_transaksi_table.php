@@ -24,6 +24,8 @@ return new class extends Migration
 
             $table->unsignedBigInteger('jumlah');
             $table->string('buktibayar');
+            $table->string('payment_type');
+            $table->string('payment_method');
 
             $table->timestamps();
         });
