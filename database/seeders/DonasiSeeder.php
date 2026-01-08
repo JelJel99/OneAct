@@ -63,5 +63,33 @@ class DonasiSeeder extends Seeder
             'jumlahsaatini' => 2500000,
             'laporan' => null,
         ]);
+
+        Donation::create([
+            'program_id' => 11,  // Donasi Bantuan Bencana Alam
+            'deskripsi' => 'Bantuan untuk korban bencana alam berupa kebutuhan pokok dan logistik darurat.',
+            'foto' => 'assets/donasi/bantuan_bencana_alam.jpg',
+            'target' => 20000000,
+            'jumlahsaatini' => 5000000,
+            'laporan' => '/asset/pdf/laporan1.pdf',
+        ]);
+
+        Donation::create([
+            'program_id' => 12, // Donasi Pendidikan Anak Yatim
+            'deskripsi' => 'Donasi untuk mendukung pendidikan anak yatim melalui penyediaan buku dan perlengkapan sekolah.',
+            'foto' => 'assets/donasi/pendidikan_anak_yatim.jpg',
+            'target' => 15000000,
+            'jumlahsaatini' => 3500000,
+            'laporan' => '/asset/pdf/laporan2.pdf',
+        ]);
+
+        Donation::create([
+            'program_id' => 13, // Donasi Pengobatan Pasien Kurang Mampu
+            'deskripsi' => 'Bantuan biaya pengobatan untuk pasien kurang mampu di daerah terpencil.',
+            'foto' => 'assets/donasi/pengobatan_pasien.jpg',
+            'target' => 10000000,
+            'jumlahsaatini' => 2500000,
+            'laporan' => '/asset/pdf/laporan3.pdf',
+        ]);
+
     }
 }

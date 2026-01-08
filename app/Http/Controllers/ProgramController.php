@@ -98,12 +98,38 @@ class ProgramController extends Controller
         $organisasiId = $request->query('organisasi_id');
         $status = $request->query('status', 'approved');
 
+        if (!$organisasiId) {
+            return response()->json(['message' => 'organisasi_id required'], 400);
+        }
+
         $programs = Program::with(['donasi', 'relawan'])
             ->where('organisasi_id', $organisasiId)
             ->where('status', $status)
             ->get();
 
-        return response()->json($programs);
+        // Mapping data supaya frontend mudah render
+        $result = $programs->map(function ($p) {
+            return [
+                'id' => $p->id,
+                'judul' => $p->judul,
+                'start_date' => $p->start_date ?? $p->donasi->start_date ?? null,
+                'end_date' => $p->end_date ?? $p->donasi->end_date ?? null,
+                'type' => $p->type,
+                'status_otomatis' => $p->status_otomatis ?? null,
+                'deskripsi' => $p->deskripsi ?? $p->donasi->deskripsi ?? null,
+                'foto' => $p->foto ?? $p->donasi->foto ?? null,
+                'jumlah_terkumpul' => $p->donasi->jumlahsaatini ?? 0,
+                'target' => $p->donasi->target ?? 0,
+                'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,
+                'partisipan' => $p->partisipan ?? $p->relawan ? $p->relawan->relawan_daftar_count ?? 0 : 0,
+                'laporan' => $p->type === 'donasi'
+                    ? optional($p->donasi)->laporan
+                    : null,
+                'tenggat' => $p->tenggat ? date('d-m-Y', strtotime($p->tenggat)) : null,
+            ];
+        });
+
+        return response()->json($result);
     }
 
 

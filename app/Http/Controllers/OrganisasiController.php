@@ -51,6 +51,11 @@ class OrganisasiController extends Controller
             })
             ->distinct('user_id')
             ->count('user_id');
+        
+        $program_status = Program::with(['donasi', 'relawan'])
+            ->where('organisasi_id', $organisasiId)
+            ->where('status', 'approved')
+            ->get();
 
         return response()->json([
             'id' => $organisasi->id,
@@ -64,6 +69,7 @@ class OrganisasiController extends Controller
             'jumlah_program_relawan' => $jumlah_program_relawan,
             'program_aktif' => $program_aktif,
             'relawan_aktif' => $relawan_aktif,
+            'program_status' => $program_status,
         ]);
     }
 }

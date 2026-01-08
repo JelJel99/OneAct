@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderStatistik(organisasi);
     renderVisiMisi(organisasi);
     renderPrograms(programs);
-    renderLaporan(laporan);
+    // renderLaporan(laporan);
 
     if (window.lucide) lucide.createIcons();
 
@@ -143,31 +143,28 @@ function renderVisiMisi(org) {
 // Render Programs (relawan & donasi)
 function renderPrograms(programs) {
   const container = document.getElementById('programContainer');
-  container.innerHTML = ''; // clear dulu
+  container.innerHTML = ''; // Clear dulu
+
+  // Map status ke class & teks
+  const statusMap = {
+    'perekrutan': { class: 'ongoing', text: 'Dalam Perekrutan' },
+    'dalam pelaksanaan': { class: 'ongoing', text: 'Dalam Pelaksanaan' },
+    'selesai': { class: 'selesai', text: 'Selesai' }
+  };
 
   programs.forEach(prog => {
-    let statusClass = '';
-    let statusText = '';
+    const statusInfo = statusMap[prog.status_otomatis] || { class: 'pending', text: 'Tidak Diketahui' };
 
-    if (prog.status === 'ongoing' || prog.status === 'approved') {
-      statusClass = 'ongoing';
-      statusText = 'Sedang Berjalan';
-    } else if (prog.status === 'selesai' || prog.status === 'completed') {
-      statusClass = 'selesai';
-      statusText = 'Selesai';
-    } else {
-      statusClass = 'pending';
-      statusText = 'Pending';
-    }
-
-    // Tentukan tag program berdasarkan type
+    const statusClass = statusInfo.class;
+    const statusText = statusInfo.text;
+    
     const tagType = prog.type === 'relawan' ? 'Relawan' : 'Donasi';
     const tagClass = prog.type === 'relawan' ? 'relawan' : 'donasi';
-
-    // Jumlah partisipan atau relawan, contoh dari data
+    
+    // Meta count: bisa partisipan (relawan) atau relawan_count (donasi)
     const metaCount = prog.partisipan || prog.relawan_count || 0;
-
-    // Program card HTML
+    
+    console.log(prog.laporan);
     const programHTML = `
       <div class="program-card" data-status="${statusClass}" ${prog.laporan ? `data-report="${prog.laporan}"` : ''}>
         <img src="${prog.foto || '/asset/default_program.jpg'}" alt="${prog.judul}">
@@ -177,26 +174,33 @@ function renderPrograms(programs) {
             <span class="status ${statusClass}">${statusText}</span>
           </div>
           <h3>${prog.judul}</h3>
-          <p class="date">${prog.tenggat || ''}</p>
+          <p class="date">${prog.tenggat}</p>
           <p class="desc">${prog.deskripsi || ''}</p>
           <p class="meta"><i data-lucide="users" class="meta-icon"></i>${metaCount}</p>
           ${prog.type === 'donasi' ? `
-          <div class="fund">
-            <div class="fund-text">
-              <span>Dana terkumpul</span>
-              <strong>Rp ${prog.jumlah_terkumpul?.toLocaleString() || '0'} / Rp ${prog.target?.toLocaleString() || '0'}</strong>
-            </div>
-            <div class="progress">
-              <div class="progress-bar" style="width:${prog.target ? (prog.jumlah_terkumpul / prog.target * 100) : 0}%"></div>
-            </div>
-            ${prog.laporan ? `<button class="report-btn">Lihat Laporan</button>` : ''}
-          </div>` : ''}
+            <div class="fund">
+              <div class="fund-text">
+                <span>Dana terkumpul</span>
+                <strong>Rp ${prog.jumlah_terkumpul?.toLocaleString() || '0'} / Rp ${prog.target?.toLocaleString() || '0'}</strong>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width:${prog.target ? (prog.jumlah_terkumpul / prog.target * 100) : 0}%"></div>
+              </div>
+              ${prog.laporan
+                ? `<a href="${prog.laporan}" target="_blank" class="report-btn">
+                    Lihat Laporan
+                  </a>`
+                : `<p class="draft-note">Laporan sedang dalam pembuatan</p>`
+              }
+            </div>` : ''}
         </div>
       </div>
     `;
 
     container.insertAdjacentHTML('beforeend', programHTML);
   });
+
+  if (window.lucide) lucide.createIcons();
 }
 
 // Render Laporan Transparansi

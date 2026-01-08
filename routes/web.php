@@ -23,6 +23,17 @@ Route::get('/organisasi/{id}', function ($id) {
     return view('organization_profile', compact('id'));
 });
 
+// web.php
+// Route::get('/laporan/{file}', function ($file) {
+//     $path = public_path("asset/pdf/$file");
+
+//     if (!file_exists($path)) {
+//         abort(404);
+//     }
+
+//     return response()->file($path);
+// });
+
 // Route::get('/programrelawan/{id}', [ProgramController::class, 'show']);
 // Route::get('/programrelawan', function () {
 //     return view('programrelawan');

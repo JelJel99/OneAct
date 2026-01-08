@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Donation;
 use App\Models\Transaction;
+use Carbon\Carbon;
 
 class DonationController extends Controller
 {
@@ -18,7 +19,8 @@ class DonationController extends Controller
     public function apiIndex()
     {
         $donations = Donation::whereHas('program', function ($q) {
-            $q->where('status', 'approved');
+            $q->where('status', 'approved')
+            ->where('tenggat', '>', Carbon::now());
         })
         ->with('program.organisasi', 'transactions')
         ->get();

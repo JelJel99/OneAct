@@ -93,7 +93,69 @@ class ProgramRelawanSeeder extends Seeder
             'foto' => 'assets/relawan/lingkungan.jpg',
             'created_at' => now(),
             'updated_at' => now(),
-]);
+        ]);
 
+        ProgramRelawan::create([
+            'program_id' => 14,
+            'kategori' => 'Lingkungan',
+            'deskripsi' => 'Relawan membantu pemulihan lingkungan pasca banjir dengan membersihkan dan memperbaiki area terdampak.',
+            'lokasi' => 'Jakarta',
+            'komitmen' => 'Mingguan',
+            'keahlian' => 'Manajemen Lingkungan',
+
+            'kuota' => 30,
+            'start_date' => '2025-09-01',
+            'end_date' => '2025-11-30',
+
+            'tanggung_jawab' => 'Membersihkan area terdampak|Membantu koordinasi evakuasi|Mengedukasi warga terdampak',
+            'persyaratan' => 'Fisik sehat|Mampu bekerja di luar ruangan|Berpengalaman di kegiatan sosial',
+            'benefit' => 'Sertifikat relawan|Pengalaman lapangan|Jaringan sosial luas',
+
+            'foto' => 'assets/relawan/pemulihan_lingkungan.jpg',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        ProgramRelawan::create([
+            'program_id' => 15,
+            'kategori' => 'Pendidikan',
+            'deskripsi' => 'Relawan mengajar dan membimbing anak-anak di desa agar mendapatkan akses pendidikan yang layak.',
+            'lokasi' => 'Yogyakarta',
+            'komitmen' => 'Bulanan',
+            'keahlian' => 'Pendidikan Anak',
+
+            'kuota' => 20,
+            'start_date' => '2025-08-15',
+            'end_date' => '2025-11-15',
+
+            'tanggung_jawab' => 'Mengajar anak-anak|Membuat materi pembelajaran kreatif|Membimbing belajar kelompok',
+            'persyaratan' => 'Sabar dan komunikatif|Berpengalaman mengajar|Mampu beradaptasi dengan anak-anak',
+            'benefit' => 'Sertifikat relawan|Pengalaman mengajar|Pengembangan soft skills',
+
+            'foto' => 'assets/relawan/pendidikan_anak.jpg',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        ProgramRelawan::create([
+            'program_id' => 16,
+            'kategori' => 'Kesehatan',
+            'deskripsi' => 'Relawan mendampingi lansia dalam kegiatan kesehatan dan sosial di komunitas lokal.',
+            'lokasi' => 'Surabaya',
+            'komitmen' => 'Mingguan',
+            'keahlian' => 'Pendampingan Kesehatan',
+
+            'kuota' => 15,
+            'start_date' => '2025-09-10',
+            'end_date' => '2025-11-20',
+
+            'tanggung_jawab' => 'Mendampingi pemeriksaan kesehatan|Membantu aktivitas harian lansia|Mengedukasi kesehatan dasar',
+            'persyaratan' => 'Sabar dan empati tinggi|Pengalaman pendampingan kesehatan|Mampu bekerja mandiri',
+            'benefit' => 'Sertifikat relawan|Pengalaman sosial|Kepuasan membantu lansia',
+
+            'foto' => 'assets/relawan/pendampingan_kesehatan.jpg',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

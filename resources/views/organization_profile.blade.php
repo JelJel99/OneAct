@@ -84,7 +84,7 @@
         <div class="org-tabs">
             <button class="tab active" data-tab="ringkasan">Profile</button>
             <button class="tab" data-tab="kegiatan">Program</button>
-            <button class="tab" data-tab="transparansi">Laporan</button>
+            <!-- <button class="tab" data-tab="transparansi">Laporan</button> -->
         </div>
 
         <!-- CONTENT -->
@@ -131,9 +131,9 @@
             <!-- render js -->
         </section>
         
-        <section class="org-content" data-category="transparansi" id="laporanContainer">
+        <!-- <section class="org-content" data-category="transparansi" id="laporanContainer"> -->
             <!-- render js -->
-        </section>
+        <!-- </section> -->
         
     </main>
     
