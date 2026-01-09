@@ -19,6 +19,7 @@ return new class extends Migration
             $table->bigInteger('target')->default(0);
             $table->bigInteger('jumlahsaatini')->default(0);
             $table->string('laporan')->nullable();
+            $table->timestamp('laporan_uploaded_at')->nullable();
             $table->timestamps();
 
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');

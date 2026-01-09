@@ -28,16 +28,27 @@ document.addEventListener('DOMContentLoaded', async function () {
         const allPrograms = await allRes.json();
         console.log('ALL PROGRAMS:', allPrograms);
 
+        // LAPORAN
+        const laporanRes = await fetch(`/api/org/laporan?organisasi_id=${organisasiId}`, {
+            credentials: 'same-origin'
+        });
+
+        if (!laporanRes.ok) throw new Error('Laporan API gagal');
+
+        const laporans = await laporanRes.json();
+        console.log('LAPORANS:', laporans);
+
+        initCreateProgramDropdown();
+        SubmitDonasiForm();
+        submitVolunteerForm();
+
         // LANGSUNG KIRIM DATA FLAT
         renderWelcome(dashboard);
         renderStatistik(dashboard);
         renderProgramsTabs(program, allPrograms);
         initProgramTabs();
-
-        // renderLaporan(laporan);
-        // initCreateProgramDropdown();
-        // SubmitDonasiForm();
-        // submitVolunteerForm();
+        
+        renderLaporan(laporans);
         // unggahLaporanForm();
         // initMainContentDelegation();
         // initLoadMoreReports();
@@ -62,31 +73,6 @@ function hideAllModals() {
     if (modalVolunteer) modalVolunteer.style.display = 'none';
     if (modalProgramDetail) modalProgramDetail.style.display = 'none'; 
     if (modalUnggahLaporan) modalUnggahLaporan.style.display = 'none';
-}
-
-// Fungsi validasi file umum (diperbarui)
-function validateFile(fileInput, maxSize, allowedMimes) {
-    if (!fileInput.files.length) {
-        alert("Mohon pilih file.");
-        return false;
-    }
-
-    const file = fileInput.files[0];
-    const maxSizeMB = maxSize / 1024 / 1024;
-    
-    if (file.size > maxSize) {
-        alert(`Ukuran file melebihi batas maksimum ${maxSizeMB} MB. Ukuran file Anda: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
-        return false;
-    }
-
-    if (!allowedMimes.includes(file.type)) {
-        // Tampilkan tipe file yang diperbolehkan
-        const allowedExtensions = allowedMimes.map(m => m.split('/')[1].toUpperCase()).join(', ');
-        alert(`Format file tidak didukung. Mohon gunakan ${allowedExtensions}.`);
-        return false;
-    }
-
-    return true;
 }
 
 // Fungsi untuk membuka modal unggah laporan
@@ -124,18 +110,21 @@ function renderStatistik(data) {
 
     c.innerHTML = `
         <div class="stat-card stat-active">
+            <i class="fas fa-check-circle"></i>
             <h3>Program Aktif</h3>
             <span class="value">${data.program_aktif}</span>
         </div>
 
         <div class="stat-card stat-volunteer">
+            <i class="fas fa-users"></i>
             <h3>Total Volunteer</h3>
             <span class="value">${data.relawan_aktif}</span>
         </div>
 
         <div class="stat-card stat-donation">
-            <h3>Program Donasi</h3>
-            <span class="value">${data.jumlah_program_donasi}</span>
+            <i class="fas fa-heart"></i>
+            <h3>Program Dalam Pengajuan</h3>
+            <span class="value">${data.program_pending}</span>
         </div>
     `;
 }
@@ -200,6 +189,20 @@ function createProgramCard(p) {
     let statusText = '';
     let statusClass = '';
 
+    let dbStatusText = '';
+    let dbStatusClass = '';
+
+    if (p.status === 'pending') {
+        dbStatusText = 'Pending';
+        dbStatusClass = 'tag-pending'; // definisikan style di CSS
+    } else if (p.status === 'approved') {
+        dbStatusText = 'Approved';
+        dbStatusClass = 'tag-approved';
+    } else if (p.status === 'reject') {
+        dbStatusText = 'Rejected';
+        dbStatusClass = 'tag-rejected';
+    }
+
     if (p.type === 'relawan') {
         const startDate = p.start_date ? new Date(p.start_date) : today;
         const endDate = p.end_date ? new Date(p.end_date) : today;
@@ -234,6 +237,7 @@ function createProgramCard(p) {
     <div class="program-card active-card">
         <div class="program-details">
             <span class="tag ${typeClass}">${typeLabel}</span>
+            <span class="tag ${dbStatusClass}">${dbStatusText}</span>
             <span class="tag ${statusClass}">${statusText}</span>
             <h4>${p.judul}</h4>
             <div class="program-stats">
@@ -280,6 +284,8 @@ function isProgramAktif(p) {
 }
 
 function renderLaporan(laporans) {
+    console.log('renderLaporan dipanggil:', laporans);
+
     const c = document.getElementById('laporanContainer');
     c.innerHTML = '';
 
@@ -288,85 +294,16 @@ function renderLaporan(laporans) {
         <div class="report-item">
             <div class="report-icon-placeholder">📄</div>
             <div class="report-info">
-            <span class="tag tag-donation">Donasi</span>
-            <span class="tag tag-published">Dipublikasi</span>
-            <h4>${l.judul}</h4>
-            <div class="report-actions-bottom">
-                <a href="/asset/pdf/${l.file}" target="_blank" class="btn-view">Lihat</a>
-            </div>
+                <span class="tag tag-donation">Donasi</span>
+                <span class="tag tag-published">Dipublikasi</span>
+                <h4>${l.judul}</h4>
+                <div class="report-actions-bottom">
+                    <a href="/asset/pdf/${l.file}" target="_blank" class="btn-view">Lihat</a>
+                </div>
             </div>
         </div>
         `);
     });
-}
-
-// Fungsi untuk membuat HTML detail program
-function generateDonasiDetailHTML(program) {
-    // ... (HTML detail Donasi, sama seperti sebelumnya)
-    return `
-        <div class="program-detail-body">
-            <img src="${program.img}" alt="${program.name}" style="width:100%; height: auto; border-radius: 6px; margin-bottom: 15px;">
-            <h3>${program.name} <span class="tag tag-donation" style="margin-left: 10px;">Donasi</span></h3>
-            <p><strong>Deskripsi Program:</strong> ${program.description}</p>
-            <hr>
-            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                <p><i class="fas fa-bullseye"></i> <strong>Target Donasi:</strong> ${program.target}</p>
-                <p><i class="fas fa-donate"></i> <strong>Terkumpul Saat Ini:</strong> ${program.terkumpul}</p>
-                <p><i class="fas fa-chart-bar"></i> <strong>Capaian:</strong> ${program.capaian}</p>
-                <p><i class="fas fa-calendar-alt"></i> <strong>Batas Akhir:</strong> ${program.deadline}</p>
-                <p><i class="fas fa-tag"></i> <strong>Kategori:</strong> ${program.kategori}</p>
-            </div>
-        </div>
-    `;
-}
-
-function generateVolunteerDetailHTML(program) {
-    // ... (HTML detail Volunteer, sama seperti sebelumnya)
-    return `
-        <div class="program-detail-body">
-            <img src="${program.img}" alt="${program.name}" style="width:100%; height: auto; border-radius: 6px; margin-bottom: 15px;">
-            <h3>${program.name} <span class="tag tag-volunteer" style="margin-left: 10px;">Volunteer</span></h3>
-            <p><strong>Deskripsi Tugas & Persyaratan:</strong> ${program.description}</p>
-            <hr>
-            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                <p><i class="fas fa-users"></i> <strong>Kebutuhan Volunteer:</strong> ${program.kebutuhan} Orang</p>
-                <p><i class="fas fa-map-marker-alt"></i> <strong>Lokasi Kegiatan:</strong> ${program.lokasi}</p>
-                <p><i class="fas fa-child"></i> <strong>Usia Minimum Pelamar:</strong> ${program.usiaMin} Tahun</p>
-                <p><i class="fas fa-calendar-alt"></i> <strong>Berakhir:</strong> ${program.deadline}</p>
-            </div>
-        </div>
-    `;
-}
-
-function displayProgramDetail(programId) {
-    const program = activeProgramsData.find(p => p.id === programId);
-    const programDetailContent = document.getElementById('programDetailContent');
-    const modalProgramDetail = document.getElementById('modalProgramDetail');
-
-    if (program && programDetailContent && modalProgramDetail) {
-        let htmlContent = '';
-        // Gunakan ID unik untuk membedakan yang sudah selesai dan yang aktif 
-        if (program.id === 'donasi_report_needed_1') {
-             // Karena ini bukan program aktif normal, kita bisa buat detail khusus jika perlu
-             // Untuk demo, kita abaikan detail program ini dan fokus ke yang aktif.
-             alert("Detail program yang sudah selesai perlu halaman kelola terpisah.");
-             return;
-        } else if (program.type === 'Donasi') {
-            htmlContent = generateDonasiDetailHTML(program);
-        } else if (program.type === 'Volunteer') {
-            htmlContent = generateVolunteerDetailHTML(program);
-        }
-
-        if (htmlContent) {
-            programDetailContent.innerHTML = htmlContent;
-            document.getElementById('detailProgramTitle').textContent = `Detail Program ${program.name}`;
-            modalProgramDetail.style.display = 'block';
-        } else {
-             alert("Tipe program tidak valid.");
-        }
-    } else {
-        alert("Detail program tidak ditemukan.");
-    }
 }
 
 
@@ -459,7 +396,11 @@ function initCreateProgramDropdown() {
     const createProgramDropdown = document.getElementById('createProgramDropdown');
     const createProgramBtn = document.getElementById('createProgramBtn');
     const closeBtns = document.querySelectorAll('.modal .close-btn');
-
+    
+    const modalDonasi = document.getElementById('modalDonasi');
+    const modalVolunteer = document.getElementById('modalVolunteer');
+    const modalUnggahLaporan = document.getElementById('modalUnggahLaporan'); // BARU
+    
     if (!createProgramBtn || !createProgramDropdown) return;
 
     createProgramBtn.addEventListener('click', e => {
@@ -467,7 +408,7 @@ function initCreateProgramDropdown() {
         createProgramDropdown.classList.toggle('show');
     });
 
-    document.addEventListener('click', e => {
+    document.addEventListener('mousedown', e => {
         if (
             !createProgramBtn.contains(e.target) &&
             !createProgramDropdown.contains(e.target)
@@ -477,8 +418,6 @@ function initCreateProgramDropdown() {
     });
 
     createProgramDropdown.querySelectorAll('a').forEach(item => {
-        const modalDonasi = document.getElementById('modalDonasi');
-        const modalVolunteer = document.getElementById('modalVolunteer');
 
         item.addEventListener('click', e => {
             e.preventDefault();
@@ -508,23 +447,78 @@ function initCreateProgramDropdown() {
 }
 
 // 2. Submit Form Donasi (Validasi Foto 10 MB)
+const MAX_PHOTO_SIZE_BYTES = 10 * 1024 * 1024; // 10MB contoh
+const ALLOWED_PHOTO_MIMES = ['image/jpeg', 'image/png', 'image/jpg'];
+
+function validateFile(fileInput, maxSize, allowedMimes) {
+    if (!fileInput.files.length) {
+        alert("Mohon pilih file.");
+        return false;
+    }
+
+    const file = fileInput.files[0];
+    const maxSizeMB = maxSize / 1024 / 1024;
+    
+    if (file.size > maxSize) {
+        alert(`Ukuran file melebihi batas maksimum ${maxSizeMB} MB. Ukuran file Anda: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
+        return false;
+    }
+
+    if (!allowedMimes.includes(file.type)) {
+        // Tampilkan tipe file yang diperbolehkan
+        const allowedExtensions = allowedMimes.map(m => m.split('/')[1].toUpperCase()).join(', ');
+        alert(`Format file tidak didukung. Mohon gunakan ${allowedExtensions}.`);
+        return false;
+    }
+
+    return true;
+}
+
 function SubmitDonasiForm() {
     const fotoDonasiInput = document.getElementById('fotoDonasi');
     const formDonasi = document.getElementById('formDonasi');
 
     if (!formDonasi || !fotoDonasiInput) return;
 
-    formDonasi.addEventListener('submit', e => {
+    formDonasi.addEventListener('submit', async e => {
         e.preventDefault();
 
         if (!validateFile(fotoDonasiInput, MAX_PHOTO_SIZE_BYTES, ALLOWED_PHOTO_MIMES)) return;
 
-        console.log(new FormData(formDonasi));
-        alert(`Program Donasi diajukan!`);
-        hideAllModals();
-        formDonasi.reset();
+        const formData = new FormData(formDonasi);
+
+        // Ambil CSRF token dari meta tag
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        try {
+            const response = await fetch('/org/submit-donasi', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                body: formData,
+                credentials: 'same-origin'
+            });
+
+            // if (!response.ok) throw new Error('Gagal submit data donasi');
+
+            if (!response.ok) {
+                const text = await response.text();
+                console.error('Response not ok:', response.status, text);
+                throw new Error('Gagal submit data donasi: ' + response.status);
+            }
+
+            const result = await response.json();
+            alert(result.message || 'Program Donasi diajukan!');
+            hideAllModals();
+            formDonasi.reset();
+
+        } catch (error) {
+            alert(error.message);
+        }
     });
 }
+
 
 // 3. Submit Form Volunteer (Validasi Foto 10 MB)
 function submitVolunteerForm() {
@@ -533,15 +527,47 @@ function submitVolunteerForm() {
 
     if (!formVolunteer || !fotoVolunteerInput) return;
 
-    formVolunteer.addEventListener('submit', e => {
+    formVolunteer.addEventListener('submit', async e => {
         e.preventDefault();
 
-        if (!validateFile(fotoVolunteerInput, MAX_PHOTO_SIZE_BYTES, ALLOWED_PHOTO_MIMES)) return;
+        // 🔒 Validasi foto
+        if (!validateFile(
+            fotoVolunteerInput,
+            MAX_PHOTO_SIZE_BYTES,
+            ALLOWED_PHOTO_MIMES
+        )) return;
 
-        console.log(new FormData(formVolunteer));
-        alert(`Program Volunteer diajukan!`);
-        hideAllModals();
-        formVolunteer.reset();
+        const formData = new FormData(formVolunteer);
+
+        // 🔐 Ambil CSRF token
+        const token = document
+            .querySelector('meta[name="csrf-token"]')
+            ?.getAttribute('content');
+
+        try {
+            const response = await fetch('/org/submit-volunteer', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token
+                },
+                body: formData,
+                credentials: 'same-origin'
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                console.error('Response not ok:', response.status, text);
+                throw new Error('Gagal submit data volunteer: ' + response.status);
+            }
+
+            const result = await response.json();
+            alert(result.message || 'Program Volunteer berhasil diajukan!');
+            hideAllModals();
+            formVolunteer.reset();
+
+        } catch (error) {
+            alert(error.message);
+        }
     });
 }
 

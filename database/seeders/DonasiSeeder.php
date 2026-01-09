@@ -91,5 +91,16 @@ class DonasiSeeder extends Seeder
             'laporan' => '/asset/pdf/laporan3.pdf',
         ]);
 
+        Donation::create([
+            'program_id' => 17, // langsung pakai id program hasil create di atas
+            'deskripsi' => 'Pengumpulan biaya untuk anak-anak Yatin desa Peras',
+            'foto' => 'assets/donasi/buku_sekolah.jpg',
+            'target' => 18000000,
+            'jumlahsaatini' => 5000000,
+            'laporan' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
     }
 }

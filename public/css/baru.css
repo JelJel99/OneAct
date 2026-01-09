@@ -29,50 +29,178 @@ body {
 
 /* --- Navbar Styling --- */
 .navbar {
+    background: #ffffff;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-container {
+    /* max-width: 1280px; */
+    margin: auto;
+    padding: 0 4rem;
+    height: 64px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    background-color: var(--text-light);
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--primary-color);
+.nav-left img {
+    /* margin-left: 20%; */
+    max-width: 13%;
+    height: auto;
+    border-radius: 100rem;
 }
 
-.navbar-links {
+.nav-menu {
     display: flex;
+    gap: 1rem;
 }
 
-.navbar-links a {
-    text-decoration: none;
-    color: var(--text-dark);
-    margin: 0 15px;
-    padding: 5px 0;
-    border-bottom: 3px solid transparent;
-    white-space: nowrap;
-}
+/* @media (min-width: 768px) {
+    .nav-menu {
+        display: flex;
+        gap: 1rem;
+    }
+} */
 
-.navbar-links a.active {
-    color: var(--primary-color);
-    border-bottom: 3px solid var(--primary-color);
-    font-weight: bold;
-}
-
-.navbar-actions {
+.nav-right {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
 }
 
-.nav-icon {
-    color: var(--primary-color);
-    font-size: 20px;
-    margin-left: 20px;
-    text-decoration: none;
-    white-space: nowrap;
+.hidden {
+    display: none !important;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: #800000;
+    padding: 0.5rem;
+    border-radius: 9999px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+}
+
+.icon-btn i {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-btn:hover {
+    background: #efeeee; /* Darker red on hover */
+}
+
+.auth-separator {
+    color: #800000;
+    font-size: 0.9rem;
+    margin: 0 -0.25rem;
+}
+
+.auth-btn {
+    display: none;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: #800000;
+    transition: 0.2s;
+}
+
+.auth-btn:hover {
+    color: #4f0000; 
+    text-decoration: underline; 
+}
+
+.user-menu {
+    position: relative;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 10px); /* Jarak 10px di bawah tombol */
+    background: white;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    padding: 0.5rem;
+    min-width: 200px;
+    z-index: 50;
+    
+    /* Keadaan default sembunyi */
+    display: none;
+}
+
+/* Class untuk menampilkan dropdown via JS */
+.dropdown.show {
+    display: block !important;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#userEmail {
+    font-size: 0.85rem;
+    color: #6b7280;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #f3f4f6;
+    margin-bottom: 0.25rem;
+    word-break: break-all;
+}
+
+#logoutBtn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    color: #dc2626; /* Warna merah untuk logout */
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: 0.2s;
+}
+
+#logoutBtn:hover {
+    background: #fef2f2;
+}
+
+@media (min-width: 320px) {
+    .auth-btn {
+        display: inline-block;
+        border: 1px;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+        color: white;
+        transition: 0.2s;
+    }
+
+    .auth-btn:hover {
+        /* background: white; */
+        border-color: white;
+        color: #e5e7eb;
+        
+    }
+}
+
+.user-menu {
+    position: relative;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .report-needed-card .tag-report-needed {
@@ -103,7 +231,7 @@ body {
     background-color: var(--text-light);
     min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 10;
+    z-index: 9999;
     right: 0;
     border-radius: 5px;
     overflow: hidden;
@@ -321,7 +449,7 @@ body {
    TAG JENIS PROGRAM
    =============================== */
 .tag-relawan {
-    background-color: #4f8ef7; /* biru */
+    background-color: #053485d0; /* biru */
     color: #fff;
     font-weight: 600;
     padding: 2px 8px;
@@ -331,7 +459,7 @@ body {
 }
 
 .tag-donasi {
-    background-color: #f39c12; /* oranye */
+    background-color: #000000; /* oranye */
     color: #fff;
     font-weight: 600;
     padding: 2px 8px;
@@ -381,6 +509,24 @@ body {
     border-radius: 12px;
     font-size: 0.75rem;
     margin-right: 5px;
+}
+
+.tag-pending {
+    background-color: orange;
+    color: white;
+    border-radius: 12px
+}
+
+.tag-approved {
+    background-color: green;
+    color: white;
+    border-radius: 12px
+}
+
+.tag-rejected {
+    background-color: red;
+    color: white;
+    border-radius: 12px
 }
 
 .program-details h4 {

@@ -10,13 +10,19 @@ class ProgramRelawan extends Model
     protected $table = 'programrelawan';
 
     protected $fillable = [
-        'program_id', 
-        'kategori', 
+        'program_id',
+        'kategori',
         'deskripsi',
-        'lokasi', 
-        'komitmen', 
-        'keahlian', 
-        'foto'
+        'lokasi',
+        'komitmen',
+        'start_date',
+        'end_date',
+        'keahlian',
+        'foto',
+        'tanggung_jawab',
+        'kuota',
+        'persyaratan',
+        'benefit',
     ];
 
     protected $appends = ['status_otomatis'];

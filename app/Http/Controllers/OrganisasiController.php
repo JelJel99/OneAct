@@ -19,6 +19,10 @@ class OrganisasiController extends Controller
 
         $programApproved = $organisasi->programs()
             ->where('status', 'approved');
+        
+        $program_pending = $organisasi->programs()
+            ->where('status', 'pending')
+            ->count();
 
         $jumlah_program_donasi = (clone $programApproved)
             ->where('type', 'donasi')->count();
@@ -70,6 +74,7 @@ class OrganisasiController extends Controller
             'program_aktif' => $program_aktif,
             'relawan_aktif' => $relawan_aktif,
             'program_status' => $program_status,
+            'program_pending' => $program_pending,
         ]);
     }
 

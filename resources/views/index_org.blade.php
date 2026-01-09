@@ -17,21 +17,32 @@
 <body>
 
     <nav class="navbar">
-        <div class="navbar-logo">OneAct</div>
-        <div class="navbar-links">
-        </div>
-        <div class="navbar-actions">
-            <div class="create-program-dropdown">
-                <button class="btn-create-program" id="createProgramBtn">
-                    + Buat Program
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="/asset/square_OneAct.png" alt="OneAct Logo" class="logo">
+                <!-- <span class="logo">OneAct</span> -->
+            </div>
+
+            <div class="nav-right">
+                <button id="notifBtn" class="icon-btn hidden">
+                    <i data-lucide="bell"></i>
                 </button>
-                <div class="dropdown-content" id="createProgramDropdown">
-                    <a href="#"><i class="fas fa-hand-holding-usd"></i> Buat Program Donasi</a>
-                    <a href="#"><i class="fas fa-hands-helping"></i> Buat Program Volunteer</a>
+
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
+                <span id="authSep" class="auth-separator">/</span>
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
+
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
+                        <i data-lucide="user"></i>
+                    </button>
+                    <div class="dropdown">
+                        <p id="userEmail"></p>
+                        <button id="logoutBtn">logout</button>
+                    </div>
                 </div>
             </div>
-            <a href="#" class="nav-icon"><i class="fas fa-bell"></i></a>
-            <a href="#" class="nav-icon"><i class="fas fa-user-circle"></i> Admin</a>
+
         </div>
     </nav>
 
@@ -135,16 +146,16 @@
             <h2>Buat Program Donasi Baru</h2>
             <form id="formDonasi">
                 <div class="form-group">
-                    <label for="namaProgramDonasi">Nama Program</label>
-                    <input type="text" id="namaProgramDonasi" required name="namaProgramDonasi">
+                    <label for="judul">Nama Program</label>
+                    <input type="text" id="judul" required name="judul">
                 </div>
                 <div class="form-group">
                     <label for="targetDonasi">Target Donasi (Rp)</label>
                     <input type="number" id="targetDonasi" required min="1000000" name="targetDonasi">
                 </div>
                 <div class="form-group">
-                    <label for="deskripsiDonasi">Deskripsi Singkat</label>
-                    <textarea id="deskripsiDonasi" rows="3" required name="deskripsiDonasi"></textarea>
+                    <label for="deskripsi">Deskripsi Singkat</label>
+                    <textarea id="deskripsi" rows="3" required name="deskripsi"></textarea>
                 </div>
                 
                 <div class="form-group upload-photo-group">
@@ -182,16 +193,20 @@
                     <input type="text" id="namaProgramVolunteer" required name="namaProgramVolunteer">
                 </div>
                 <div class="form-group">
+                    <label for="deskripsi">Deskripsi</label>
+                    <input type="text" id="deskripsi" required name="deskripsi">
+                </div>
+                <div class="form-group">
+                    <label for="deadlineVolun">Batas Akhir Pendaftaran Volunteer</label>
+                    <input type="date" id="deadlineVolun" required name="deadlineVolun">
+                </div>
+                <div class="form-group">
                     <label for="jumlahVolunteer">Kebutuhan Volunteer (Orang)</label>
                     <input type="number" id="jumlahVolunteer" required min="1" name="jumlahVolunteer">
                 </div>
                 <div class="form-group">
                     <label for="lokasiVolunteer">Lokasi Kegiatan</label>
                     <input type="text" id="lokasiVolunteer" required name="lokasiVolunteer">
-                </div>
-                <div class="form-group">
-                    <label for="persyaratanUsia">Usia Minimum Pelamar</label>
-                    <input type="number" id="persyaratanUsia" required min="16" name="persyaratanUsia">
                 </div>
                 
                 <div class="form-group upload-photo-group">
@@ -200,8 +215,42 @@
                     <p class="file-info">Format: PNG, JPG, JPEG. Maksimum: 10 MB.</p>
                 </div>
                 <div class="form-group">
-                    <label for="deskripsiVolunteer">Deskripsi Tugas & Persyaratan</label>
-                    <textarea id="deskripsiVolunteer" rows="3" required name="deskripsiVolunteer"></textarea>
+                    <label for="komitmen">Komitmen</label>
+                    <input type="text" id="komitmen" required name="komitmen">
+                </div>
+                <div class="form-group">
+                    <label for="keahlian">Keahlian</label>
+                    <input type="text" id="keahlian" required name="keahlian">
+                </div>
+                <div class="form-group">
+                    <label for="tanggung_jawab">Tanggung Jawab</label>
+                    <input type="text" id="tanggung_jawab" required name="tanggung_jawab">
+                </div>
+                <div class="form-group">
+                    <label for="kriteria">Kriteria</label>
+                    <input type="text" id="kriteria" required name="kriteria">
+                </div>
+                <div class="form-group">
+                    <label for="benefit">Benefit</label>
+                    <input type="text" id="benefit" required name="benefit">
+                </div>
+                <div class="form-group">
+                    <label for="start_date">Tanggal Mulai Kegiatan Volunteer</label>
+                    <input type="date" id="start_date" required name="start_date">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">Tanggal Akhir Kegiatan Volunteer</label>
+                    <input type="date" id="end_date" required name="end_date">
+                </div>
+                <div class="form-group">
+                    <label for="kategoriRelawan">Kategori</label>
+                    <select id="kategoriRelawan" required name="kategoriRelawan">
+                        <option value="">Pilih Kategori</option>
+                        <option value="Sosial">Sosial</option>
+                        <option value="Kesehatan">Kesehatan</option>
+                        <option value="Lingkungan">Lingkungan</option>
+                        <option value="Pendidikan">Pendidikan</option>
+                    </select>
                 </div>
                 
                 <button type="submit" class="btn-primary">Ajukan Program Volunteer</button>
@@ -251,7 +300,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/global.js') }}"></script>
     <script src="{{ asset('js/baru.js') }}"></script>
+    <script src="{{ asset('js/global.js') }}"></script>
 </body>
 </html>

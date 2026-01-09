@@ -148,3 +148,8 @@ Route::middleware(['auth', 'role:organisasi'])
         Route::get('/laporan', [OrganisasiDashboardController::class, 'laporan']);
         Route::get('/laporan/{program}', [OrganisasiDashboardController::class, 'downloadLaporan']);
     });
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/org/submit-donasi', [OrganisasiDashboardController::class, 'storeDonasi']);
+    Route::post('/org/submit-volunteer', [OrganisasiDashboardController::class, 'storeVolunteer']);
+});

@@ -138,6 +138,7 @@ class ProgramSeeder extends Seeder
             'created_at' => now(),
         ]);
 
+        
         Program::create([
             'organisasi_id' => 2,
             'judul' => 'Relawan Pendidikan untuk Anak Desa',
@@ -146,13 +147,22 @@ class ProgramSeeder extends Seeder
             'tenggat' => '2025-08-01',
             'created_at' => now(),
         ]);
-
+        
         Program::create([
             'organisasi_id' => 3,
             'judul' => 'Relawan Pendampingan Kesehatan Lansia',
             'type' => 'Relawan',
             'status' => 'approved',
             'tenggat' => '2025-08-30',
+            'created_at' => now(),
+        ]);
+        
+        Program::create([
+            'organisasi_id' => 1,
+            'judul' => 'Biaya Pendidikan untuk Anak Yatim',
+            'type' => 'donasi',
+            'status' => 'approved',
+            'tenggat' => '2025-08-25',
             'created_at' => now(),
         ]);
 
