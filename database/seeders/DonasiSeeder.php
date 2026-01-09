@@ -17,6 +17,7 @@ class DonasiSeeder extends Seeder
             'target' => 10000000,
             'jumlahsaatini' => 1500000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -26,6 +27,7 @@ class DonasiSeeder extends Seeder
             'target' => 12000000,
             'jumlahsaatini' => 8000000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -35,6 +37,7 @@ class DonasiSeeder extends Seeder
             'target' => 30000000,
             'jumlahsaatini' => 29000000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -44,6 +47,7 @@ class DonasiSeeder extends Seeder
             'target' => 18000000,
             'jumlahsaatini' => 5000000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -53,6 +57,7 @@ class DonasiSeeder extends Seeder
             'target' => 7000000,
             'jumlahsaatini' => 4000000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -62,6 +67,7 @@ class DonasiSeeder extends Seeder
             'target' => 9000000,
             'jumlahsaatini' => 2500000,
             'laporan' => null,
+            'laporan_uploaded_at' => null,
         ]);
 
         Donation::create([
@@ -71,6 +77,7 @@ class DonasiSeeder extends Seeder
             'target' => 20000000,
             'jumlahsaatini' => 5000000,
             'laporan' => '/asset/pdf/laporan1.pdf',
+            'laporan_uploaded_at' => '2025-12-30 14:30:00',
         ]);
 
         Donation::create([
@@ -80,6 +87,7 @@ class DonasiSeeder extends Seeder
             'target' => 15000000,
             'jumlahsaatini' => 3500000,
             'laporan' => '/asset/pdf/laporan2.pdf',
+            'laporan_uploaded_at' => '2025-12-30 11:30:00',
         ]);
 
         Donation::create([
@@ -89,6 +97,7 @@ class DonasiSeeder extends Seeder
             'target' => 10000000,
             'jumlahsaatini' => 2500000,
             'laporan' => '/asset/pdf/laporan3.pdf',
+            'laporan_uploaded_at' => '2025-12-30 19:30:00',
         ]);
 
         Donation::create([
@@ -98,8 +107,7 @@ class DonasiSeeder extends Seeder
             'target' => 18000000,
             'jumlahsaatini' => 5000000,
             'laporan' => null,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'laporan_uploaded_at' => null,
         ]);
 
     }

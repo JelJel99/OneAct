@@ -119,6 +119,7 @@ class ProgramController extends Controller
 
             return [
                 'id' => $p->id,
+                'donation_id' => optional($p->donasi)->id,
                 'judul' => $p->judul,
                 'start_date' => $startDate ? date('Y-m-d', strtotime($startDate)) : null,
                 'end_date' => $endDate ? date('Y-m-d', strtotime($endDate)) : null,
@@ -130,7 +131,11 @@ class ProgramController extends Controller
                 'target' => optional($p->donasi)->target ?? 0,
                 'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,
                 'partisipan' => $p->partisipan ?? (optional($p->relawan)->relawan_daftar_count ?? 0),
-                'laporan' => null,
+                'laporan' => (
+                    $p->type === 'donasi'
+                        ? optional($p->donasi)->laporan
+                        : null
+                ),
                 'tenggat' => $p->tenggat ? date('Y-m-d', strtotime($p->tenggat)) : null,
             ];
         });
@@ -176,7 +181,11 @@ class ProgramController extends Controller
                 'target' => optional($p->donasi)->target ?? 0,
                 'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,
                 'partisipan' => $p->partisipan ?? (optional($p->relawan)->relawan_daftar_count ?? 0),
-                'laporan' => null,
+                'laporan' => (
+                    $p->type === 'donasi'
+                        ? optional($p->donasi)->laporan
+                        : null
+                ),
                 'tenggat' => $p->tenggat ? date('Y-m-d', strtotime($p->tenggat)) : null,
             ];
         });

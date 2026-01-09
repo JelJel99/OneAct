@@ -24,6 +24,16 @@
             </div>
 
             <div class="nav-right">
+                <div class="create-program-dropdown">
+                    <button class="btn-create-program" id="createProgramBtn">
+                        + Buat Program
+                    </button>
+                    <div class="dropdown-content" id="createProgramDropdown">
+                        <a href="#"><i class="fas fa-hand-holding-usd"></i> Buat Program Donasi</a>
+                        <a href="#"><i class="fas fa-hands-helping"></i> Buat Program Volunteer</a>
+                    </div>
+                </div>
+                
                 <button id="notifBtn" class="icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
@@ -61,9 +71,11 @@
 
             <section class="manage-program">
                 <div class="program-tabs">
-                    <button class="tab-btn active" data-tab="all">Semua Program <span class="count" id="countAll">0</span></button>
+                    <button class="tab-btn active" data-tab="all">Semua Program <span class="count" id="countAll">0</span>
+                    </button>
                     <!-- <button class="tab-btn" data-tab="active">Program Aktif <span class="count" id="countActive">0</span></button> -->
-                    <button class="tab-btn" data-tab="report">Laporan <span class="count" id="countReport">0</span></button>
+                    <button class="tab-btn" data-tab="report">Unggah Laporan <span class="count" id="countReport">0</span>
+                    </button>
                 </div>
 
                 <!-- <div class="program-content" id="activePrograms"></div> -->
@@ -274,31 +286,45 @@
     <div id="modalUnggahLaporan" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>Unggah Laporan Program Selesai</h2>
-            
-            <input type="hidden" id="programIdToReport" name="programIdToReport" value="">
-
-            <div class="form-group">
-                <label for="reportProgramTitle">Program Yang Dilaporkan:</label>
-                <p id="reportProgramTitle" style="font-weight: bold; color: var(--primary-color);">[Nama Program]</p>
-            </div>
+            <h2>Unggah Laporan Penyelesaian Donasi</h2>
 
             <form id="formUnggahLaporan">
-                <div class="form-group upload-photo-group">
-                    <label for="fileLaporan">Pilih File Laporan (Format PDF, Max 50 MB)</label>
-                    <input type="file" id="fileLaporan" accept="application/pdf" required name="fileLaporan"> 
-                    <p class="file-info">Format: PDF. Maksimum: 50 MB.</p>
-                </div>
-                
+                <input
+                    type="hidden"
+                    id="programIdToReport"
+                    name="donation_id"
+                >
+
                 <div class="form-group">
-                    <label for="judulLaporan">Judul Laporan</label>
-                    <input type="text" id="judulLaporan" required placeholder="Contoh: Laporan Penggunaan Dana Pembangunan Sekolah - Final" name="judulLaporan">
+                    <label>Program Yang Dilaporkan:</label>
+                    <p
+                        id="reportProgramTitle"
+                        style="font-weight:bold;color:var(--primary-color);"
+                    >
+                        [Nama Program]
+                    </p>
                 </div>
-                
-                <button type="submit" class="btn-primary">Unggah dan Publikasikan</button>
+
+                <div class="form-group upload-photo-group">
+                    <label for="fileLaporan">
+                        Pilih File Laporan (PDF, Max 50 MB)
+                    </label>
+
+                    <!-- ✅ name HARUS "laporan" -->
+                    <input type="file" id="fileLaporan" name="laporan" accept="application/pdf" required>
+                    <p class="file-info">
+                        Format: PDF. Maksimum: 50 MB.
+                    </p>
+                </div>
+
+                <!-- ✅ BUTTON SUDAH BENAR -->
+                <button type="submit" class="btn-primary">
+                    Unggah dan Publikasikan
+                </button>
             </form>
         </div>
     </div>
+
 
     <script src="{{ asset('js/baru.js') }}"></script>
     <script src="{{ asset('js/global.js') }}"></script>

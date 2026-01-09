@@ -214,7 +214,7 @@ class OrganisasiDashboardController extends Controller
                     'jumlah_terkumpul' => $p->donasi->jumlahsaatini ?? 0,
                     'partisipan' => optional($p->relawan)->relawan_daftar_count ?? 0,
                     'tenggat' => $p->tenggat,
-                    'laporan' => $p->laporan_file,
+                    'laporan_file' => $p->laporan_file,
                     'selesai' => $p->laporan_file ? true : false,
                 ];
             });
@@ -226,18 +226,96 @@ class OrganisasiDashboardController extends Controller
      */
     public function laporan()
     {
-        $organisasi = Organisasi::where('user_id', auth()->id())->firstOrFail();
+        $organisasi = auth()->user()->organisasi;
+        $today = now()->toDateString();
 
-        return Program::where('organisasi_id', $organisasi->id)
-            ->whereNotNull('laporan_file')
-            ->select('id', 'judul', 'laporan_file')
+        $laporans = Donation::whereNotNull('laporan')
+            ->whereHas('program', function ($q) use ($organisasi, $today) {
+                $q->where('organisasi_id', $organisasi->id)
+                ->where('type', 'donasi')
+                ->whereDate('tenggat', '<', $today);
+            })
+            ->with('program:id,judul')
+            ->latest('laporan_uploaded_at')
             ->get()
-            ->map(fn ($p) => [
-                'program_id' => $p->id,
-                'judul' => $p->judul,
-                'file' => $p->laporan_file,
-            ]);
+            ->map(function ($d) {
+                return [
+                    'judul' => $d->program->judul,
+                    'file'  => $d->laporan,
+                    'tanggal' => optional($d->laporan_uploaded_at)
+                                    ->format('d M Y'), // 🔥 FORMAT SIAP PAKAI
+                ];
+            });
+
+        return response()->json($laporans);
     }
+
+    public function laporanPending()
+    {
+        $organisasi = auth()->user()->organisasi;
+        if (!$organisasi) {
+            return response()->json(['error' => 'Organisasi tidak ditemukan'], 404);
+        }
+
+        $today = now()->toDateString();
+
+        $laporans = Donation::whereNull('laporan') // belum upload laporan
+            ->whereHas('program', function ($q) use ($organisasi, $today) {
+                $q->where('organisasi_id', $organisasi->id)
+                ->where('type', 'donasi')
+                ->whereDate('tenggat', '<', $today); // tenggat sudah lewat
+            })
+            ->with('program:id,judul')
+            ->latest('tenggat') // tampilkan yang paling dekat tenggat dulu
+            ->get()
+            ->map(function ($d) {
+                return [
+                    'id'     => $d->id,
+                    'judul'  => $d->program->judul,
+                    'target' => $d->target,
+                    'jumlahsaatini' => $d->jumlahsaatini,
+                    'tenggat' => $d->program->tenggat->format('d M Y'),
+                ];
+            });
+
+        return response()->json($laporans);
+    }
+
+
+    public function uploadLaporan(Request $request, $programId)
+    {
+        $request->validate([
+            'laporan' => 'required|mimes:pdf|max:10240',
+        ]);
+
+        $program = Program::with('donasi')->findOrFail($programId);
+
+        // ⛔ hanya DONASI
+        if ($program->type !== 'donasi' || !$program->donasi) {
+            return response()->json([
+                'error' => 'Program ini bukan donasi'
+            ], 400);
+        }
+
+        // ⛔ pastikan tenggat lewat
+        if (now()->lt($program->tenggat)) {
+            return response()->json([
+                'error' => 'Belum melewati tenggat program'
+            ], 403);
+        }
+
+        $path = $request->file('laporan')->store('laporan_donasi', 'public');
+
+        $program->donasi->update([
+            'laporan' => $path,
+            'laporan_uploaded_at' => now(),
+        ]);
+
+        return response()->json([
+            'message' => 'Laporan berhasil diupload'
+        ]);
+    }
+
 
     /**
      * DOWNLOAD LAPORAN PDF

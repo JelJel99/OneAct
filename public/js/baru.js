@@ -1,3 +1,8 @@
+const ALLOWED_PHOTO_MIMES = ['image/png', 'image/jpeg'];
+const MAX_PHOTO_SIZE_BYTES = 10 * 1024 * 1024; // 10MB contoh
+const ALLOWED_REPORT_MIMES = ['application/pdf'];
+const MAX_REPORT_SIZE_BYTES = 50 * 1024 * 1024;
+
 document.addEventListener('DOMContentLoaded', async function () {
     try {
         // DASHBOARD
@@ -26,7 +31,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
         if (!allRes.ok) throw new Error('All Program API gagal');
         const allPrograms = await allRes.json();
-        console.log('ALL PROGRAMS:', allPrograms);
 
         // LAPORAN
         const laporanRes = await fetch(`/api/org/laporan?organisasi_id=${organisasiId}`, {
@@ -37,6 +41,39 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const laporans = await laporanRes.json();
         console.log('LAPORANS:', laporans);
+
+        // const laporanPenRes = await fetch('/api/org/laporan/pending', 
+        //     { credentials: 'same-origin' }
+        // );
+        // const laporansPending = await laporanPenRes.json();
+
+        document.addEventListener('click', function (e) {
+            const btn = e.target.closest('.btn-upload-report');
+            if (!btn) return;
+
+            const programId = btn.dataset.programId;
+            console.log('UPLOAD PROGRAM ID:', programId);
+            const programName = btn.dataset.programTitle;
+
+            openReportModal(programId, programName);
+        });
+
+        document.addEventListener('click', function (e) {
+            const modal = document.getElementById('modalUnggahLaporan');
+            const modalContent = modal?.querySelector('.modal-content');
+
+            // klik tombol X
+            if (e.target.classList.contains('close-btn')) {
+                modal.style.display = 'none';
+            }
+
+            // klik area luar modal
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+
 
         initCreateProgramDropdown();
         SubmitDonasiForm();
@@ -49,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         initProgramTabs();
         
         renderLaporan(laporans);
-        // unggahLaporanForm();
+        unggahLaporanForm();
         // initMainContentDelegation();
         // initLoadMoreReports();
         // initProgramDetailModal();
@@ -153,35 +190,52 @@ function initProgramTabs() {
 }
 
 function renderProgramsTabs(approvedPrograms, allPrograms) {
-    // const activeContainer = document.getElementById('activePrograms');
     const allContainer = document.getElementById('allPrograms');
-    const reportContainer = document.getElementById('reportPrograms'); // untuk laporan nanti
+    const reportContainer = document.getElementById('reportPrograms');
 
-    // Kosongkan dulu kontainer
-    // activeContainer.innerHTML = '';
     allContainer.innerHTML = '';
     reportContainer.innerHTML = '';
 
-    // const aktifPrograms = approvedPrograms.filter(isProgramAktif);
-    // console.log('Approved Programs:', approvedPrograms);
-
-    // let countActive = 0;
     let countAll = 0;
-    
-    // Tab Program Aktif / Approved
-    // aktifPrograms.forEach(p => {
-    //     activeContainer.insertAdjacentHTML('beforeend', createProgramCard(p));
-    //     countActive++;
-    // });
+    let countReport = 0;
 
-    // Tab Semua Program
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
     allPrograms.forEach(p => {
         allContainer.insertAdjacentHTML('beforeend', createProgramCard(p));
         countAll++;
+
+        // ✅ DONASI + SELESAI + BELUM ADA LAPORAN_FILE
+        if (
+            p.type === 'donasi' &&
+            p.status === 'approved' &&
+            !p.laporan &&
+            p.tenggat &&
+            new Date(p.tenggat) < today
+        ) {
+            reportContainer.insertAdjacentHTML(
+                'beforeend',
+                createDonasiReportCard(p)
+            );
+            countReport++;
+        }
     });
 
-    // document.getElementById('countActive').textContent = countActive;
+    if (countReport === 0) {
+        reportContainer.innerHTML = `
+            <div class="empty-state">
+                <p>Tidak ada program donasi yang memerlukan unggahan laporan.</p>
+                <small>Seluruh laporan telah diunggah.</small>
+            </div>
+        `;
+    }
+
     document.getElementById('countAll').textContent = countAll;
+    document.getElementById('countReport').textContent = countReport;
+
+    allContainer.style.display = 'block';
+    reportContainer.style.display = 'none';
 }
 
 function createProgramCard(p) {
@@ -203,29 +257,32 @@ function createProgramCard(p) {
         dbStatusClass = 'tag-rejected';
     }
 
-    if (p.type === 'relawan') {
-        const startDate = p.start_date ? new Date(p.start_date) : today;
-        const endDate = p.end_date ? new Date(p.end_date) : today;
+    // HANYA hitung status dinamis kalau status bukan pending dan bukan reject
+    if (p.status !== 'pending' && p.status !== 'reject') {
+        if (p.type === 'relawan') {
+            const startDate = p.start_date ? new Date(p.start_date) : today;
+            const endDate = p.end_date ? new Date(p.end_date) : today;
 
-        if (today < startDate) {
-            statusText = 'Dalam Perekrutan';
-            statusClass = 'tag-recruiting';
-        } else if (today >= startDate && today <= endDate) {
-            statusText = 'Dalam Pelaksanaan';
-            statusClass = 'tag-active';
-        } else if (today > endDate) {
-            statusText = 'Selesai';
-            statusClass = 'tag-finished';
-        }
-    } else if (p.type === 'donasi') {
-        const endDate = p.tenggat ? new Date(p.tenggat) : today;
+            if (today < startDate) {
+                statusText = 'Dalam Perekrutan';
+                statusClass = 'tag-recruiting';
+            } else if (today >= startDate && today <= endDate) {
+                statusText = 'Dalam Pelaksanaan';
+                statusClass = 'tag-active';
+            } else if (today > endDate) {
+                statusText = 'Selesai';
+                statusClass = 'tag-finished';
+            }
+        } else if (p.type === 'donasi') {
+            const endDate = p.tenggat ? new Date(p.tenggat) : today;
 
-        if (today <= endDate) {
-            statusText = 'Dalam Pelaksanaan';
-            statusClass = 'tag-active';
-        } else {
-            statusText = 'Selesai';
-            statusClass = 'tag-finished';
+            if (today <= endDate) {
+                statusText = 'Dalam Pelaksanaan';
+                statusClass = 'tag-active';
+            } else {
+                statusText = 'Selesai';
+                statusClass = 'tag-finished';
+            }
         }
     }
 
@@ -233,12 +290,17 @@ function createProgramCard(p) {
     const typeLabel = p.type === 'relawan' ? 'Relawan' : 'Donasi';
     const typeClass = p.type === 'relawan' ? 'tag-relawan' : 'tag-donasi';
 
+    // Jika statusText kosong, jangan render span-nya
+    const statusTagHTML = statusText
+        ? `<span class="tag ${statusClass}">${statusText}</span>`
+        : '';
+
     return `
     <div class="program-card active-card">
         <div class="program-details">
             <span class="tag ${typeClass}">${typeLabel}</span>
             <span class="tag ${dbStatusClass}">${dbStatusText}</span>
-            <span class="tag ${statusClass}">${statusText}</span>
+            ${statusTagHTML}
             <h4>${p.judul}</h4>
             <div class="program-stats">
                 ${p.type === 'relawan'
@@ -250,6 +312,85 @@ function createProgramCard(p) {
         </div>
     </div>
     `;
+}
+
+function renderDonasiReportTab(programs) {
+    const container = document.getElementById('reportPrograms');
+    container.innerHTML = '';
+
+    const donasiNeedReport = programs.filter(isDonasiReportNeeded);
+
+    if (donasiNeedReport.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <p>Tidak ada program donasi yang memerlukan unggahan laporan.</p>
+                <small>Seluruh laporan donasi telah diunggah.</small>
+            </div>
+        `;
+        document.getElementById('countReport').textContent = 0;
+        return;
+    }
+
+    donasiNeedReport.forEach(p => {
+        container.insertAdjacentHTML('beforeend', createDonasiReportCard(p));
+    });
+
+    document.getElementById('countReport').textContent = donasiNeedReport.length;
+}
+
+function createDonasiReportCard(p) {
+    return `
+    <div class="program-card active-card report-needed-card">
+        <div class="program-details">
+            <span class="tag tag-report-needed">
+                <i class="fas fa-exclamation-triangle"></i>
+                Laporan Belum Diunggah
+            </span>
+
+            <h4>${p.judul}</h4>
+
+            <div class="program-stats">
+                <span>
+                    <i class="fas fa-check-double"></i>
+                    Status: Selesai
+                </span>
+
+                <span>
+                    <i class="fas fa-donate"></i>
+                    Total Donasi:
+                    Rp ${(p.jumlah_terkumpul ?? 0).toLocaleString('id-ID')}
+                </span>
+
+                <span>
+                    <i class="fas fa-calendar-alt"></i>
+                    Program Selesai: ${formatDate(p.tenggat)}
+                </span>
+            </div>
+
+            <div class="program-actions">
+                <button
+                    class="btn-primary btn-upload-report"
+                    data-program-id="${p.id}"
+                    data-program-title="${p.judul}>
+                    Unggah Laporan
+                </button>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+function isDonasiReportNeeded(p) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    return (
+        p.type === 'donasi' &&
+        p.status === 'approved' &&
+        !p.laporan &&
+        p.tenggat &&
+        new Date(p.tenggat) < today
+    );
 }
 
 function formatDate(dateString) {
@@ -284,28 +425,32 @@ function isProgramAktif(p) {
 }
 
 function renderLaporan(laporans) {
-    console.log('renderLaporan dipanggil:', laporans);
-
     const c = document.getElementById('laporanContainer');
     c.innerHTML = '';
+
+    if (!laporans.length) {
+        c.innerHTML = '<p>Belum ada laporan.</p>';
+        return;
+    }
 
     laporans.forEach(l => {
         c.insertAdjacentHTML('beforeend', `
         <div class="report-item">
-            <div class="report-icon-placeholder">📄</div>
             <div class="report-info">
                 <span class="tag tag-donation">Donasi</span>
                 <span class="tag tag-published">Dipublikasi</span>
                 <h4>${l.judul}</h4>
+                <small class="report-date">
+                    Diunggah: ${l.tanggal ?? '-'}
+                </small>
                 <div class="report-actions-bottom">
-                    <a href="/asset/pdf/${l.file}" target="_blank" class="btn-view">Lihat</a>
+                    <a href="${l.file}" target="_blank" class="btn-view">Lihat Laporan</a>
                 </div>
             </div>
         </div>
         `);
     });
 }
-
 
 // Fungsi untuk membuat elemen laporan dari data
 // function createReportItem(report) {
@@ -446,34 +591,6 @@ function initCreateProgramDropdown() {
     });
 }
 
-// 2. Submit Form Donasi (Validasi Foto 10 MB)
-const MAX_PHOTO_SIZE_BYTES = 10 * 1024 * 1024; // 10MB contoh
-const ALLOWED_PHOTO_MIMES = ['image/jpeg', 'image/png', 'image/jpg'];
-
-function validateFile(fileInput, maxSize, allowedMimes) {
-    if (!fileInput.files.length) {
-        alert("Mohon pilih file.");
-        return false;
-    }
-
-    const file = fileInput.files[0];
-    const maxSizeMB = maxSize / 1024 / 1024;
-    
-    if (file.size > maxSize) {
-        alert(`Ukuran file melebihi batas maksimum ${maxSizeMB} MB. Ukuran file Anda: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
-        return false;
-    }
-
-    if (!allowedMimes.includes(file.type)) {
-        // Tampilkan tipe file yang diperbolehkan
-        const allowedExtensions = allowedMimes.map(m => m.split('/')[1].toUpperCase()).join(', ');
-        alert(`Format file tidak didukung. Mohon gunakan ${allowedExtensions}.`);
-        return false;
-    }
-
-    return true;
-}
-
 function SubmitDonasiForm() {
     const fotoDonasiInput = document.getElementById('fotoDonasi');
     const formDonasi = document.getElementById('formDonasi');
@@ -573,20 +690,83 @@ function submitVolunteerForm() {
 
 // 4. Submit Form Unggah Laporan (Validasi PDF 50 MB)
 function unggahLaporanForm() {
-    const formUnggahLaporan = document.getElementById('formUnggahLaporan');
-    const fileLaporanInput = document.getElementById('fileLaporan');
+    const form = document.getElementById('formUnggahLaporan');
+    const fileInput = document.getElementById('fileLaporan');
+    const donationIdInput = document.getElementById('programIdToReport');
 
-    if (!formUnggahLaporan || !fileLaporanInput) return;
+    if (!form || !fileInput || !donationIdInput) return;
 
-    formUnggahLaporan.addEventListener('submit', e => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        if (!validateFile(fileLaporanInput, MAX_REPORT_SIZE_BYTES, ALLOWED_REPORT_MIMES)) return;
+        if (!validateFile(
+            fileInput,
+            MAX_REPORT_SIZE_BYTES,
+            ALLOWED_REPORT_MIMES
+        )) return;
 
-        console.log(new FormData(formUnggahLaporan));
-        hideAllModals();
-        formUnggahLaporan.reset();
+        const programId = donationIdInput.value;
+        const formData = new FormData(form);
+
+        const token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute('content');
+
+        try {
+            const response = await fetch(
+                `/api/org/laporan/upload/${programId}`, // ✅ TEMPLATE STRING
+                {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': token
+                    },
+                    body: formData,
+                    credentials: 'same-origin'
+                }
+            );
+
+            if (!response.ok) {
+                const text = await response.text();
+                console.error(text);
+                throw new Error('Gagal upload laporan');
+            }
+
+            const result = await response.json();
+            alert(result.message);
+
+            hideAllModals();
+            form.reset();
+
+        } catch (err) {
+            alert(err.message);
+        }
     });
+}
+
+
+// 2. Submit Form Donasi (Validasi Foto 10 MB)
+function validateFile(fileInput, maxSize, allowedMimes) {
+    if (!fileInput.files.length) {
+        alert("Mohon pilih file.");
+        return false;
+    }
+
+    const file = fileInput.files[0];
+    const maxSizeMB = maxSize / 1024 / 1024;
+    
+    if (file.size > maxSize) {
+        alert(`Ukuran file melebihi batas maksimum ${maxSizeMB} MB. Ukuran file Anda: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
+        return false;
+    }
+
+    if (!allowedMimes.includes(file.type)) {
+        // Tampilkan tipe file yang diperbolehkan
+        const allowedExtensions = allowedMimes.map(m => m.split('/')[1].toUpperCase()).join(', ');
+        alert(`Format file tidak didukung. Mohon gunakan ${allowedExtensions}.`);
+        return false;
+    }
+
+    return true;
 }
 
 // 6. Event Delegation (Detail Program Aktif & Unggah Laporan)

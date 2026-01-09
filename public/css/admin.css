@@ -29,13 +29,24 @@ body {
 /* --- Sidebar --- */
 .sidebar {
     width: 250px;
+    height: 100vh; /* Tinggi penuh viewport */
     background: var(--primary-red);
     color: white;
     padding: 2rem 1.5rem;
+    
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    overflow-y: auto; /* Kalau isinya lebih tinggi, munculkan scroll vertikal */
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+
 }
+
 
 .logo {
     font-size: 1.5rem;
@@ -93,6 +104,7 @@ body {
 .main-content {
     flex-grow: 1;
     padding: 2rem;
+    margin-left: 250px;
 }
 
 .main-header {

@@ -16,8 +16,12 @@ class Donation extends Model
         'target',
         'jumlahsaatini',
         'laporan',
+        'laporan_uploaded_at',    
     ];
 
+    protected $casts = [
+        'laporan_uploaded_at' => 'datetime',
+    ];
     
     protected $appends = ['status', 'progress'];
     public function getStatusAttribute()

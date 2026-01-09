@@ -146,6 +146,8 @@ Route::middleware(['auth', 'role:organisasi'])
         Route::get('/programs/all', [ProgramController::class, 'getAllProgramsByOrganisasi']);
 
         Route::get('/laporan', [OrganisasiDashboardController::class, 'laporan']);
+        Route::get('/laporan/pending', [OrganisasiDashboardController::class, 'laporanPending']);
+        Route::post('/laporan/upload/{program}', [OrganisasiDashboardController::class, 'uploadLaporan']);
         Route::get('/laporan/{program}', [OrganisasiDashboardController::class, 'downloadLaporan']);
     });
 
