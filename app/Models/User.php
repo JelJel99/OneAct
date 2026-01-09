@@ -63,4 +63,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(RelawanDaftar::class);
     }
+
+    public function organisasi()
+    {
+        return $this->hasOne(Organisasi::class);
+    }
+
+
+
 }

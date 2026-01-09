@@ -109,29 +109,81 @@ class ProgramController extends Controller
 
         // Mapping data supaya frontend mudah render
         $result = $programs->map(function ($p) {
+            if ($p->type === 'relawan') {
+                $startDate = optional($p->relawan)->start_date;
+                $endDate = optional($p->relawan)->end_date;
+            } else {
+                $startDate = $p->start_date ?? optional($p->donasi)->start_date;
+                $endDate = $p->tenggat ?? optional($p->donasi)->end_date;
+            }
+
             return [
                 'id' => $p->id,
                 'judul' => $p->judul,
-                'start_date' => $p->start_date ?? $p->donasi->start_date ?? null,
-                'end_date' => $p->end_date ?? $p->donasi->end_date ?? null,
+                'start_date' => $startDate ? date('Y-m-d', strtotime($startDate)) : null,
+                'end_date' => $endDate ? date('Y-m-d', strtotime($endDate)) : null,
                 'type' => $p->type,
                 'status_otomatis' => $p->status_otomatis ?? null,
-                'deskripsi' => $p->deskripsi ?? $p->donasi->deskripsi ?? null,
-                'foto' => $p->foto ?? $p->donasi->foto ?? null,
-                'jumlah_terkumpul' => $p->donasi->jumlahsaatini ?? 0,
-                'target' => $p->donasi->target ?? 0,
+                'deskripsi' => $p->deskripsi ?? optional($p->donasi)->deskripsi,
+                'foto' => $p->foto ?? optional($p->donasi)->foto,
+                'jumlah_terkumpul' => optional($p->donasi)->jumlahsaatini ?? 0,
+                'target' => optional($p->donasi)->target ?? 0,
                 'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,
-                'partisipan' => $p->partisipan ?? $p->relawan ? $p->relawan->relawan_daftar_count ?? 0 : 0,
-                'laporan' => $p->type === 'donasi'
-                    ? optional($p->donasi)->laporan
-                    : null,
-                'tenggat' => $p->tenggat ? date('d-m-Y', strtotime($p->tenggat)) : null,
+                'partisipan' => $p->partisipan ?? (optional($p->relawan)->relawan_daftar_count ?? 0),
+                'laporan' => null,
+                'tenggat' => $p->tenggat ? date('Y-m-d', strtotime($p->tenggat)) : null,
             ];
         });
+
 
         return response()->json($result);
     }
 
+    public function getAllProgramsByOrganisasi(Request $request)
+    {
+        $organisasiId = $request->query('organisasi_id');
+
+        if (!$organisasiId) {
+            return response()->json(['message' => 'organisasi_id required'], 400);
+        }
+
+        // Ambil semua program, tanpa filter status
+        $programs = Program::with(['donasi', 'relawan'])
+            ->where('organisasi_id', $organisasiId)
+            ->get();
+
+        // Mapping data supaya frontend mudah render
+        $result = $programs->map(function ($p) {
+            if ($p->type === 'relawan') {
+                $startDate = optional($p->relawan)->start_date;
+                $endDate = optional($p->relawan)->end_date;
+            } else {
+                $startDate = $p->start_date ?? optional($p->donasi)->start_date;
+                $endDate = $p->tenggat ?? optional($p->donasi)->end_date;
+            }
+
+            return [
+                'id' => $p->id,
+                'judul' => $p->judul,
+                'start_date' => $startDate ? date('Y-m-d', strtotime($startDate)) : null,
+                'end_date' => $endDate ? date('Y-m-d', strtotime($endDate)) : null,
+                'type' => $p->type,
+                'status' => $p->status,
+                'status_otomatis' => $p->status_otomatis ?? null,
+                'deskripsi' => $p->deskripsi ?? optional($p->donasi)->deskripsi,
+                'foto' => $p->foto ?? optional($p->donasi)->foto,
+                'jumlah_terkumpul' => optional($p->donasi)->jumlahsaatini ?? 0,
+                'target' => optional($p->donasi)->target ?? 0,
+                'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,
+                'partisipan' => $p->partisipan ?? (optional($p->relawan)->relawan_daftar_count ?? 0),
+                'laporan' => null,
+                'tenggat' => $p->tenggat ? date('Y-m-d', strtotime($p->tenggat)) : null,
+            ];
+        });
+
+
+        return response()->json($result);
+    }
 
     public function show($program_id)
     {

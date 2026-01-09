@@ -72,4 +72,17 @@ class OrganisasiController extends Controller
             'program_status' => $program_status,
         ]);
     }
+
+    public function dashboardAuth()
+    {
+        $user = auth()->user();
+
+        if (!$user->organisasi_id) {
+            abort(403, 'User tidak memiliki organisasi');
+        }
+
+        return $this->showOrg($user->organisasi_id);
+    }
+
+
 }

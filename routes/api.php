@@ -8,6 +8,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RelawanController;
 use App\Http\Controllers\UserHistoryController;
 use App\Http\Controllers\OrganisasiController;
+use App\Http\Controllers\OrganisasiDashboardController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,57 +42,15 @@ Route::get('/home/programs', [ProgramController::class, 'apiHomePrograms']);
 Route::get('/relawan/{id}', [RelawanController::class, 'show']);
 Route::get('/organisasi/{id}', [OrganisasiController::class, 'showOrg']);
 Route::get('/programs', [ProgramController::class, 'getProgramsByOrganisasi']);
-Route::get('/laporan', [LaporanController::class, 'byOrganisasi']);
+Route::get('/laporan', [OrganisasiDashboardController::class, 'laporan']);
+// Route::get('/laporan', [LaporanController::class, 'byOrganisasi']);
 
-// Route::get('/organisasi/{id}', function ($id) {
-//     return view('organisasi.profile', compact('id'));
-// });
 
 // Relawan Programs
 Route::get('/programrelawan', [ProgramController::class, 'programRelawanApproved']);
-// Route::get('/relawan/{id}', [ProgramController::class, 'showRelawan']);
 Route::get('/detail-relawan/{id}', [RelawanController::class, 'show']);
 Route::get('/api/relawan', [RelawanController::class, 'index']);
-
-// Route::middleware('auth:api')->post('/relawan/daftar', [ProgramController::class, 'relawandaftar']);
-// Route::middleware('auth')->post(
-//     '/relawan/daftar',
-//     [ProgramController::class, 'relawandaftar']
-// );
 
 // Support routes
 Route::get('/faq', [SupportController::class, 'getFaqs']);
 Route::post('/contact', [SupportController::class, 'submitContact']);
-
-/*
-|--------------------------------------------------------------------------
-| USER (LOGIN REQUIRED)
-|--------------------------------------------------------------------------
-*/
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-// Route::middleware('auth:sanctum')->get('/user/history', [HistoryController::class, 'index']);
-
-// Route::get('/user/history', [UserHistoryController::class, 'index']);
-
-/*
-|--------------------------------------------------------------------------
-| ADMIN API (PROTECTED)
-|--------------------------------------------------------------------------
-*/
-// Route::middleware('auth:sanctum')
-//     ->prefix('admin')
-//     ->group(function () {
-
-//         Route::get('/programs', [AdminController::class, 'programs']);
-//         Route::get('/programs/{id}', [AdminController::class, 'programDetail']);
-
-//         Route::post('/programs/{id}/approve', [AdminController::class, 'approveProgram']);
-//         Route::post('/programs/{id}/reject', [AdminController::class, 'rejectProgram']);
-
-//         Route::get('/users', [AdminController::class, 'users']);
-//         Route::post('/users/{id}/suspend', [AdminController::class, 'suspendUser']);
-//         Route::post('/users/{id}/unsuspend', [AdminController::class, 'unsuspendUser']);
-//     });

@@ -213,6 +213,5 @@
     
     <script src="{{ asset('js/global.js') }}"></script>
     <script src="{{ asset('js/organization_profile.js') }}"></script>
-
 </body>
 </html>

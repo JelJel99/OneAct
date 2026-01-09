@@ -1,12 +1,21 @@
 document.addEventListener("DOMContentLoaded", async () => {
     renderDonasi()
 
+    const user = await getAuthUser();
+    if (user) window.authUser = user;
+    
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".donasi-btn");
         if (!btn) return;
 
         const donationId = btn.dataset.id;
         if (!donationId) return;
+
+        if (!window.authUser) {
+            console.error("Anda harus login dulu untuk melakukan donasi!");
+            alert("Harap login terlebih dahulu untuk melakukan donasi."); // optional
+            return;
+        }
 
         window.location.href = `/donation/${donationId}`;
     });

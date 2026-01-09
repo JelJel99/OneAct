@@ -10,6 +10,9 @@ return new class extends Migration
     {
         Schema::create('organisasi', function (Blueprint $table) {
             $table->id(); // BIGINT UNSIGNED
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
             $table->string('nama');
             $table->text('visi')->nullable();
             $table->text('misi')->nullable();

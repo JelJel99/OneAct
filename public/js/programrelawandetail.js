@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", async() => {
     console.log("AUTH USER:", user);
 
     if (user) {
+        window.authUser = user;
         updateNavbarAuth(user);
         initUserDropdown();
     } else {
@@ -15,9 +16,20 @@ document.addEventListener("DOMContentLoaded", async() => {
     
     renderProgramRelawanDetail();
 
-    document.getElementById("daftarBtn").addEventListener("click", () => {
-        daftarRelawan();
-    });
+    const daftarBtn = document.getElementById("daftarBtn");
+    if (daftarBtn) {
+        daftarBtn.addEventListener("click", () => {
+            // ✅ Cek login dulu
+            if (!window.authUser) {
+                console.error("User belum login! Harap login untuk mendaftar relawan.");
+                alert("Anda harus login terlebih dahulu untuk mendaftar sebagai relawan.");
+                return;
+            }
+
+            // kalau sudah login, lanjut daftar relawan
+            daftarRelawan();
+        });
+    }
 });
 
 function initMobileMenu() {

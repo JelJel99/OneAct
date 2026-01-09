@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     loadHomePrograms();
 
     if (user) {
+        window.authUser = user;
         loadUserHistory(user.id);
         updateNavbarAuth(user);
 
@@ -43,6 +44,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
+        if (!window.authUser) {
+            console.error("User belum login! Harap login terlebih dahulu untuk daftar relawan.");
+            alert("Anda harus login terlebih dahulu untuk mendaftar sebagai relawan."); // optional
+            return;
+        }
+
         daftarRelawan(programRelawanId);
     });
 
@@ -52,6 +59,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const donationId = btn.dataset.id;
         if (!donationId) return;
+
+        if (!window.authUser) {
+            console.error("User belum login! Harap login terlebih dahulu untuk donasi.");
+            alert("Anda harus login terlebih dahulu untuk melakukan donasi.");
+            return;
+        }
 
         window.location.href = `/donation/${donationId}`;
     });

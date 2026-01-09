@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             // 'program_history' => null,
         ]);
 
+        
         User::create([
             'name' => 'Dummy User',
             'email' => 'dummy@gmail.com',
@@ -31,7 +32,7 @@ class UserSeeder extends Seeder
             'status' => 'active',
             // 'program_history' => null,
         ]);
-
+        
         User::create([
             'name' => 'aa User',
             'email' => 'aa@gmail.com',
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder
             'status' => 'active',
             // 'program_history' => null,
         ]);
-
+        
         User::create([
             'name' => 'bb User',
             'email' => 'bb@gmail.com',
@@ -48,6 +49,30 @@ class UserSeeder extends Seeder
             'role' => 'general',
             'status' => 'active',
             // 'program_history' => null,
+        ]);
+
+        User::create([
+            'name' => 'Rumah Cinta Indonesia',
+            'email' => 'rumahcinta@organisasi.id',
+            'password' => Hash::make('org123456'),
+            'role' => 'organisasi',
+            'status' => 'active'
+        ]);
+        
+        User::create([
+            'name' => 'Yayasan Peduli Anak Indonesia',
+            'email' => 'info@pedulianak.id',
+            'password' => Hash::make('org123456'),
+            'role' => 'organisasi',
+            'status' => 'active'
+        ]);
+        
+        User::create([
+            'name' => 'Peduli Bencana Nusantara',
+            'email' => 'info@pedulibencana.id',
+            'password' => Hash::make('org123456'),
+            'role' => 'organisasi',
+            'status' => 'active'
         ]);
     }
 }

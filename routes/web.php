@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\OrganisasiController;
+use App\Http\Controllers\OrganisasiDashboardController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
@@ -120,3 +122,29 @@ Route::get('/api/donation', [DonationController::class, 'apiIndex']);
 Route::get('/donation/status', [DonationController::class, 'status']); // ⬅️ HARUS DI ATAS
 Route::get('/donation/{donation}', [DonationController::class, 'show']);
 Route::post('/donation/{id}/pay', [DonationController::class, 'pay']);
+
+// ORGANISASI PAGE
+// Route::middleware(['auth', 'role:organisasi'])->group(function () {
+//     Route::get('/organisasiidx/dashboard', function () {
+//         return view('index_org');
+//     });
+// });
+
+Route::middleware(['auth', 'role:organisasi'])
+    ->prefix('org')
+    ->group(function () {
+        Route::get('/dashboard', fn () => view('index_org'));
+    });
+
+Route::middleware(['auth', 'role:organisasi'])
+    ->prefix('api/org')
+    ->group(function () {
+
+        Route::get('/dashboard', [OrganisasiDashboardController::class, 'index']);
+
+        Route::get('/programs', [ProgramController::class, 'getProgramsByOrganisasi']);
+        Route::get('/programs/all', [ProgramController::class, 'getAllProgramsByOrganisasi']);
+
+        Route::get('/laporan', [OrganisasiDashboardController::class, 'laporan']);
+        Route::get('/laporan/{program}', [OrganisasiDashboardController::class, 'downloadLaporan']);
+    });

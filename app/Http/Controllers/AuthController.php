@@ -72,12 +72,18 @@ class AuthController extends Controller
         // 🔥 INI YANG KURANG KEMARIN
         $user = auth()->user();
 
+        if ($user->role === 'admin') {
+            $redirect = '/admin/dashboard';
+        } elseif ($user->role === 'organisasi') {
+            $redirect = '/org/dashboard';
+        } else {
+            $redirect = '/home';
+        }
+
         return response()->json([
             'success' => true,
             'user' => $user,
-            'redirect_to' => $user->role === 'admin'
-                ? '/admin/dashboard'
-                : '/home'
+            'redirect_to' => $redirect
         ]);
     }
 

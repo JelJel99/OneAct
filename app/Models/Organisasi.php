@@ -21,4 +21,9 @@ class Organisasi extends Model
     {
         return $this->hasMany(Program::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
