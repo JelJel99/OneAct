@@ -158,29 +158,32 @@ function initProgramTabs() {
         });
     });
 
-    // aktifkan tab default (yang ada class active)
-    const activeBtn = document.querySelector('.program-tabs .tab-btn.active');
-    if (activeBtn) activeBtn.click();
+    // aktifkan tab default (misal tab "allPrograms")
+    const allTabBtn = document.querySelector('.program-tabs .tab-btn[data-tab="all"]');
+    if (allTabBtn) allTabBtn.click();
 }
 
 function renderProgramsTabs(approvedPrograms, allPrograms) {
-    const activeContainer = document.getElementById('activePrograms');
+    // const activeContainer = document.getElementById('activePrograms');
     const allContainer = document.getElementById('allPrograms');
     const reportContainer = document.getElementById('reportPrograms'); // untuk laporan nanti
 
     // Kosongkan dulu kontainer
-    activeContainer.innerHTML = '';
+    // activeContainer.innerHTML = '';
     allContainer.innerHTML = '';
     reportContainer.innerHTML = '';
 
-    let countActive = 0;
-    let countAll = 0;
+    // const aktifPrograms = approvedPrograms.filter(isProgramAktif);
+    // console.log('Approved Programs:', approvedPrograms);
 
+    // let countActive = 0;
+    let countAll = 0;
+    
     // Tab Program Aktif / Approved
-    approvedPrograms.forEach(p => {
-        activeContainer.insertAdjacentHTML('beforeend', createProgramCard(p));
-        countActive++;
-    });
+    // aktifPrograms.forEach(p => {
+    //     activeContainer.insertAdjacentHTML('beforeend', createProgramCard(p));
+    //     countActive++;
+    // });
 
     // Tab Semua Program
     allPrograms.forEach(p => {
@@ -188,7 +191,7 @@ function renderProgramsTabs(approvedPrograms, allPrograms) {
         countAll++;
     });
 
-    document.getElementById('countActive').textContent = countActive;
+    // document.getElementById('countActive').textContent = countActive;
     document.getElementById('countAll').textContent = countAll;
 }
 
@@ -235,8 +238,7 @@ function createProgramCard(p) {
             <h4>${p.judul}</h4>
             <div class="program-stats">
                 ${p.type === 'relawan'
-                    ? `<span>Peserta: ${p.partisipan || 0}/${p.kuota || '-'}</span>
-                       <span>Berakhir: ${formatDate(p.end_date) || '-'}</span>`
+                    ? `<span>Berakhir: ${formatDate(p.end_date) || '-'}</span>`
                     : `<span>Terkumpul: Rp ${p.jumlah_terkumpul.toLocaleString()}</span>
                        <span>Berakhir: ${formatDate(p.tenggat) || '-'}</span>`
                 }
@@ -247,8 +249,34 @@ function createProgramCard(p) {
 }
 
 function formatDate(dateString) {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
+}
+
+function isProgramAktif(p) {
+    const today = new Date();
+    // Reset waktu ke 00:00:00 agar perbandingan hanya tanggal
+    today.setHours(0,0,0,0);
+
+    if (p.status !== 'approved') {
+        return false;
+    }
+
+    if (p.type === 'relawan') {
+        if (!p.end_date) return false;
+        const endDate = new Date(p.end_date);
+        endDate.setHours(0,0,0,0);
+        return today <= endDate;  // <= supaya yang berakhir hari ini tetap aktif
+    }
+
+    if (p.type === 'donasi') {
+        if (!p.tenggat) return false;
+        const tenggat = new Date(p.tenggat);
+        tenggat.setHours(0,0,0,0);
+        return today <= tenggat;
+    }
+
+    return false;
 }
 
 function renderLaporan(laporans) {

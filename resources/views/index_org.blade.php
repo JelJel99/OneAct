@@ -51,11 +51,11 @@
             <section class="manage-program">
                 <div class="program-tabs">
                     <button class="tab-btn active" data-tab="all">Semua Program <span class="count" id="countAll">0</span></button>
-                    <button class="tab-btn" data-tab="active">Program Aktif <span class="count" id="countActive">0</span></button>
+                    <!-- <button class="tab-btn" data-tab="active">Program Aktif <span class="count" id="countActive">0</span></button> -->
                     <button class="tab-btn" data-tab="report">Laporan <span class="count" id="countReport">0</span></button>
                 </div>
 
-                <div class="program-content" id="activePrograms"></div>
+                <!-- <div class="program-content" id="activePrograms"></div> -->
                 <div class="program-content" id="allPrograms" style="display:none"></div>
                 <div class="program-content" id="reportPrograms" style="display:none"></div>
 
