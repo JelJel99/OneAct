@@ -132,11 +132,12 @@ async function loadRelawanPrograms() {
         }
 
         programs.forEach(p => {
+            console.log("FOTO RAW:", p.foto);
             grid.innerHTML += `
             <div class="col-lg-4 col-md-6">
                 <div class="relawan-card">
                     <div class="relawan-card-image">
-                        <img src="/${p.relawan?.foto ?? 'asset/default.jpg'}" alt="${p.judul}">
+                        <img src="${p.relawan?.foto ?? 'asset/default.jpg'}" alt="${p.judul}">
                         <div class="relawan-card-overlay"></div>
                         <div class="relawan-card-content">
                             <h3 class="relawan-card-title">${p.judul}</h3>

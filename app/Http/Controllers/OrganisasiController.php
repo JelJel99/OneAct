@@ -64,6 +64,7 @@ class OrganisasiController extends Controller
         return response()->json([
             'id' => $organisasi->id,
             'nama' => $organisasi->nama,
+            'aboutOrg' => $organisasi->aboutOrg,
             'visi' => $organisasi->visi,
             'misi' => $organisasi->misi,
             'tagline' => $organisasi->tagline ?? 'Setiap orang berhak mendapatkan bantuan yang layak.',

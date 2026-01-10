@@ -3,61 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Relawan | OneAct</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Komunitas - One Act</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Bootstrap (optional, tapi grid kamu pakai row/col) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/programrelawan.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/community.css') }}">
 </head>
-
 <body>
-    <nav class="main-navbar">
-        <div class="main-nav-container">
-            <div class="main-nav-left">
-                <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <img src="/asset/square_OneAct.png" alt="OneAct Logo" class="logo">
+                <!-- <span class="logo">OneAct</span> -->
             </div>
-    
-            <div class="main-nav-menu">
-                <a href="home" class="main-nav-link">Beranda</a>
-                <a href="donation" class="main-nav-link">Donasi</a>
-                <a href="programrelawan" class="main-nav-link active">Relawan</a>
-                <a href="community" class="main-nav-link">Komunitas</a>
-                <a href="faq" class="main-nav-link">FAQs</a>
+
+            <div class="nav-menu">
+                <a href="home" class="nav-link">Beranda</a>
+                <a href="donation" class="nav-link">Donasi</a>
+                <a href="programrelawan" class="nav-link">Relawan</a>
+                <a href="community" class="nav-link active">Komunitas</a>
+                <a href="faq" class="nav-link">FAQs</a>
             </div>
-    
-            <div class="main-nav-right">
+
+            <div class="nav-right">
                 <button id="hamburgerBtn" class="icon-btn mobile-only">
                     <i data-lucide="menu"></i>
                 </button>
 
-                <!-- NOTIF -->
-                <button id="notifBtn" class="main-icon-btn hidden">
+                <button id="notifBtn" class="icon-btn hidden">
                     <i data-lucide="bell"></i>
                 </button>
-    
-                <!-- GUEST -->
-                <a id="loginBtn" href="{{ url('/login') }}" class="main-auth-btn">Masuk</a>
+
+                <a id="loginBtn" href="/login" class="auth-btn">Masuk</a>
                 <span id="authSep" class="auth-separator">/</span>
-                <a id="registerBtn" href="{{ url('/signup') }}" class="main-auth-btn">Daftar</a>
-    
-                <!-- AUTH USER -->
-                <div id="userMenu" class="main-user-menu hidden">
-                    <button class="main-icon-btn" id="userBtn">
+                <a id="registerBtn" href="/signup" class="auth-btn">Daftar</a>
+
+                <div id="userMenu" class="user-menu hidden">
+                    <button class="icon-btn" id="userBtn">
                         <i data-lucide="user"></i>
                     </button>
-                    <div class="user-dropdown">
+                    <div class="dropdown">
                         <p id="userEmail"></p>
-                        <button id="logoutBtn">Logout</button>
+                        <button id="logoutBtn">logout</button>
                     </div>
                 </div>
             </div>
+
         </div>
-    
-        <!-- MOBILE MENU -->
+
         <div id="mobile-menu" class="mobile-menu">
             <a href="home" class="mobile-item">Beranda</a>
             <a href="donation" class="mobile-item">Donasi</a>
@@ -70,23 +64,49 @@
         </div>
     </nav>
 
-    <div class="relawan-page">
-        <div class="container">
-            <!-- Title -->
-            <h1 class="relawan-title">Relawan</h1>
-
-            <!-- Subtitle -->
-            <p class="relawan-subtitle">
-                Kebaikan selalu dimulai dari satu tindakan sederhana. Di OneAct, setiap relawan punya peran penting untuk membawa harapan bagi banyak orang
+    <div class="container">
+        <div class="header-section">
+            <h1 class="page-title">Komunitas Tersedia</h1>
+            <p class="page-description">
+                Gabung dengan ribuan relawan dan komunitas yang peduli terhadap lingkungan, pendidikan, dan kemanusiaan.
             </p>
+        </div>
 
-            <!-- Cards Grid -->
-            <div class="row g-4" id="relawan-list">
-                <!-- data dari database akan di-render di sini -->
+        <div class="suggested-communities">
+            <h2 class="section-title">Komunitas yang Mungkin Anda Suka</h2>
+            
+            <!-- All 7 filter categories displayed -->
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="kemanusiaan">Kemanusiaan</button>
+                <button class="filter-btn" data-filter="lingkungan">Lingkungan</button>
+                <button class="filter-btn" data-filter="pendidikan">Pendidikan</button>
+                <button class="filter-btn" data-filter="teknologi">Teknologi</button>
+                <button class="filter-btn" data-filter="hewan">Hewan</button>
+                <button class="filter-btn" data-filter="lainnya">Lainnya</button>
+            </div>
+
+            <div class="community-list" id="communityList">
+                @foreach($komunitas as $k)
+                    <div class="community-card" data-category="{{ strtolower($k->kategori) }}">
+                        <div class="community-header">
+                            <div class="community-icon" style="background-color: #f0e8d5;">{{ $k->kategori[0] ?? '🏠' }}</div>
+                            <div class="community-title">
+                                <h3>{{ $k->nama }}</h3>
+                                <p class="community-category">{{ $k->kategori }}</p>
+                            </div>
+                        </div>
+                        <p class="community-description">
+                            {{ $k->deskripsi }}
+                        </p>
+                        <div class="button-wrapper">
+                            <a href="/community/{{ $k->id }}" class="detail-btn">Lihat Detail</a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>
-
     <footer class="footer">
         <div class="footer-container">
     
@@ -160,8 +180,37 @@
             <p>© 2025 OneAct. All rights reserved.</p>
         </div>
     </footer>
+    
+    <script src="{{ asset('js/global.js') }}"></script>
+    <script src="{{ asset('js/community.js') }}" defer></script>
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const communityCards = document.querySelectorAll('.community-card');
 
-    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
-    <script src="{{ asset('js/programrelawan.js') }}"></script>
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+
+                // Filter communities
+                communityCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    
+                    if (filter === 'all' || category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Init lucide icons
+        lucide.createIcons();
+    </script>
 </body>
 </html>

@@ -14,6 +14,7 @@ class OrganisasiSeeder extends Seeder
         Organisasi::create([
             'user_id' => 5,
             'nama' => 'Rumah Cinta Indonesia',
+            'aboutOrg' => 'Rumah Cinta Indonesia adalah organisasi sosial yang berfokus pada kegiatan kemanusiaan dan kepedulian terhadap sesama. Kami hadir untuk membantu masyarakat yang membutuhkan melalui berbagai program bantuan sosial dan solidaritas. Dengan semangat gotong royong, kami berupaya menebarkan kasih dan harapan bagi mereka yang membutuhkan. Setiap langkah kami dilandasi oleh nilai empati dan kepedulian.',
             'visi' => 'Membantu sesama',
             'misi' => 'Memberikan bantuan sosial',
             'email' => 'rumahcinta@organisasi.id',
@@ -25,6 +26,7 @@ class OrganisasiSeeder extends Seeder
         Organisasi::create([
             'user_id' => 6,
             'nama' => 'Yayasan Peduli Anak Indonesia',
+            'aboutOrg' => 'Yayasan Peduli Anak Indonesia merupakan organisasi nirlaba yang berkomitmen untuk meningkatkan akses pendidikan bagi anak-anak kurang mampu. Kami menjalankan berbagai program pengajaran, pendampingan, dan pengembangan karakter. Melalui pendidikan yang merata, kami percaya setiap anak berhak meraih masa depan yang lebih baik. Kami berupaya menciptakan lingkungan belajar yang aman dan inspiratif.',
             'visi' => 'Pendidikan untuk semua',
             'misi' => 'Mengajar anak-anak kurang mampu',
             'email' => 'info@pedulianak.id',
@@ -36,6 +38,7 @@ class OrganisasiSeeder extends Seeder
         Organisasi::create([
             'user_id' => 7,
             'nama' => 'Peduli Bencana Nusantara',
+            'aboutOrg' => 'Peduli Bencana Nusantara adalah organisasi kemanusiaan yang bergerak dalam penanganan dan edukasi kebencanaan di Indonesia. Kami fokus pada respon cepat bencana, penyaluran bantuan, serta peningkatan kesiapsiagaan masyarakat. Melalui kolaborasi dan aksi nyata, kami berupaya meminimalkan dampak bencana alam. Komitmen kami adalah membangun masyarakat yang tangguh dan siap menghadapi bencana.',
             'visi' => 'Membangun kesiapsiagaan bencana',
             'misi' => 'Memberikan bantuan dan edukasi bencana alam',
             'email' => 'contact@pedulibencana.id',

@@ -125,14 +125,14 @@
     
                 <a href="tel:+6281656782" class="contact-item">
                     <div class="contact-icon-circle">
-                        <img src="" />
+                        <i data-lucide="phone"></i>
                     </div>
                     <span>+62 81 656 7824</span>
                 </a>
     
                 <a href="mailto:oneact@oneact.or.id" class="contact-item">
                     <div class="contact-icon-circle">
-                        <img src="" />
+                        <i data-lucide="mail"></i>
                     </div>
                     <span>oneact@oneact.or.id</span>
                 </a>

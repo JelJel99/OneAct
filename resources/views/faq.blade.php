@@ -180,6 +180,80 @@
 
     </main>
 
+    <footer class="footer">
+        <div class="footer-container">
+    
+            <!-- Left Section -->
+            <div class="footer-left">
+                <h2 class="footer-title">OneAct</h2>
+                <p class="footer-description">
+                    Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
+                </p>
+    
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram" class="social-btn">
+                        <img src="/asset/instagram.png" alt="Instagram" />
+                    </a>
+                    <a href="#" aria-label="Twitter" class="social-btn">
+                        <img src="/asset/twitter.png" alt="Twitter" />
+                    </a>
+                    <a href="#" aria-label="Facebook" class="social-btn">
+                        <img src="/asset/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="#" aria-label="Youtube" class="social-btn">
+                        <img src="/asset/youtube.png" alt="Youtube" />
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social-btn">
+                        <img src="/asset/linkedin.png" alt="LinkedIn" />
+                    </a>
+                </div>
+            </div>
+    
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3 class="footer-heading">Quick Links</h3>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Use</a>
+                <a href="#" class="footer-link">Tim Kami</a>
+                <a href="#" class="footer-link">FAQs/Kontak</a>
+                <a href="#" class="footer-link">Karir</a>
+                <a href="#" class="footer-link">Sponsorship</a>
+            </div>
+    
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3 class="footer-heading">Hubungi Kami</h3>
+    
+                <div class="contact-item">
+                    <img src="" class="contact-icon" />
+                    <div>
+                        <p class="contact-title">Kantor Pusat OneAct</p>
+                        <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
+                    </div>
+                </div>
+    
+                <a href="tel:+6281656782" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <i data-lucide="phone"></i>
+                    </div>
+                    <span>+62 81 656 7824</span>
+                </a>
+    
+                <a href="mailto:oneact@oneact.or.id" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <i data-lucide="mail"></i>
+                    </div>
+                    <span>oneact@oneact.or.id</span>
+                </a>
+            </div>
+    
+        </div>
+    
+        <div class="footer-bottom">
+            <p>© 2025 OneAct. All rights reserved.</p>
+        </div>
+    </footer>
+    
     <script>
         lucide.createIcons();
     </script>

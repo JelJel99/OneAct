@@ -27,7 +27,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Minimal usia 18 tahun|Memiliki empati tinggi|Bersedia berinteraksi dengan lansia',
             'benefit' => 'Sertifikat relawan|Pengalaman sosial|Jaringan komunitas',
 
-            'foto' => 'assets/relawan/lansia.jpg',
+            'foto' => '/asset/program-makan-bergizi-gratis-kalangan-lansia-dinilai-harus-jadi-prioritas-zab.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -11,22 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forum', function (Blueprint $table) {
+        Schema::create('komunitas', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('komunitas_id')
-                ->constrained('komunitas')
+            $table->foreignId('organisasi_id')
+                ->constrained('organisasi')
                 ->cascadeOnDelete();
-
-            $table->foreignId('user_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
-
-            $table->text('pesan')->nullable();
-            $table->string('file')->nullable();
+            $table->string('nama');
+            $table->text('deskripsi');
+            $table->string('kategori');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forum');
+        Schema::dropIfExists('komunitas');
     }
 };

@@ -11,6 +11,10 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\OrganisasiDashboardController;
+use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\ForumController;
+use App\Http\Controllers\CeritaController;
+use App\Http\Controllers\EventProposalController;
 
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
@@ -155,3 +159,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/org/submit-donasi', [OrganisasiDashboardController::class, 'storeDonasi']);
     Route::post('/org/submit-volunteer', [OrganisasiDashboardController::class, 'storeVolunteer']);
 });
+
+// KOMUNITAS
+Route::get('/community', [CommunityController::class, 'index'])->name('community.index');
+Route::get('/community/{id}', [CommunityController::class, 'show'])->name('community.show');
+
+// Forum routes
+Route::get('/community/{komunitas_id}/forum', [ForumController::class, 'index'])->name('forum.index');
+Route::post('/community/{komunitas_id}/forum', [ForumController::class, 'store'])->name('forum.store');
+Route::post('/forum/{forum_id}/komentar', [ForumController::class, 'storeKomentar'])->name('forum.komentar');
+
+// Cerita/Story routes
+Route::get('/community/{komunitas_id}/cerita', [CeritaController::class, 'create'])->name('cerita.create');
+Route::post('/community/{komunitas_id}/cerita', [CeritaController::class, 'store'])->name('cerita.store');
+
+// Event Proposal routes
+Route::get('/community/{komunitas_id}/event', [EventProposalController::class, 'create'])->name('event.create');
+Route::post('/community/{komunitas_id}/event', [EventProposalController::class, 'store'])->name('event.store');

@@ -74,4 +74,8 @@ class Program extends Model
         return $this->hasOne(Donation::class);
     }    
 
+    public function getTypeLabelAttribute()
+    {
+        return ucfirst($this->type);
+    }
 }

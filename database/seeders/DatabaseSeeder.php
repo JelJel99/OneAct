@@ -21,10 +21,12 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             OrganisasiSeeder::class,
             ProgramSeeder::class,
-            ProgramRelawanSeeder::class,
+            KomunitasSeeder::class,
             DonasiSeeder::class,
-            TransaksiSeeder::class,
+            // FaqSeeder::class,
+            ProgramRelawanSeeder::class,
             RelawanDaftarSeeder::class,
+            TransaksiSeeder::class,
         ]);
     }
 }

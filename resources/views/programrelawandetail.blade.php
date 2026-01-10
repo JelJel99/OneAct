@@ -27,7 +27,7 @@
                 <a href="/home" class="main-nav-link">Beranda</a>
                 <a href="/donation" class="main-nav-link">Donasi</a>
                 <a href="/programrelawan" class="main-nav-link active">Relawan</a>
-                <a href="/komunitas" class="main-nav-link">Komunitas</a>
+                <a href="/community" class="main-nav-link">Komunitas</a>
                 <a href="/faq" class="main-nav-link">FAQs</a>
             </div>
     
@@ -64,7 +64,7 @@
             <a href="/home" class="mobile-item">Beranda</a>
             <a href="/donation" class="mobile-item">Donasi</a>
             <a href="/programrelawan" class="mobile-item">Relawan</a>
-            <a href="/komunitas" class="mobile-item">Komunitas</a>
+            <a href="/community" class="mobile-item">Komunitas</a>
             <a href="/faq" class="mobile-item">FAQs</a>
             <!-- <hr class="mobile-divider">
             <a id="mobileLogin" href="/login" class="auth-btn">Masuk</a>
@@ -197,14 +197,14 @@
     
                 <a href="tel:+6281656782" class="contact-item">
                     <div class="contact-icon-circle">
-                        <img src="" />
+                        <i data-lucide="phone"></i>
                     </div>
                     <span>+62 81 656 7824</span>
                 </a>
     
                 <a href="mailto:oneact@oneact.or.id" class="contact-item">
                     <div class="contact-icon-circle">
-                        <img src="" />
+                        <i data-lucide="mail"></i>
                     </div>
                     <span>oneact@oneact.or.id</span>
                 </a>

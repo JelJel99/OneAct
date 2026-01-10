@@ -14,6 +14,7 @@ return new class extends Migration
                 ->constrained('users')
                 ->cascadeOnDelete();
             $table->string('nama');
+            $table->longText('aboutOrg');
             $table->text('visi')->nullable();
             $table->text('misi')->nullable();
             $table->string('email')->nullable();

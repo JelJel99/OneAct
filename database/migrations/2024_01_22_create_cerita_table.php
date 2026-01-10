@@ -6,26 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('komunitas', function (Blueprint $table) {
+        Schema::create('cerita', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('komunitas_id')->constrained('komunitas');
             $table->string('nama');
-            $table->text('deskripsi');
-            $table->string('kategori');
-            $table->string('foto')->nullable();
+            $table->longText('cerita');
+            $table->enum('peran', ['relawan', 'donatur']);
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('komunitas');
+        Schema::dropIfExists('cerita');
     }
 };

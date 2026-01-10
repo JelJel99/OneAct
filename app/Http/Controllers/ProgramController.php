@@ -23,7 +23,11 @@ class ProgramController extends Controller
 
     public function apiHomePrograms()
     {
-        $programs = Program::with(['donasi.transactions', 'organisasi'])->where('status', 'approved')->get();
+        $programs = Program::with(['donasi.transactions', 'organisasi'])
+            ->where('status', 'approved')
+            ->whereNotNull('tenggat')
+            ->whereDate('tenggat', '>=', Carbon::today())
+            ->get();
 
         return response()->json(
             $programs->map(function ($p) {
@@ -53,7 +57,8 @@ class ProgramController extends Controller
     {
         return Program::with(['relawan', 'organisasi'])
             ->where('type', 'relawan')      // hanya relawan
-            ->where('status', 'approved')   // STATUS DARI TABEL programs
+            ->where('status', 'approved') 
+            ->whereDate('tenggat', '>=', Carbon::today())  // STATUS DARI TABEL programs
             ->orderBy('created_at', 'desc')
             ->get();
     }
@@ -126,7 +131,10 @@ class ProgramController extends Controller
                 'type' => $p->type,
                 'status_otomatis' => $p->status_otomatis ?? null,
                 'deskripsi' => $p->deskripsi ?? optional($p->donasi)->deskripsi,
-                'foto' => $p->foto ?? optional($p->donasi)->foto,
+                'foto' => $p->type === 'relawan'
+                    ? optional($p->relawan)->foto
+                    : ($p->foto ?? optional($p->donasi)->foto),
+
                 'jumlah_terkumpul' => optional($p->donasi)->jumlahsaatini ?? 0,
                 'target' => optional($p->donasi)->target ?? 0,
                 'jumlah_donatur' => $p->donasi ? $p->donasi->transactions()->count() : 0,

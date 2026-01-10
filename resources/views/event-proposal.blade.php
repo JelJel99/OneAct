@@ -1,90 +1,54 @@
+@include('components.navbar')
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Relawan | OneAct</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <title>Usulan Event - {{ $komunitas->nama }}</title>
+    @vite(['resources/css/event-proposal.css', 'resources/js/event-proposal.js'])
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Bootstrap (optional, tapi grid kamu pakai row/col) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="{{ asset('css/global.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/programrelawan.css') }}">
 </head>
+<body class="body">
+    <div class="breadcrumb">
+        <a href="/community">← Komunitas</a> > 
+        <a href="/community/{{ $komunitas->id }}">{{ $komunitas->nama }}</a> > 
+        <strong>Usulan Event</strong>
+    </div>
 
-<body>
-    <nav class="main-navbar">
-        <div class="main-nav-container">
-            <div class="main-nav-left">
-                <img src="{{ asset('asset/square_OneAct.png') }}" alt="OneAct Logo" class="logo">
+    <div class="main-content">
+        <h1 class="page-title">Usulan Event Baru</h1>
+        <p class="page-subtitle">Ayo bantu komunitas dengan ide kegiatan baru!</p>
+
+        <form action="{{ route('event.store', $komunitas->id) }}" method="POST" id="eventProposalForm">
+            @csrf
+            <div class="form-group">
+                <label for="eventName">Nama Event</label>
+                <input type="text" id="eventName" name="nama_event" placeholder="Contoh: Jalan Sehat Bersama Anabul" required>
             </div>
-    
-            <div class="main-nav-menu">
-                <a href="home" class="main-nav-link">Beranda</a>
-                <a href="donation" class="main-nav-link">Donasi</a>
-                <a href="programrelawan" class="main-nav-link active">Relawan</a>
-                <a href="community" class="main-nav-link">Komunitas</a>
-                <a href="faq" class="main-nav-link">FAQs</a>
+
+            <div class="form-group">
+                <label for="eventDescription">Deskripsi Event</label>
+                <textarea id="eventDescription" name="deskripsi" placeholder="Jelaskan ide acara kamu..." required></textarea>
             </div>
-    
-            <div class="main-nav-right">
-                <button id="hamburgerBtn" class="icon-btn mobile-only">
-                    <i data-lucide="menu"></i>
-                </button>
 
-                <!-- NOTIF -->
-                <button id="notifBtn" class="main-icon-btn hidden">
-                    <i data-lucide="bell"></i>
-                </button>
-    
-                <!-- GUEST -->
-                <a id="loginBtn" href="{{ url('/login') }}" class="main-auth-btn">Masuk</a>
-                <span id="authSep" class="auth-separator">/</span>
-                <a id="registerBtn" href="{{ url('/signup') }}" class="main-auth-btn">Daftar</a>
-    
-                <!-- AUTH USER -->
-                <div id="userMenu" class="main-user-menu hidden">
-                    <button class="main-icon-btn" id="userBtn">
-                        <i data-lucide="user"></i>
-                    </button>
-                    <div class="user-dropdown">
-                        <p id="userEmail"></p>
-                        <button id="logoutBtn">Logout</button>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="eventDate">Tanggal yang diusulkan</label>
+                <input type="date" id="eventDate" name="tanggal" required>
             </div>
-        </div>
-    
-        <!-- MOBILE MENU -->
-        <div id="mobile-menu" class="mobile-menu">
-            <a href="home" class="mobile-item">Beranda</a>
-            <a href="donation" class="mobile-item">Donasi</a>
-            <a href="programrelawan" class="mobile-item">Relawan</a>
-            <a href="community" class="mobile-item">Komunitas</a>
-            <a href="faq" class="mobile-item">FAQs</a>
-            <!-- <hr class="mobile-divider">
-            <a id="mobileLogin" href="/login" class="auth-btn">Masuk</a>
-            <a id="mobileRegister" href="/signup" class="auth-btn">Daftar</a> -->
-        </div>
-    </nav>
 
-    <div class="relawan-page">
-        <div class="container">
-            <!-- Title -->
-            <h1 class="relawan-title">Relawan</h1>
-
-            <!-- Subtitle -->
-            <p class="relawan-subtitle">
-                Kebaikan selalu dimulai dari satu tindakan sederhana. Di OneAct, setiap relawan punya peran penting untuk membawa harapan bagi banyak orang
-            </p>
-
-            <!-- Cards Grid -->
-            <div class="row g-4" id="relawan-list">
-                <!-- data dari database akan di-render di sini -->
+            <div class="form-group">
+                <label for="eventLocation">Lokasi / Tempat</label>
+                <input type="text" id="eventLocation" name="lokasi" placeholder="Contoh: Taman Kota" required>
             </div>
-        </div>
+
+            <div class="form-group">
+                <label for="volunteerNeeds">Kebutuhan Relawan (Opsional)</label>
+                <textarea id="volunteerNeeds" name="kebutuhan_relawan" placeholder="Butuh relawan untuk..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Kirim Usulan Event</button>
+        </form>
     </div>
 
     <footer class="footer">
@@ -161,7 +125,6 @@
         </div>
     </footer>
 
-    <!-- <script src="{{ asset('js/global.js') }}"></script> -->
-    <script src="{{ asset('js/programrelawan.js') }}"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </body>
 </html>

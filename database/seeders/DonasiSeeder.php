@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Donation;
+use App\Models\Program;
 
 class DonasiSeeder extends Seeder
 {
@@ -13,7 +14,7 @@ class DonasiSeeder extends Seeder
         Donation::create([
             'program_id' => 2,
             'deskripsi' => 'Bantuan untuk korban banjir di Sumatra berupa kebutuhan pokok dan logistik darurat.',
-            'foto' => 'assets/donasi/banjir_sumatra.jpg',
+            'foto' => '/asset/antarafoto-banjir-jakarta-071121-ak-4.jpg',
             'target' => 10000000,
             'jumlahsaatini' => 1500000,
             'laporan' => null,

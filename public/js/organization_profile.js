@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 4️⃣ RENDER
     renderProfile(organisasi);
     renderStatistik(organisasi);
+    renderAboutOrg(organisasi);
     renderVisiMisi(organisasi);
     renderPrograms(programs);
     // renderLaporan(laporan);
@@ -118,6 +119,19 @@ function renderStatistik(org) {
   `;
 }
 
+function renderAboutOrg(org) {
+  const container = document.getElementById('aboutOrgContainer');
+  container.innerHTML = 
+  `
+    <h3>Menganal Kami Lebih Lanjut!</h3>
+    <div class="aboutOrg_container">
+      <div class="aboutOrg_content">
+        <p>${org.aboutOrg || 'Deskripsi tidak tersedia.'}</p>
+      </div>
+    </div>
+  `;
+}
+
 // Render Visi & Misi
 function renderVisiMisi(org) {
   const container = document.getElementById('visiMisiContainer');
@@ -164,7 +178,8 @@ function renderPrograms(programs) {
     // Meta count: bisa partisipan (relawan) atau relawan_count (donasi)
     const metaCount = prog.partisipan || prog.relawan_count || 0;
     
-    console.log(prog.laporan);
+    console.log('TYPE:', prog.type, 'FOTO:', prog.foto, 'REL FOTO:', prog.program_relawan?.foto);
+
     const programHTML = `
       <div class="program-card" data-status="${statusClass}" ${prog.laporan ? `data-report="${prog.laporan}"` : ''}>
         <img src="${prog.foto || '/asset/default_program.jpg'}" alt="${prog.judul}">

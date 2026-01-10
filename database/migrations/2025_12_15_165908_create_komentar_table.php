@@ -27,7 +27,7 @@ return new class extends Migration
                 ->constrained('komentar')
                 ->nullOnDelete();
 
-            $table->text('komentar')->nullable();
+            $table->text('komentar');
             $table->string('file')->nullable();
             $table->timestamps();
         });

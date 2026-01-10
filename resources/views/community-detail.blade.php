@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organization-Profile</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>{{ $komunitas->nama }} - Detail Komunitas</title>
     <script src="https://unpkg.com/lucide@latest"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.253.0/dist/lucide.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/global.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/organization_profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/community-detail.css') }}">
 </head>
-
-<body data-active-nav="donasi">
-
+<body>
     <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
@@ -26,10 +20,10 @@
             </div>
 
             <div class="nav-menu">
-                <a href="/home" class="nav-link active">Beranda</a>
+                <a href="/home" class="nav-link">Beranda</a>
                 <a href="/donation" class="nav-link">Donasi</a>
                 <a href="/programrelawan" class="nav-link">Relawan</a>
-                <a href="/community" class="nav-link">Komunitas</a>
+                <a href="/community" class="nav-link active">Komunitas</a>
                 <a href="/faq" class="nav-link">FAQs</a>
             </div>
 
@@ -71,77 +65,98 @@
         </div>
     </nav>
 
-    <main class="org-main">
-        <!-- HEADER -->
-        <section class="org-header">
-            <div class="org-header-left" id="orgProfileContainer">
-                <!-- render js -->
-            </div>
-
-        </section>
-
-        <!-- TABS -->
-        <div class="org-tabs">
-            <button class="tab active" data-tab="ringkasan">Profile</button>
-            <button class="tab" data-tab="kegiatan">Program</button>
-            <!-- <button class="tab" data-tab="transparansi">Laporan</button> -->
+        <main class="main">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a onclick="window.location.href='/community'">← Komunitas</a>
+            <span> > </span>
+            <strong>{{ $komunitas->nama }}</strong>
         </div>
 
-        <!-- CONTENT -->
-        <section class="org-content" data-category="ringkasan">
-
-            <!-- ABOUT ORG -->
-            <div class="card-box" id="aboutOrgContainer">
-                <!-- render js -->
-            </div>
-
-            <!-- STATISTIC -->
-            <div class="card-box" id="statistikContainer">
-                <!-- render js -->
-            </div>
-
-            <!-- VISI MISI -->
-            <div class="card-box" id="visiMisiContainer">
-                <!-- render js -->
-            </div>
-
-            <!-- DAMPAK SOSIAL -->
-            <!-- <div class="card-box">
-                <h3>Dampak Sosial</h3>
-                <div class="impact-wrapper">
-
-                    <div class="impact-grid">
-                        <div class="impact-item">
-                            <strong>150+ Anak</strong>
-                            <span>Telah menerima pendidikan dasar</span>
-                        </div>
-                        <div class="impact-item">
-                            <strong>85%</strong>
-                            <span>Peningkatan kemampuan literasi</span>
-                        </div>
-                        <div class="impact-item">
-                            <strong>12 Anak</strong>
-                            <span>Kembali ke sekolah formal</span>
-                        </div>
-                        <div class="impact-item">
-                            <strong>500+ Jam</strong>
-                            <span>Total waktu pengajaran</span>
+        <!-- Main Content -->
+        <div class="container">
+            <!-- Left Column -->
+            <div class="left-column">
+                <div class="community-header">
+                    <div class="community-title-section">
+                        <div class="community-avatar">{{ $komunitas->kategori[0] ?? '🏠' }}</div>
+                        <div class="community-title-info">
+                            <h1>{{ $komunitas->nama }}</h1>
                         </div>
                     </div>
+                    <p class="community-description">{{ $komunitas->deskripsi }}</p>
                 </div>
-            </div> -->
-        </section>
 
-        <section class="org-content" data-category="kegiatan" id="programContainer">
-            <!-- render js -->
-        </section>
-        
-        <!-- <section class="org-content" data-category="transparansi" id="laporanContainer"> -->
-            <!-- render js -->
-        <!-- </section> -->
-        
+                <!-- Cerita Kita section -->
+                <div class="info-card">
+                    <h3>Cerita Kita</h3>
+                    @if($stories && count($stories) > 0)
+                        @foreach($stories as $story)
+                            <div class="story-item">
+                                <div class="story-header">
+                                    <span class="story-name">{{ $story->nama }}</span>
+                                    <span class="story-role">{{ ucfirst($story->peran) }}</span>
+                                </div>
+                                <p class="story-content">{{ Str::limit($story->cerita, 150) }}</p>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="empty-section">
+                            Belum ada cerita
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Right Column Sidebar -->
+            <div class="right-column">
+                <!-- Aksi Cepat section - removed follow button -->
+                <div class="info-card">
+                    <h3>Aksi Cepat</h3>
+                    <div class="action-buttons">
+                        <a href="{{ route('cerita.create', $komunitas->id) }}" class="btn">Bagikan Cerita</a>
+                        <a href="{{ route('event.create', $komunitas->id) }}" class="btn">Usulan Event</a>
+                    </div>
+                </div>
+
+                <!-- Acara Mendatang section -->
+                <div class="info-card">
+                    <h3>Acara Mendatang</h3>
+
+                    @if($upcomingEvent)
+                        <div class="event-item">
+                            <div class="event-header">
+                                <div class="event-date">
+                                    {{ \Carbon\Carbon::parse($upcomingEvent->tenggat)->format('d M') }}
+                                </div>
+
+                                {{-- TAG --}}
+                                <span class="event-tag {{ $upcomingEvent->type }}">
+                                    {{ $upcomingEvent->type_label }}
+                                </span>
+                            </div>
+
+                            <div class="event-title">
+                                {{ $upcomingEvent->judul }}
+                            </div>
+
+                            {{-- LOKASI KHUSUS RELAWAN --}}
+                            @if($upcomingEvent->type === 'relawan' && $upcomingEvent->programRelawan->first())
+                                <div class="event-location">
+                                    <span>📍</span>
+                                    <span>{{ $upcomingEvent->programRelawan->first()->lokasi }}</span>
+                                </div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="empty-section">
+                            Belum ada acara mendatang
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </main>
-    
     <footer class="footer">
         <div class="footer-container">
     
@@ -215,8 +230,12 @@
             <p>© 2025 OneAct. All rights reserved.</p>
         </div>
     </footer>
-    
+
     <script src="{{ asset('js/global.js') }}"></script>
-    <script src="{{ asset('js/organization_profile.js') }}"></script>
+    <script type="module" src="{{ asset('js/community-detail.js') }}"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

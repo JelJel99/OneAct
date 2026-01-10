@@ -26,4 +26,10 @@ class Organisasi extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function komunitas()
+    {
+        return $this->hasMany(Komunitas::class);
+    }
+
 }
