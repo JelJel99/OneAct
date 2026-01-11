@@ -27,7 +27,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Minimal usia 18 tahun|Memiliki empati tinggi|Bersedia berinteraksi dengan lansia',
             'benefit' => 'Sertifikat relawan|Pengalaman sosial|Jaringan komunitas',
 
-            'foto' => '/asset/program-makan-bergizi-gratis-kalangan-lansia-dinilai-harus-jadi-prioritas-zab.jpg',
+            'foto' => '/asset/relawan/program-makan-bergizi-gratis-kalangan-lansia-dinilai-harus-jadi-prioritas-zab.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -48,7 +48,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Suka mengajar anak-anak|Sabar dan komunikatif|Diutamakan berlatar pendidikan',
             'benefit' => 'Sertifikat pengabdian|Pengalaman mengajar|Portofolio kegiatan sosial',
 
-            'foto' => 'assets/relawan/pendidikan.jpg',
+            'foto' => 'asset/relawan/relawancerdas.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -69,7 +69,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Latar belakang kesehatan lebih diutamakan|Mampu berkomunikasi dengan masyarakat|Bersedia bekerja di lapangan',
             'benefit' => 'Sertifikat relawan|Pengalaman lapangan kesehatan|Relasi profesional',
 
-            'foto' => 'assets/relawan/kesehatan.jpg',
+            'foto' => 'asset/relawan/relawan-edukasi-kesehatan.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -90,7 +90,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Peduli lingkungan|Mampu bekerja dalam tim|Siap kegiatan outdoor',
             'benefit' => 'Sertifikat relawan|Pengalaman konservasi|Kontribusi nyata untuk lingkungan',
 
-            'foto' => 'assets/relawan/lingkungan.jpg',
+            'foto' => 'asset/relawan/relawanenergibersih.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -111,7 +111,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Fisik sehat|Mampu bekerja di luar ruangan|Berpengalaman di kegiatan sosial',
             'benefit' => 'Sertifikat relawan|Pengalaman lapangan|Jaringan sosial luas',
 
-            'foto' => 'assets/relawan/pemulihan_lingkungan.jpg',
+            'foto' => 'asset/relawan/relawan-post-bencana.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -132,7 +132,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Sabar dan komunikatif|Berpengalaman mengajar|Mampu beradaptasi dengan anak-anak',
             'benefit' => 'Sertifikat relawan|Pengalaman mengajar|Pengembangan soft skills',
 
-            'foto' => 'assets/relawan/pendidikan_anak.jpg',
+            'foto' => 'asset/relawan/relawan-mengajar.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -153,7 +153,7 @@ class ProgramRelawanSeeder extends Seeder
             'persyaratan' => 'Sabar dan empati tinggi|Pengalaman pendampingan kesehatan|Mampu bekerja mandiri',
             'benefit' => 'Sertifikat relawan|Pengalaman sosial|Kepuasan membantu lansia',
 
-            'foto' => 'assets/relawan/pendampingan_kesehatan.jpg',
+            'foto' => 'asset/relawan/relawan-damping-lansia.jpg',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

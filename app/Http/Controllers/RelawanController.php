@@ -21,7 +21,7 @@ class RelawanController extends Controller
             'lokasi' => $relawan->lokasi,
             'komitmen' => $relawan->komitmen,
             'keahlian' => $relawan->keahlian,
-            'foto' => $relawan->foto,
+            'foto' => asset($relawan->foto),
             'tanggung_jawab' => $relawan->tanggung_jawab,
             'persyaratan' => $relawan->persyaratan,
             'benefit' => $relawan->benefit,

@@ -95,60 +95,77 @@
         </div>
     </div>
 
-
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-col">
-                <h3>OneAct</h3>
-                <p>Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <div class="footer-container">
+    
+            <!-- Left Section -->
+            <div class="footer-left">
+                <h2 class="footer-title">OneAct</h2>
+                <p class="footer-description">
+                    Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
+                </p>
+    
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram" class="social-btn">
+                        <img src="/asset/instagram.png" alt="Instagram" />
+                    </a>
+                    <a href="#" aria-label="Twitter" class="social-btn">
+                        <img src="/asset/twitter.png" alt="Twitter" />
+                    </a>
+                    <a href="#" aria-label="Facebook" class="social-btn">
+                        <img src="/asset/facebook.png" alt="Facebook" />
+                    </a>
+                    <a href="#" aria-label="Youtube" class="social-btn">
+                        <img src="/asset/youtube.png" alt="Youtube" />
+                    </a>
+                    <a href="#" aria-label="LinkedIn" class="social-btn">
+                        <img src="/asset/linkedin.png" alt="LinkedIn" />
+                    </a>
                 </div>
             </div>
-            <div class="footer-col">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Tim Kami</a></li>
-                    <li><a href="#">FAQs/Kontak</a></li>
-                    <li><a href="#">Karir</a></li>
-                    <li><a href="#">Sponsorship</a></li>
-                </ul>
+    
+            <!-- Quick Links -->
+            <div class="footer-links">
+                <h3 class="footer-heading">Quick Links</h3>
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Use</a>
+                <a href="#" class="footer-link">Tim Kami</a>
+                <a href="#" class="footer-link">FAQs/Kontak</a>
+                <a href="#" class="footer-link">Karir</a>
+                <a href="#" class="footer-link">Sponsorship</a>
             </div>
-            <div class="footer-col">
-                <h4>Hubungi Kami</h4>
+    
+            <!-- Contact Info -->
+            <div class="footer-contact">
+                <h3 class="footer-heading">Hubungi Kami</h3>
+    
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i> 
+                    <img src="" class="contact-icon" />
                     <div>
-                        <strong>Kantor Pusat OneAct</strong>
-                        <p>Jalan Letnan Sutopo<br> Serpong - Banten</p>
+                        <p class="contact-title">Kantor Pusat OneAct</p>
+                        <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
                     </div>
                 </div>
-                
-                <a href="tel:+62816567824" class="contact-item contact-link">
-                    <i class="fas fa-phone"></i> 
-                    <div>
-                        <strong>Hubungi Kami</strong>
-                        <p>+62 81 656 7824</p>
+    
+                <a href="tel:+6281656782" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <i data-lucide="phone"></i>
                     </div>
+                    <span>+62 81 656 7824</span>
                 </a>
-
-                <a href="mailto:oneact@oneact.or.id" class="contact-item contact-link">
-                    <i class="fas fa-envelope"></i> 
-                    <div>
-                        <strong>Email Kami</strong>
-                        <p>oneact@oneact.or.id</p>
+    
+                <a href="mailto:oneact@oneact.or.id" class="contact-item">
+                    <div class="contact-icon-circle">
+                        <i data-lucide="mail"></i>
                     </div>
+                    <span>oneact@oneact.or.id</span>
                 </a>
             </div>
+    
         </div>
+    
         <div class="footer-bottom">
-            &copy; 2025 OneAct. All rights reserved. Made with ❤️ for a better world
+            <p>© 2025 OneAct. All rights reserved.</p>
         </div>
     </footer>
 
@@ -325,79 +342,7 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-container">
     
-            <!-- Left Section -->
-            <div class="footer-left">
-                <h2 class="footer-title">OneAct</h2>
-                <p class="footer-description">
-                    Platform kolaborasi sosial yang menghubungkan individu, komunitas, dan organisasi untuk bersama-sama mengatasi permasalahan sosial berupa kemiskinan, pendidikan, kesehatan, dan lingkungan. Kami hadir sebagai wadah donasi dan volunteer yang transparan, terstruktur, dan terpercaya.
-                </p>
-    
-                <div class="footer-social">
-                    <a href="#" aria-label="Instagram" class="social-btn">
-                        <img src="/asset/instagram.png" alt="Instagram" />
-                    </a>
-                    <a href="#" aria-label="Twitter" class="social-btn">
-                        <img src="/asset/twitter.png" alt="Twitter" />
-                    </a>
-                    <a href="#" aria-label="Facebook" class="social-btn">
-                        <img src="/asset/facebook.png" alt="Facebook" />
-                    </a>
-                    <a href="#" aria-label="Youtube" class="social-btn">
-                        <img src="/asset/youtube.png" alt="Youtube" />
-                    </a>
-                    <a href="#" aria-label="LinkedIn" class="social-btn">
-                        <img src="/asset/linkedin.png" alt="LinkedIn" />
-                    </a>
-                </div>
-            </div>
-    
-            <!-- Quick Links -->
-            <div class="footer-links">
-                <h3 class="footer-heading">Quick Links</h3>
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Use</a>
-                <a href="#" class="footer-link">Tim Kami</a>
-                <a href="#" class="footer-link">FAQs/Kontak</a>
-                <a href="#" class="footer-link">Karir</a>
-                <a href="#" class="footer-link">Sponsorship</a>
-            </div>
-    
-            <!-- Contact Info -->
-            <div class="footer-contact">
-                <h3 class="footer-heading">Hubungi Kami</h3>
-    
-                <div class="contact-item">
-                    <img src="" class="contact-icon" />
-                    <div>
-                        <p class="contact-title">Kantor Pusat OneAct</p>
-                        <p class="contact-text">Jalan Letnan Sutopo<br>Serpong - Banten</p>
-                    </div>
-                </div>
-    
-                <a href="tel:+6281656782" class="contact-item">
-                    <div class="contact-icon-circle">
-                        <i data-lucide="phone"></i>
-                    </div>
-                    <span>+62 81 656 7824</span>
-                </a>
-    
-                <a href="mailto:oneact@oneact.or.id" class="contact-item">
-                    <div class="contact-icon-circle">
-                        <i data-lucide="mail"></i>
-                    </div>
-                    <span>oneact@oneact.or.id</span>
-                </a>
-            </div>
-    
-        </div>
-    
-        <div class="footer-bottom">
-            <p>© 2025 OneAct. All rights reserved.</p>
-        </div>
-    </footer>
     
     <script src="{{ asset('js/baru.js') }}"></script>
     <script src="{{ asset('js/global.js') }}"></script>

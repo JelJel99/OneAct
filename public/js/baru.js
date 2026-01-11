@@ -371,7 +371,7 @@ function createDonasiReportCard(p) {
                 <button
                     class="btn-primary btn-upload-report"
                     data-program-id="${p.id}"
-                    data-program-title="${p.judul}>
+                    data-program-title="${p.judul}">
                     Unggah Laporan
                 </button>
             </div>

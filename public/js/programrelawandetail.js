@@ -145,6 +145,8 @@ function renderProgramRelawanDetail() {
         window.programRelawanId = data.id;
         window.programId = data.program_id;    
         console.log("ProgramRelawanId saat daftar:", window.programRelawanId);
+        console.log('FOTO RAW:', data.foto);
+
             // Title
             document.getElementById("programTitle").innerText = `Program Relawan: ${data.kategori}`;
             document.getElementById("programTitle2").innerText = data.program.judul;
