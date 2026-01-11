@@ -11,7 +11,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <!-- <link rel="stylesheet" href="{{ asset('css/global.css') }}"> -->
-    <link rel="stylesheet" href="{{ asset('css/baru.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index_org.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -327,14 +327,12 @@
                         Pilih File Laporan (PDF, Max 50 MB)
                     </label>
 
-                    <!-- ✅ name HARUS "laporan" -->
                     <input type="file" id="fileLaporan" name="laporan" accept="application/pdf" required>
                     <p class="file-info">
                         Format: PDF. Maksimum: 50 MB.
                     </p>
                 </div>
 
-                <!-- ✅ BUTTON SUDAH BENAR -->
                 <button type="submit" class="btn-primary">
                     Unggah dan Publikasikan
                 </button>
@@ -344,7 +342,7 @@
 
     
     
-    <script src="{{ asset('js/baru.js') }}"></script>
     <script src="{{ asset('js/global.js') }}"></script>
+    <script src="{{ asset('js/index_org.js') }}"></script>
 </body>
 </html>

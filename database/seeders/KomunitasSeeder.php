@@ -18,7 +18,7 @@ class KomunitasSeeder extends Seeder
                 'organisasi_id' => 1,
                 'nama' => 'PawFriends',
                 'deskripsi' => 'Komunitas pecinta hewan dan volunteer vaksinasi hewan peliharaan.',
-                'kategori' => 'kesehatan',
+                'kategori' => 'Hewan',
                 'foto' => null,
                 'created_at' => now(),
                 'updated_at' => now(),

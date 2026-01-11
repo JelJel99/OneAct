@@ -241,7 +241,7 @@ class OrganisasiDashboardController extends Controller
             ->map(function ($d) {
                 return [
                     'judul' => $d->program->judul,
-                    'file'  => $d->laporan,
+                    'file' => asset('storage/' . $d->laporan),
                     'tanggal' => optional($d->laporan_uploaded_at)
                                     ->format('d M Y'), // 🔥 FORMAT SIAP PAKAI
                 ];
@@ -312,7 +312,8 @@ class OrganisasiDashboardController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Laporan berhasil diupload'
+            'message' => 'Laporan berhasil diupload',
+            'file' => asset('storage/' . $path),
         ]);
     }
 

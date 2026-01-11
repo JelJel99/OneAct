@@ -19,7 +19,7 @@ use App\Http\Controllers\EventProposalController;
 // Route::middleware('auth')->get('/api/user/history', [UserHistoryController::class, 'index']);
 
 // PUBLIC PAGES
-Route::get('/', fn () => view('welcome'));
+Route::get('/', fn () => view('home'));
 Route::get('/signup', fn () => view('signup'));
 Route::get('/login', fn () => view('login'))->name('login');
 

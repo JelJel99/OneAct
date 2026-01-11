@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('nama');
             $table->longText('cerita');
             $table->enum('peran', ['relawan', 'donatur']);
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

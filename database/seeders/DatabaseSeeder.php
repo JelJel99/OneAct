@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             ProgramRelawanSeeder::class,
             RelawanDaftarSeeder::class,
             TransaksiSeeder::class,
+            CeritaSeeder::class,
         ]);
     }
 }
